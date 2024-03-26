@@ -190,3 +190,19 @@ INSERT INTO `prep_steps` (`id`, `recipe_id`, `number`, `descr`) VALUES
 INSERT INTO `favorites` (`recipe_id`, `user_id`) VALUES
 (1, 1),
 (2, 2);
+
+INSERT INTO `lookup` (`id`, `group`, `value`, `display`) VALUES
+(1, 'recipe_types', 'meat_and_fish', 'Vlees en Vis'),
+(2, 'recipe_types', 'meat', 'Vlees'),
+(3, 'recipe_types', 'fish', 'Vis'),
+(4, 'recipe_types', 'vegetarian', 'Vegetarisch'),
+(5, 'recipe_types', 'vegan', 'Veganistisch'),
+(6, 'cuisine_types', 'region', 'Regio'),
+(7, 'cuisine_types', 'country', 'Land'),
+(8, 'cuisine_types', 'other', 'Overig'),
+(9, 'units', 'gram', 'Gram'),
+(10, 'units', 'litre', 'Liter'),
+(11, 'units', 'numerical', 'Numeriek'),
+(12, 'detail_tabs', 'ingredients', 'Ingrediënten'),
+(13, 'detail_tabs', 'prep_steps', 'Bereidingswijze'),
+(14, 'detail_tabs', 'comments', 'Reacties');
