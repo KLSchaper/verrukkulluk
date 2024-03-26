@@ -57,7 +57,7 @@ CREATE TABLE `comments` (
 CREATE TABLE `cuisines` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `type` enum('Region','Country','Other') NOT NULL,
+  `type` enum('region','country','other') NOT NULL,
   `parent_id` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -167,7 +167,7 @@ CREATE TABLE `recipes` (
   `blurb` varchar(255) NOT NULL,
   `people` tinyint(2) NOT NULL,
   `cuisine_id` int(11) UNSIGNED NOT NULL,
-  `type` enum('Vlees & Vis','Vlees','Vis','Vegetarisch','Vegan') NOT NULL,
+  `type` enum('meat_and_fish','meat','fish','vegetarian','vegan') NOT NULL,
   `descr` text NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp()
