@@ -87,6 +87,19 @@ CREATE TABLE `ingredients` (
 -- --------------------------------------------------------
 
 --
+-- Tabelstructuur voor tabel `lookup`
+--
+
+CREATE TABLE `lookup` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `group` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `display` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
 -- Tabelstructuur voor tabel `measures`
 --
 
@@ -220,6 +233,12 @@ ALTER TABLE `favorites`
   ADD KEY `favorites_recipe_id` (`recipe_id`);
 
 --
+-- Indexen voor tabel `lookup`
+--
+ALTER TABLE `lookup`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexen voor tabel `ingredients`
 --
 ALTER TABLE `ingredients`
@@ -302,6 +321,12 @@ ALTER TABLE `cuisines`
 -- AUTO_INCREMENT voor een tabel `ingredients`
 --
 ALTER TABLE `ingredients`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT voor een tabel `ingredients`
+--
+ALTER TABLE `lookup`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
