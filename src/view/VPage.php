@@ -66,6 +66,17 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 ];
                 $this->showData('IngredientFormDAO', $function_calls);
                 break;
+            case 'DetailTabs':
+                $function_calls = [
+                    'getTabName'    => [],
+                    'getTabContent' => [
+                        'recipe_id' => 1,
+                    ],
+                ];
+                $this->showData('CommentsTabDAO', $function_calls);
+                $this->showData('IngredientsTabDAO', $function_calls);
+                $this->showData('PrepStepsTabDAO', $function_calls);
+                break;
             default:
                 echo '<h1>404 pagina niet gevonden</h1>'.PHP_EOL;
         }
