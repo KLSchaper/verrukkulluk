@@ -1,7 +1,8 @@
 <?php
 namespace vrklk\model\recipe;
 
-class PrepStepsTabDAO implements \vrklk\model\interfaces\iRecipeTabDAO
+class CommentsTabDAO extends \vrklk\base\model\BaseDAO implements
+    \vrklk\model\interfaces\iRecipeTabDAO
 {
     public function getTabName() : string
     {
@@ -10,7 +11,15 @@ class PrepStepsTabDAO implements \vrklk\model\interfaces\iRecipeTabDAO
     
     public function getTabContent(int $recipe_id) : array
     {
-        // retrieve the relevant content for this tab from DB
-        return [];
+        return $this->crud->selectMore(
+            "SELECT c.text, u.name, u.img"
+            ." FROM comments AS c"
+            ." INNER JOIN users AS u ON c.user_id = u.id"
+            ." WHERE c.recipe_id = :recipe_id"
+            ." ORDER BY c.date DESC",
+            [
+                'recipe_id' => [$recipe_id, true],
+            ],
+        );
     }
 }
