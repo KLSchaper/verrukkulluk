@@ -24,6 +24,9 @@ class VController extends \vrklk\base\controller\Controller
     protected function showResponse(): void
     {
         switch ($this->response['page']) {
+            case 'site_test':
+                $page = new \vrklk\view\VPage('Site');
+                break;
             case 'agenda_test':
                 $page = new \vrklk\view\VPage('Agenda');
                 break;

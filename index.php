@@ -6,6 +6,7 @@ include 'ManKind/web_bootstrap.php';
 try {
     \ManKind\ModelManager::registerModels(
         [
+            'SiteDAO'           => 'vrklk\model\site\SiteDAO',
             'AgendaDAO'         => 'vrklk\model\site\AgendaDAO',
             'FavoritesDAO'      => 'vrklk\model\user\FavoritesDAO',
             'RecipeFormDAO'     => 'vrklk\model\form\RecipeFormDAO',
