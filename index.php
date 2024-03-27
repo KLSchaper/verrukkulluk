@@ -3,8 +3,7 @@ session_start();
 include 'vendor/autoload.php';
 include 'ManKind/web_bootstrap.php';
 
-try
-{
+try {
     \ManKind\ModelManager::registerModels(
         [
             'AgendaDAO'         => 'vrklk\model\site\AgendaDAO',
@@ -19,8 +18,6 @@ try
     );
     $maincontroller = new vrklk\controller\VController();
     $maincontroller->handleRequest();
-}
-catch (\Throwable $e)
-{
+} catch (\Throwable $e) {
     \ManKind\tools\dev\Logger::_error($e);
 }
