@@ -16,16 +16,11 @@ class RecipeFormDAO extends \vrklk\model\form\FormDAO implements
 
     public function getRecipeTypes() : array
     {
-        $lookup_types = $this->crud->selectMore(
-            "SELECT display" 
+        return $this->crud->selectAsPairs(
+            "SELECT value, display" 
             ." FROM lookup AS l" 
             ." WHERE l.group = 'recipe_types'"
             ." ORDER BY id ASC"
         );
-        foreach($lookup_types as $display_type)
-        {
-            $types[] = $display_type['display'];
-        }
-        return $types;
     }
 }
