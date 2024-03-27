@@ -6,29 +6,26 @@ class RecipeFormDAO extends \vrklk\model\form\FormDAO implements
 {
     public function getCuisineList() : array
     {
-        // retrieve all cuisines from DB
         return $this->crud->selectMore(
-            "SELECT *" 
-            ." FROM cuisines" 
-            ." ORDER BY type ASC"
+            "SELECT c.id, c.name, c.parent_id, c.type, l.display AS display_type" 
+            ." FROM cuisines AS c" 
+            ." INNER JOIN lookup AS l ON (l.group = 'cuisine_types' AND c.type = l.value)"
+            ." ORDER BY c.type ASC"
         );
     }
 
     public function getRecipeTypes() : array
     {
-        // retrieve all recipe types from DB
-        var_dump($this->crud->selectMore(
-            "SELECT COLUMNS" 
-            ." FROM `recipes`" 
-            ." LIKE 'type'"
-        ));
-        // can it be done with SQL or do we need to hardcode it?
-        return [
-            'Vlees & Vis',
-            'Vlees',
-            'Vis',
-            'Vegetarisch',
-            'Vegan',
-        ];
+        $lookup_types = $this->crud->selectMore(
+            "SELECT display" 
+            ." FROM lookup AS l" 
+            ." WHERE l.group = 'recipe_types'"
+            ." ORDER BY id ASC"
+        );
+        foreach($lookup_types as $display_type)
+        {
+            $types[] = $display_type['display'];
+        }
+        return $types;
     }
 }
