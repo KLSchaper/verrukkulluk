@@ -1,4 +1,5 @@
 <?php
+
 namespace vrklk\model\interfaces;
 
 interface iAddMeasure
@@ -8,5 +9,5 @@ interface iAddMeasure
         string $name,
         string $category,
         float $quantity
-    ) : int | false;
+    ): int | false;
 }

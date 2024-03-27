@@ -1,4 +1,5 @@
 <?php
+
 namespace vrklk\model\interfaces;
 
 interface iAgendaDAO

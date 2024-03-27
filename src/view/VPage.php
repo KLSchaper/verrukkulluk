@@ -1,21 +1,24 @@
 <?php
+
 namespace vrklk\view;
 
 class VPage extends \vrklk\base\view\HtmlDoc
 {
-//=============================================================================
-// PUBLIC
-//=============================================================================
+    //=========================================================================
+    // PUBLIC
+    //=========================================================================
     public function __construct(string $title)
     {
         parent::__construct($title, \Config::AUTHOR);
     }
 
+    //=========================================================================
+    // PROTECTED
+    //=========================================================================
     protected function showBodyContent(): void
     {
-        echo '<h1>Class '.$this->title.'</h1>'.PHP_EOL;
-        switch($this->title)
-        {
+        echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
+        switch ($this->title) {
             case 'Agenda':
                 $function_calls = [
                     'getUpcomingEvents' => [
@@ -78,19 +81,21 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('PrepStepsTabDAO', $function_calls);
                 break;
             default:
-                echo '<h1>404 pagina niet gevonden</h1>'.PHP_EOL;
+                echo '<h1>404 pagina niet gevonden</h1>' . PHP_EOL;
         }
     }
 
-    private function showData(string $class, array $function_calls) : void
+    //=========================================================================
+    // PRIVATE
+    //=========================================================================
+    private function showData(string $class, array $function_calls): void
     {
-        $model_call = '\ManKind\ModelManager::get'.$class;
+        $model_call = '\ManKind\ModelManager::get' . $class;
         $dao = $model_call();
-        foreach($function_calls as $function => $parameters)
-        {
+        foreach ($function_calls as $function => $parameters) {
             echo "<p>Testing {$class}::{$function}()</p>";
             $data = $dao->$function(...$parameters);
-            echo '<pre>'.var_export($data, true).'</pre>';
+            echo '<pre>' . var_export($data, true) . '</pre>';
         }
     }
 }
