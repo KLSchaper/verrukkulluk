@@ -10,7 +10,7 @@ class CommentsTabDAO extends \vrklk\base\model\BaseDAO implements
     //=========================================================================
     public function getTabName(): string
     {
-        return 'Opmerkingen';
+        return 'comments';
     }
 
     public function getTabContent(int $recipe_id): array

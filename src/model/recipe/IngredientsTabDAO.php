@@ -10,7 +10,7 @@ class IngredientsTabDAO extends \vrklk\base\model\BaseDAO implements
     //=========================================================================
     public function getTabName(): string
     {
-        return 'Ingrediënten';
+        return 'ingredients';
     }
 
     public function getTabContent(int $recipe_id): array

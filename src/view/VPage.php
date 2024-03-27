@@ -19,6 +19,23 @@ class VPage extends \vrklk\base\view\HtmlDoc
     {
         echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
         switch ($this->title) {
+            case 'Site':
+                $function_calls = [
+                    'getDetailMenuItems'    => [],
+                    'getFooterTitle'        => [],
+                    'getContactInfo'        => [],
+                    'getLoginTitle'         => [
+                        'logged_user'   => true,
+                    ],
+                    'getLoginContent'       => [
+                        'logged_user'   => true,
+                    ],
+                    'getMenuItems'          => [
+                        'logged_user'   => true,
+                    ],
+                ];
+                $this->showData('SiteDAO', $function_calls);
+                break;
             case 'Agenda':
                 $function_calls = [
                     'getUpcomingEvents' => [
