@@ -2,7 +2,7 @@
 
 namespace vrklk\model\site;
 
-class SiteDAO implements
+class SiteDAO extends \vrklk\base\model\BaseDAO implements
     \vrklk\model\interfaces\iDetailMenuDAO,
     \vrklk\model\interfaces\iFooterDAO,
     \vrklk\model\interfaces\iLoginDAO,
@@ -13,7 +13,12 @@ class SiteDAO implements
     //=========================================================================
     public function getDetailMenuItems(): array
     {
-        return ['Ingrediënten', 'Bereidingswijze', 'Opmerkingen'];
+        return $this->crud->selectAsPairs(
+            "SELECT value, display"
+                . " FROM lookup AS l"
+                . " WHERE l.group = 'detail_tabs'"
+                . " ORDER BY id ASC"
+        );
     }
 
     public function getFooterTitle(): string
