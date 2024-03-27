@@ -178,7 +178,7 @@ INSERT INTO `lookup` (`id`, `group`, `value`, `display`) VALUES
 (11, 'units', 'numerical', 'Numeriek'),
 (12, 'detail_tabs', 'ingredients', 'Ingrediënten'),
 (13, 'detail_tabs', 'prep_steps', 'Bereidingswijze'),
-(14, 'detail_tabs', 'comments', 'Reacties');
+(14, 'detail_tabs', 'comments', 'Opmerkingen');
 
 -- --------------------------------------------------------
 
