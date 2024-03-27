@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'verrukkulluk/site',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => null,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '2bb548edff6c9600257dfc5b785dedd100aa8c33',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'verrukkulluk/site' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => null,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '2bb548edff6c9600257dfc5b785dedd100aa8c33',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
