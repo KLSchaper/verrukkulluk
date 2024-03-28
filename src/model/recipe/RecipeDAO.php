@@ -1,7 +1,7 @@
 <?php
 namespace vrklk\model\recipe;
 
-class RecipeDAO implements \vrklk\model\interfaces\iRecipeDAO
+class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interfaces\iRecipeDAO
 {
     public function getHomeRecipes(int $amount, int $page_number): array
     {
@@ -39,7 +39,7 @@ class RecipeDAO implements \vrklk\model\interfaces\iRecipeDAO
             INNER JOIN favorites f ON r.id = f.recipe_id
             WHERE f.user_id = :user_id
             ORDER BY date DESC
-            LIMIT 2 OFFSET 0;
+            LIMIT :amount OFFSET :offset;
         ';
         $parameters = ["amount" => [$amount, true], "offset" => [$amount * ($page_number-1), true], 'user_id' => [$user_id, true]];
 
@@ -69,7 +69,7 @@ class RecipeDAO implements \vrklk\model\interfaces\iRecipeDAO
         foreach ($test_elements as $element){
             $search_query_tester .= empty($search_query_tester) ? '' : ' OR ';
             $search_query_tester .= $element . ' LIKE :search_query' . $i;
-            $search_parameters['search_query' . $i] = ['"%' . $search_query . '%"', true];
+            $search_parameters['search_query' . $i] = ['%' . $search_query . '%', true];
             $i++;
         }
 
@@ -117,15 +117,31 @@ class RecipeDAO implements \vrklk\model\interfaces\iRecipeDAO
 
 
         // 2. get the products for the optimal price
-        $product_dao = new \vrklk\model\recipe\ProductDAO;
+        $product_dao = new \vrklk\model\recipe\ProductDAO($this->crud);
         
         //get ingredients
-        //for each ingredient, get the priceproductarray
-        //add together the prices, store the rest in ingredient_list for later
+        $recipe_ingredient_query = '
+            SELECT i.id AS id, (ri.quantity * m.quantity) AS quantity_needed
+            FROM ingredients i
+            INNER JOIN recipe_ingredients ri ON ri.ingredient_id = i.id
+            INNER JOIN recipes r ON ri.recipe_id = r.id
+            INNER JOIN measures m ON ri.measure_id = m.id
+            WHERE r.id = :recipe_id;
+        ';
+        $recipe_ingredients = $this->crud->selectAsPairs($recipe_ingredient_query, $parameters);
 
+        $total_price = 0;
+        foreach($recipe_ingredients as $ingredient_id => $required_quantity) {
+            $price_product_array = $product_dao->getIngredientProduct($ingredient_id, $required_quantity);
+            if ($price_product_array) {
+                $products_by_ingredients[$ingredient_id] = $price_product_array;
+                $total_price += $price_product_array['price'];
+            }
+        }
+        $recipe_result['price'] = $total_price;
 
         // 3. get the total calories
-        $calories = getCalories($ingredient_list, $recipe_id);
+        $calories = $this->getCalories($products_by_ingredients, $recipe_id);
         $recipe_result['calories'] = $calories;
 
         return $recipe_result;
@@ -133,7 +149,7 @@ class RecipeDAO implements \vrklk\model\interfaces\iRecipeDAO
 
 
     //private functions
-    private function getCalories($ingredient_list, $recipe_id): float {
+    private function getCalories($products_by_ingredients, $recipe_id): float {
         // step 1: create temporary table for product ID's & amounts
         $create_product_amounts_table = '
             CREATE TEMPORARY TABLE product_amounts (
@@ -141,13 +157,13 @@ class RecipeDAO implements \vrklk\model\interfaces\iRecipeDAO
                 amount INT(11)
             );
         ';
-        $this->crud->doCreate($create_product_amounts_table);
+        $this->crud->executeQuery($create_product_amounts_table);
 
         // step 2: insert the product ID's & amounts into the temporary table
         
         //TODO make this work well with product output
         $product_insert_values = '';
-        foreach($ingredient_list as $ingredient) {
+        foreach($products_by_ingredients as $ingredient) {
             $product_list = $ingredient['products'];
             foreach ($product_list as $product_id => $product_amount) {
                 $product_insert_values .= (empty($product_insert_values)) ? '' : ', ';

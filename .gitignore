@@ -3,3 +3,4 @@ _sys/
 ManKind/
 composer.bat
 composer.phar
+vendor/

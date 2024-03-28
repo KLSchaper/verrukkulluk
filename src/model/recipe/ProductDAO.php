@@ -1,7 +1,7 @@
 <?php
 namespace vrklk\model\recipe;
 
-class ProductDAO implements \vrklk\model\interfaces\iProductDAO
+class ProductDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interfaces\iProductDAO
 {
     public function getIngredientProduct(
         int $ingredient_id,
@@ -22,7 +22,11 @@ class ProductDAO implements \vrklk\model\interfaces\iProductDAO
         $product_list_parameters = ['ingredient_id' => [$ingredient_id, true]];
         $product_list = $this->crud->selectMore($product_list_query, $product_list_parameters);
 
-        $optimal_products_array = getOptimalProducts($quantity, $product_list, INF);
+        if (empty($product_list)) {
+            return false;
+        }
+
+        $optimal_products_array = $this->getOptimalProducts($quantity, $product_list, INF);
         
         return $optimal_products_array;
     }
