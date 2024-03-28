@@ -16,7 +16,7 @@ interface iRecipeDAO
     public function getSearchRecipes(
         int $amount,
         int $page_number,
-        string $query
+        string $searchQuery
     ): array;
     public function getRecipeDetails(int $recipe_id): array;
 }
