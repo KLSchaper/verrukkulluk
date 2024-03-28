@@ -1,11 +1,11 @@
 INSERT INTO `cuisines` (`id`, `name`, `type`, `parent_id`) VALUES
-(1, 'Europees', 'Region', NULL),
-(2, 'Mediterraans', 'Region', 1),
-(3, 'Frans', 'Country', 1),
-(4, 'Grieks', 'Country', 2),
-(5, 'Italiaans', 'Country', 2),
-(6, 'Nederlands', 'Country', 1),
-(7, 'Spaans', 'Country', 2);
+(1, 'Europees', 'region', NULL),
+(2, 'Mediterraans', 'region', 1),
+(3, 'Frans', 'country', 1),
+(4, 'Grieks', 'country', 2),
+(5, 'Italiaans', 'country', 2),
+(6, 'Nederlands', 'country', 1),
+(7, 'Spaans', 'country', 2);
 
 INSERT INTO `ingredients` (`id`, `name`, `unit`) VALUES -- gram, litre, numerical
 (1, 'tarwebloem', 'gram'),
@@ -83,7 +83,7 @@ INSERT INTO `recipes` (`id`, `title`, `img`, `blurb`, `people`, `cuisine_id`, `t
 	'Heerlijke pizza met tomaat en mozarella, helemaal zelf gemaakt, inclusief bodem!',
 	4,
 	5,
-	'Vegetarisch',
+	'vegetarian',
 	'Met dit recept maake je zelf je eigen pizza margherita van de losse ingrediënten. Je maakt zelf de
 	bodem en de saus, en voegt daarna de mozarella en kruiden toe.',
 	1
@@ -95,7 +95,7 @@ INSERT INTO `recipes` (`id`, `title`, `img`, `blurb`, `people`, `cuisine_id`, `t
 	'Een heerlijk recept voor echt klassieke lasagne.',
 	4,
 	5,
-	'Vlees',
+	'meat',
 	'Lasagne is een recept dat terug gaat tot 1282, wanneer de oudste tekst bekent is waarin het bescheven
 	is, hoewel het natuurlijk wel sinds dien veranderd is. De "al forno" in de naam betekent simpelweg
 	dat het een ovengerecht is.',
@@ -190,3 +190,19 @@ INSERT INTO `prep_steps` (`id`, `recipe_id`, `number`, `descr`) VALUES
 INSERT INTO `favorites` (`recipe_id`, `user_id`) VALUES
 (1, 1),
 (2, 2);
+
+INSERT INTO `lookup` (`id`, `group`, `value`, `display`) VALUES
+(1, 'recipe_types', 'meat_and_fish', 'Vlees en Vis'),
+(2, 'recipe_types', 'meat', 'Vlees'),
+(3, 'recipe_types', 'fish', 'Vis'),
+(4, 'recipe_types', 'vegetarian', 'Vegetarisch'),
+(5, 'recipe_types', 'vegan', 'Veganistisch'),
+(6, 'cuisine_types', 'region', 'Regio'),
+(7, 'cuisine_types', 'country', 'Land'),
+(8, 'cuisine_types', 'other', 'Overig'),
+(9, 'units', 'gram', 'Gram'),
+(10, 'units', 'litre', 'Liter'),
+(11, 'units', 'numerical', 'Numeriek'),
+(12, 'detail_tabs', 'ingredients', 'Ingrediënten'),
+(13, 'detail_tabs', 'prep_steps', 'Bereidingswijze'),
+(14, 'detail_tabs', 'comments', 'Opmerkingen');

@@ -1,14 +1,17 @@
 <?php
+
 namespace vrklk\model\recipe;
 
 class ProductDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interfaces\iProductDAO
 {
+    //=========================================================================
+    // PUBLIC
+    //=========================================================================
     public function getIngredientProduct(
         int $ingredient_id,
         float $quantity,
         string $select_on = 'price'
-    ): array | false
-    {
+    ): array | false {
         // returns the product info best matching parameters from DB
         
         // fetch product list of the ingredient ID into $product_list, with standard_quantity instead of the table's quantity

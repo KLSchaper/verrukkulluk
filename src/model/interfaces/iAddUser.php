@@ -1,4 +1,5 @@
 <?php
+
 namespace vrklk\model\interfaces;
 
 interface iAddUser
@@ -8,5 +9,5 @@ interface iAddUser
         string $email,
         string $password,
         string $img
-    ) : int | false;
+    ): int | false;
 }

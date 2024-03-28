@@ -1,4 +1,5 @@
 <?php
+
 namespace vrklk\model\interfaces;
 
 interface iAddComment
@@ -7,5 +8,5 @@ interface iAddComment
         int $recipe_id,
         int $user_id,
         string $text
-    ) : int | false;
+    ): int | false;
 }

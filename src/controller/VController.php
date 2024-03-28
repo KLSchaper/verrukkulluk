@@ -1,28 +1,32 @@
 <?php
+
 namespace vrklk\controller;
 
 class VController extends \vrklk\base\controller\Controller
 {
+    //=========================================================================
+    // PROTECTED
+    //=========================================================================
     protected function validateGet(): void
     {
-        switch ($this->request['page'])
-        {
+        switch ($this->request['page']) {
             // needs to be extended
         }
     }
 
     protected function validatePost(): void
     {
-        switch ($this->request['page'])
-        {
+        switch ($this->request['page']) {
             // needs to be extended
         }
     }
 
     protected function showResponse(): void
     {
-        switch ($this->response['page'])
-        {
+        switch ($this->response['page']) {
+            case 'site_test':
+                $page = new \vrklk\view\VPage('Site');
+                break;
             case 'agenda_test':
                 $page = new \vrklk\view\VPage('Agenda');
                 break;
@@ -38,20 +42,23 @@ class VController extends \vrklk\base\controller\Controller
             case 'ingredientform_test':
                 $page = new \vrklk\view\VPage('IngredientForm');
                 break;
+            case 'detailtabs_test':
+                $page = new \vrklk\view\VPage('DetailTabs');
+                break;
             default:
                 $page = new \vrklk\view\VPage('404');
         }
         $page->show();
     }
-//=============================================================================
-// PRIVATE
-//=============================================================================
+
+    //=========================================================================
+    // PRIVATE
+    //=========================================================================
     private function getKeyValue(
         array $arr,
         string $key,
-        mixed $default=false
-    ) : mixed 
-    {
+        mixed $default = false
+    ): mixed {
         return (isset($arr[$key]) ? $arr[$key] : $default);
     }
 }

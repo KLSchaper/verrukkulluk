@@ -1,8 +1,12 @@
 <?php
+
 namespace vrklk\model\recipe;
 
 class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interfaces\iRecipeDAO
 {
+    //=========================================================================
+    // PUBLIC
+    //=========================================================================
     public function getHomeRecipes(int $amount, int $page_number): array
     {
         // retrieves amount of recipe_id's, offset by page_number, from DB
@@ -28,8 +32,7 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         int $amount,
         int $page_number,
         int $user_id
-    ): array
-    {
+    ): array {
         // retrieves amount of recipe_id's, offset by page_number, from DB
         // where recipe_id is a favorite for user_id
 
@@ -56,8 +59,7 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         int $amount,
         int $page_number,
         string $search_query
-    ): array
-    {
+    ): array {
         // retrieves amount of recipe_id's, offset by page_number, from DB
         // where recipe_id is a valid match for query
 

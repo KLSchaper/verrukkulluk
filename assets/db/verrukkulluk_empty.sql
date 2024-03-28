@@ -57,7 +57,7 @@ CREATE TABLE `comments` (
 CREATE TABLE `cuisines` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `type` enum('Region','Country','Other') NOT NULL,
+  `type` enum('region','country','other') NOT NULL,
   `parent_id` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -82,6 +82,19 @@ CREATE TABLE `ingredients` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
   `unit` enum('gram','litre','numerical') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `lookup`
+--
+
+CREATE TABLE `lookup` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `group` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `display` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 -- --------------------------------------------------------
@@ -154,7 +167,7 @@ CREATE TABLE `recipes` (
   `blurb` varchar(255) NOT NULL,
   `people` tinyint(2) NOT NULL,
   `cuisine_id` int(11) UNSIGNED NOT NULL,
-  `type` enum('Vlees & Vis','Vlees','Vis','Vegetarisch','Vegan') NOT NULL,
+  `type` enum('meat_and_fish','meat','fish','vegetarian','vegan') NOT NULL,
   `descr` text NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp()
@@ -218,6 +231,12 @@ ALTER TABLE `cuisines`
 ALTER TABLE `favorites`
   ADD PRIMARY KEY (`user_id`,`recipe_id`),
   ADD KEY `favorites_recipe_id` (`recipe_id`);
+
+--
+-- Indexen voor tabel `lookup`
+--
+ALTER TABLE `lookup`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexen voor tabel `ingredients`
@@ -302,6 +321,12 @@ ALTER TABLE `cuisines`
 -- AUTO_INCREMENT voor een tabel `ingredients`
 --
 ALTER TABLE `ingredients`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT voor een tabel `ingredients`
+--
+ALTER TABLE `lookup`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --

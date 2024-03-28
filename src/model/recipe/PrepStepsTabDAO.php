@@ -1,16 +1,28 @@
 <?php
+
 namespace vrklk\model\recipe;
 
-class PrepStepsTabDAO implements \vrklk\model\interfaces\iRecipeTabDAO
+class PrepStepsTabDAO extends \vrklk\base\model\BaseDAO implements
+    \vrklk\model\interfaces\iRecipeTabDAO
 {
-    public function getTabName() : string
+    //=========================================================================
+    // PUBLIC
+    //=========================================================================
+    public function getTabName(): string
     {
-        return 'Bereidingswijze';
+        return 'prep_steps';
     }
-    
-    public function getTabContent(int $recipe_id) : array
+
+    public function getTabContent(int $recipe_id): array
     {
-        // retrieve the relevant content for this tab from DB
-        return [];
+        return $this->crud->selectMore(
+            "SELECT number, descr"
+                . " FROM prep_steps"
+                . " WHERE recipe_id = :recipe_id"
+                . " ORDER BY number ASC",
+            [
+                'recipe_id' => [$recipe_id, true],
+            ],
+        );
     }
 }

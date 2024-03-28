@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 14 mrt 2024 om 16:38
+-- Gegenereerd op: 26 mrt 2024 om 16:12
 -- Serverversie: 10.4.32-MariaDB
 -- PHP-versie: 8.2.12
 
@@ -75,7 +75,7 @@ INSERT INTO `comments` (`id`, `recipe_id`, `user_id`, `text`, `date`) VALUES
 CREATE TABLE `cuisines` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(255) NOT NULL,
-  `type` enum('Region','Country','Other') NOT NULL,
+  `type` enum('region','country','other') NOT NULL,
   `parent_id` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
@@ -84,13 +84,13 @@ CREATE TABLE `cuisines` (
 --
 
 INSERT INTO `cuisines` (`id`, `name`, `type`, `parent_id`) VALUES
-(1, 'Europees', 'Region', NULL),
-(2, 'Mediterraans', 'Region', 1),
-(3, 'Frans', 'Country', 1),
-(4, 'Grieks', 'Country', 2),
-(5, 'Italiaans', 'Country', 2),
-(6, 'Nederlands', 'Country', 1),
-(7, 'Spaans', 'Country', 2);
+(1, 'Europees', 'region', NULL),
+(2, 'Mediterraans', 'region', 1),
+(3, 'Frans', 'country', 1),
+(4, 'Grieks', 'country', 2),
+(5, 'Italiaans', 'country', 2),
+(6, 'Nederlands', 'country', 1),
+(7, 'Spaans', 'country', 2);
 
 -- --------------------------------------------------------
 
@@ -146,6 +146,39 @@ INSERT INTO `ingredients` (`id`, `name`, `unit`) VALUES
 (16, 'passata di pomodoro', 'gram'),
 (17, 'ongezouten roomboter', 'gram'),
 (18, 'lasagne all\'uovo', 'gram');
+
+-- --------------------------------------------------------
+
+--
+-- Tabelstructuur voor tabel `lookup`
+--
+
+CREATE TABLE `lookup` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `group` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `display` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Gegevens worden geëxporteerd voor tabel `lookup`
+--
+
+INSERT INTO `lookup` (`id`, `group`, `value`, `display`) VALUES
+(1, 'recipe_types', 'meat_and_fish', 'Vlees en Vis'),
+(2, 'recipe_types', 'meat', 'Vlees'),
+(3, 'recipe_types', 'fish', 'Vis'),
+(4, 'recipe_types', 'vegetarian', 'Vegetarisch'),
+(5, 'recipe_types', 'vegan', 'Veganistisch'),
+(6, 'cuisine_types', 'region', 'Regio'),
+(7, 'cuisine_types', 'country', 'Land'),
+(8, 'cuisine_types', 'other', 'Overig'),
+(9, 'units', 'gram', 'Gram'),
+(10, 'units', 'litre', 'Liter'),
+(11, 'units', 'numerical', 'Numeriek'),
+(12, 'detail_tabs', 'ingredients', 'Ingrediënten'),
+(13, 'detail_tabs', 'prep_steps', 'Bereidingswijze'),
+(14, 'detail_tabs', 'comments', 'Opmerkingen');
 
 -- --------------------------------------------------------
 
@@ -291,7 +324,7 @@ CREATE TABLE `recipes` (
   `blurb` varchar(255) NOT NULL,
   `people` tinyint(2) NOT NULL,
   `cuisine_id` int(11) UNSIGNED NOT NULL,
-  `type` enum('Vlees & Vis','Vlees','Vis','Vegetarisch','Vegan') NOT NULL,
+  `type` enum('meat_and_fish','meat','fish','vegetarian','vegan') NOT NULL,
   `descr` text NOT NULL,
   `user_id` int(11) UNSIGNED NOT NULL,
   `date` datetime NOT NULL DEFAULT current_timestamp()
@@ -302,8 +335,8 @@ CREATE TABLE `recipes` (
 --
 
 INSERT INTO `recipes` (`id`, `title`, `img`, `blurb`, `people`, `cuisine_id`, `type`, `descr`, `user_id`, `date`) VALUES
-(1, 'Pizza Margherita', 'pizza_margherita.webp', 'Heerlijke pizza met tomaat en mozarella, helemaal zelf gemaakt, inclusief bodem!', 4, 5, 'Vegetarisch', 'Met dit recept maake je zelf je eigen pizza margherita van de losse ingrediënten. Je maakt zelf de\r\n	bodem en de saus, en voegt daarna de mozarella en kruiden toe.', 1, '2024-03-14 16:38:13'),
-(2, 'Lasagne al Forno', 'lasagne_al_forno.webp', 'Een heerlijk recept voor echt klassieke lasagne.', 4, 5, 'Vlees', 'Lasagne is een recept dat terug gaat tot 1282, wanneer de oudste tekst bekent is waarin het bescheven\r\n	is, hoewel het natuurlijk wel sinds dien veranderd is. De \"al forno\" in de naam betekent simpelweg\r\n	dat het een ovengerecht is.', 3, '2024-03-14 16:38:13');
+(1, 'Pizza Margherita', 'pizza_margherita.webp', 'Heerlijke pizza met tomaat en mozarella, helemaal zelf gemaakt, inclusief bodem!', 4, 5, 'vegetarian', 'Met dit recept maake je zelf je eigen pizza margherita van de losse ingrediënten. Je maakt zelf de\r\n	bodem en de saus, en voegt daarna de mozarella en kruiden toe.', 1, '2024-03-14 16:38:13'),
+(2, 'Lasagne al Forno', 'lasagne_al_forno.webp', 'Een heerlijk recept voor echt klassieke lasagne.', 4, 5, 'meat', 'Lasagne is een recept dat terug gaat tot 1282, wanneer de oudste tekst bekent is waarin het bescheven\r\n	is, hoewel het natuurlijk wel sinds dien veranderd is. De \"al forno\" in de naam betekent simpelweg\r\n	dat het een ovengerecht is.', 3, '2024-03-14 16:38:13');
 
 -- --------------------------------------------------------
 
@@ -407,6 +440,12 @@ ALTER TABLE `ingredients`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexen voor tabel `lookup`
+--
+ALTER TABLE `lookup`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexen voor tabel `measures`
 --
 ALTER TABLE `measures`
@@ -484,6 +523,12 @@ ALTER TABLE `cuisines`
 --
 ALTER TABLE `ingredients`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+
+--
+-- AUTO_INCREMENT voor een tabel `lookup`
+--
+ALTER TABLE `lookup`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT voor een tabel `measures`

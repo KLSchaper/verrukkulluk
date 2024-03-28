@@ -3,23 +3,22 @@ session_start();
 include 'vendor/autoload.php';
 include 'ManKind/web_bootstrap.php';
 
-try
-{   
-    // \ManKind\tools\dev\Logger::_echo(\ManKind\cms\utils\HttpUtils::serverVar('REQUEST_URI'));
+try {
     \ManKind\ModelManager::registerModels(
         [
-            'AgendaDAO' => 'vrklk\model\site\AgendaDAO',
-            'FavoritesDAO' => 'vrklk\model\user\FavoritesDAO',
-            'RecipeFormDAO' => 'vrklk\model\form\RecipeFormDAO',
-            'MeasureFormDAO' => 'vrklk\model\form\MeasureFormDAO',
+            'SiteDAO'           => 'vrklk\model\site\SiteDAO',
+            'AgendaDAO'         => 'vrklk\model\site\AgendaDAO',
+            'FavoritesDAO'      => 'vrklk\model\user\FavoritesDAO',
+            'RecipeFormDAO'     => 'vrklk\model\form\RecipeFormDAO',
+            'MeasureFormDAO'    => 'vrklk\model\form\MeasureFormDAO',
             'IngredientFormDAO' => 'vrklk\model\form\IngredientFormDAO',
-        ]      
+            'CommentsTabDAO'    => 'vrklk\model\recipe\CommentsTabDAO',
+            'IngredientsTabDAO' => 'vrklk\model\recipe\IngredientsTabDAO',
+            'PrepStepsTabDAO'   => 'vrklk\model\recipe\PrepStepsTabDAO',
+        ]
     );
     $maincontroller = new vrklk\controller\VController();
     $maincontroller->handleRequest();
-            
-}
-catch (\Throwable $e)
-{
+} catch (\Throwable $e) {
     \ManKind\tools\dev\Logger::_error($e);
 }

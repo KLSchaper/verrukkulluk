@@ -1,6 +1,7 @@
 *.txt
 _sys/
 ManKind/
+vendor/
 composer.bat
 composer.phar
 vendor/

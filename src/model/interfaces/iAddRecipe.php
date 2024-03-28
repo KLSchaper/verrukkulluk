@@ -1,4 +1,5 @@
 <?php
+
 namespace vrklk\model\interfaces;
 
 interface iAddRecipe
@@ -11,16 +12,16 @@ interface iAddRecipe
         int $cuisine_id,
         string $type,
         string $descr
-    ) : int | false;
+    ): int | false;
     public function storeRecipeIngredient(
         int $recipe_id,
         int $ingredient_id,
         float $quantity,
         int $measure_id
-    ) : bool;
+    ): bool;
     public function storeRecipeStep(
         int $recipe_id,
         int $number,
         string $descr
-    ) : bool;
+    ): bool;
 }
