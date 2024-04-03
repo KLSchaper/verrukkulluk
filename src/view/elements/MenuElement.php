@@ -14,7 +14,7 @@ class MenuElement extends BaseElement
     private \vrklk\model\site\SiteDAO $site_dao;
     private array $menu_items;
 
-    public function __construct($user_id)
+    public function __construct(int $user_id)
     {
         $this->site_dao = \ManKind\ModelManager::getSiteDAO();
         $this->menu_items = $this->site_dao->getMenuItems(boolval($user_id));
