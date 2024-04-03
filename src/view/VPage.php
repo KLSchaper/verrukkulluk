@@ -131,6 +131,10 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 ];
                 $this->showData('RecipeDAO', $function_calls);
                 break;
+            case 'Page':
+                $menu = new \vrklk\view\elements\MenuElement(1);
+                $menu->show();
+                break;
             default:
                 echo '<h1>404 pagina niet gevonden</h1>' . PHP_EOL;
         }
