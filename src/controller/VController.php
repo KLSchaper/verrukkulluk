@@ -45,6 +45,12 @@ class VController extends \vrklk\base\controller\Controller
             case 'detailtabs_test':
                 $page = new \vrklk\view\VPage('DetailTabs');
                 break;
+            case 'product_test':
+                $page = new \vrklk\view\VPage('Product');
+                break;
+            case 'recipe_test':
+                $page = new \vrklk\view\VPage('Recipe');
+                break;
             default:
                 $page = new \vrklk\view\VPage('404');
         }

@@ -38,25 +38,25 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 break;
             case 'Agenda':
                 $function_calls = [
-                    'getUpcomingEvents' => [
-                        'amount'    =>  3,
+                    'getUpcomingEvents'     => [
+                        'amount'        => 3,
                     ],
                 ];
                 $this->showData('AgendaDAO', $function_calls);
                 break;
             case 'Favorite':
                 $function_calls = [
-                    'checkFavorite'      => [
-                        'recipe_id' =>  1,
-                        'user_id'   =>  1,
+                    'checkFavorite'         => [
+                        'recipe_id'     => 1,
+                        'user_id'       => 1,
                     ],
                 ];
                 $this->showData('FavoritesDAO', $function_calls);
                 break;
             case 'RecipeForm':
                 $function_calls = [
-                    'getFormInfo'       => [
-                        'form_id'   =>  1,
+                    'getFormInfo'           => [
+                        'form_id'       => 1,
                     ],
                     'getCuisineList'    => [],
                     'getRecipeTypes'    => [],
@@ -65,10 +65,10 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 break;
             case 'MeasureForm':
                 $function_calls = [
-                    'getFormInfo'       => [
-                        'form_id'   =>  1,
+                    'getFormInfo'           => [
+                        'form_id'       => 1,
                     ],
-                    'getUnit'           => [
+                    'getUnit'               => [
                         'ingredient_id' => 1,
                     ],
                 ];
@@ -76,10 +76,10 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 break;
             case 'IngredientForm':
                 $function_calls = [
-                    'getFormInfo'       => [
-                        'form_id'   =>  1,
+                    'getFormInfo'           => [
+                        'form_id'       => 1,
                     ],
-                    'getIngredientList' => [],
+                    'getIngredientList'     => [],
                     'getMeasures'       => [
                         'ingredient_id' => 4,
                     ],
@@ -96,6 +96,40 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('CommentsTabDAO', $function_calls);
                 $this->showData('IngredientsTabDAO', $function_calls);
                 $this->showData('PrepStepsTabDAO', $function_calls);
+                break;
+            case 'Product':
+                $function_calls = [
+                    'getIngredientProduct'  => [
+                        'ingredient_id' => 1,
+                        'quantity'      => 1,
+                    ],
+                    'getProductById'        => [
+                        'product_id'    => 1
+                    ],
+                ];
+                $this->showData('ProductDAO', $function_calls);
+                break;
+            case 'Recipe':
+                $function_calls = [
+                    'getHomeRecipes'        => [
+                        'amount'        => 4,
+                        'page_number'   => 1,
+                    ],
+                    'getFavoriteRecipes'    => [
+                        'amount'        => 4,
+                        'page_number'   => 1,
+                        'user_id'       => 1,
+                    ],
+                    'getSearchRecipes'      => [
+                        'amount'        => 4,
+                        'page_number'   => 1,
+                        'search_query'  => 'uovo',
+                    ],
+                    'getRecipeDetails'      => [
+                        'recipe_id'     => 1,
+                    ],
+                ];
+                $this->showData('RecipeDAO', $function_calls);
                 break;
             default:
                 echo '<h1>404 pagina niet gevonden</h1>' . PHP_EOL;
