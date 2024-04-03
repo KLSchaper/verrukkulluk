@@ -15,6 +15,8 @@ try {
             'CommentsTabDAO'    => 'vrklk\model\recipe\CommentsTabDAO',
             'IngredientsTabDAO' => 'vrklk\model\recipe\IngredientsTabDAO',
             'PrepStepsTabDAO'   => 'vrklk\model\recipe\PrepStepsTabDAO',
+            'ProductDAO'        => 'vrklk\model\recipe\ProductDAO',
+            'RecipeDAO'         => 'vrklk\model\recipe\RecipeDAO',
         ]
     );
     $maincontroller = new vrklk\controller\VController();
