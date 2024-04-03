@@ -1,0 +1,61 @@
+:root {
+    /* FONTS */
+    --heading: "pretty_lilyregular";
+    --regular: "Arial";
+
+    /* COLORS */
+    --dark-brown: #402214;
+    --lighter-brown:  #774231;
+    --lightest-brown: #aa4b1b;
+
+    --darker-red: #b31714;
+    --lighter-red: #dc3439;
+
+    --kahki: #fff0d6;
+
+    --darker-orange: #eb8d1f;
+    --lighter-orange: #fca01f;
+
+    --darker-green: #6e8722;
+    --lighter-green: #95b82d;
+
+    --white: #FFF;
+    --black: #000;
+}
+
+@font-face {
+    font-family: pretty_lilyregular;
+    src: url(pretty_lily-webfont.woff);
+}
+
+.lily {
+    font-family: var(--heading);
+}
+
+div {
+    font-family: var(--regular);
+}
+
+.btn-menu {
+    font-size: 48px;
+    color: var(--darker-orange);
+    background-color: rgba(255, 255, 255, 0);
+}
+
+/* FOOTER FIX */
+div.page-container {
+    position: relative;
+    min-height: 100vh;
+}
+
+div.content-wrap {
+    padding-bottom: 4rem;
+}
+
+footer.footer-custom {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2rem;
+}
+
