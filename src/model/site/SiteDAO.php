@@ -51,11 +51,29 @@ class SiteDAO extends \vrklk\base\model\BaseDAO implements
     public function getMenuItems(bool $logged_user): array
     {
         $logged_in_menu = [
-            'Mijn Favorieten',
-            'Recept Toevoegen',
-            'Mijn Boodschappenlijst'
+            'favorites'     => [
+                'title'         => 'Mijn Favorieten',
+                'type'          => 'link',
+                'display_order' => 10,
+            ],
+            'add_recipe'    => [
+                'title'         => 'Recept Toevoegen',
+                'type'          => 'link',
+                'display_order' => 20,
+            ],
+            'shopping_list' => [
+                'title'         => 'Mijn Boodschappenlijst',
+                'type'          => 'link',
+                'display_order' => 30,
+            ],
         ];
-        $logged_out_menu = ['Mijn Boodschappenlijst'];
+        $logged_out_menu = [
+            'shopping_list' => [
+                'title'         => 'Mijn Boodschappenlijst',
+                'type'          => 'link',
+                'display_order' => 30,
+            ],
+        ];
         return $logged_user ? $logged_in_menu : $logged_out_menu;
     }
 }

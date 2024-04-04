@@ -12,12 +12,17 @@ class MenuElement extends \vrklk\base\view\BaseElement
     // menu items
 
     private \vrklk\model\site\SiteDAO $site_dao;
-    private array $menu_items;
+    private array $item_info;
+    private \vrklk\view\collections\MenuCollection $item_collection;
 
     public function __construct(int $user_id)
     {
         $this->site_dao = \ManKind\ModelManager::getSiteDAO();
-        $this->menu_items = $this->site_dao->getMenuItems(boolval($user_id));
+        $this->item_info = $this->site_dao->getMenuItems(boolval($user_id));
+        $this->item_collection = new \vrklk\view\collections\MenuCollection(
+            $this->item_info,
+            new \vrklk\view\factories\MenuItemFactory()
+        );
     }
 
     public function show()
@@ -34,12 +39,16 @@ class MenuElement extends \vrklk\base\view\BaseElement
                     <ul class="navbar-nav">
         EOD . PHP_EOL;
 
-        foreach ($this->menu_items as $item) {
+        $menu_items = $this->item_collection->getItems();
+        if ($menu_items) {
+            foreach ($menu_items as $menu_item) {
+                $menu_item->show();
+            }
+        } else {
             echo <<<EOD
-                            <li class="nav-item px-3">
-                                <a class="nav-link" href="#">
-                                <h1 class="lily">$item</h1>
-                            </a></li>
+            <li class="nav-item px-3">
+                <h1>Kan menu niet tonen</h1>
+            </a></li>
             EOD . PHP_EOL;
         }
 
