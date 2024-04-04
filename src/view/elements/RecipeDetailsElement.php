@@ -2,7 +2,7 @@
 
 namespace vrklk\view\elements;
 
-class RecipeDetailsElement extends BaseElement
+class RecipeDetailsElement extends \vrklk\base\view\BaseElement
 {
     // This element needs:
     // Standard Data

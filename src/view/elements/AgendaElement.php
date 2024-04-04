@@ -21,7 +21,7 @@ class AgendaElement extends BaseElement
     {
         // div:
             //h: "Agenda"
-        foreach($agenda_data as $agenda_entry) {
+        foreach($this->agenda_data as $agenda_entry) {
             //div:
                 //h: entry name
                 //p: entry date

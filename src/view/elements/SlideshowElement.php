@@ -2,7 +2,7 @@
 
 namespace vrklk\view\elements;
 
-class SlideshowElement extends BaseElement
+class SlideshowElement extends \vrklk\base\view\BaseElement
 {
     // This element needs:
     // Standard Data

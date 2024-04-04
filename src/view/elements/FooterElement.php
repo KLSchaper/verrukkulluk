@@ -2,7 +2,7 @@
 
 namespace vrklk\view\elements;
 
-class FooterElement extends BaseElement
+class FooterElement extends \vrklk\base\view\BaseElement
 {
     // This element needs:
         //verrukkulluk image

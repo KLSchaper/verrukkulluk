@@ -2,7 +2,7 @@
 
 namespace vrklk\view\elements;
 
-class MenuElement extends BaseElement
+class MenuElement extends \vrklk\base\view\BaseElement
 {
     // This element needs:
     // Standard Data:
