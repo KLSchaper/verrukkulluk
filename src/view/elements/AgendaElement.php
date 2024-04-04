@@ -10,7 +10,7 @@ class AgendaElement extends \vrklk\base\view\BaseElement
     // Variable Data
         // agenda details for a number of entries
 
-    private array $agenda_data;
+    private array $agenda_info;
 
     public function __construct()
     {
@@ -21,7 +21,7 @@ class AgendaElement extends \vrklk\base\view\BaseElement
     {
         // div:
             //h: "Agenda"
-        foreach($this->agenda_data as $agenda_entry) {
+        foreach($this->agenda_info as $event) {
             //div:
                 //h: entry name
                 //p: entry date
