@@ -2,7 +2,7 @@
 
 namespace vrklk\view\elements;
 
-class NameElement extends BaseElement
+class NameElement extends \vrklk\base\view\BaseElement
 {
     private array $commentData;
 

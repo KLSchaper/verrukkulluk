@@ -2,7 +2,7 @@
 
 namespace vrklk\view\elements;
 
-class AgendaElement extends BaseElement
+class AgendaElement extends \vrklk\base\view\BaseElement
 {
     // This element needs:
     // Standard Data

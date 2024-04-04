@@ -2,7 +2,7 @@
 
 namespace vrklk\view\elements;
 
-class NameElement extends BaseElement
+class NameElement extends \vrklk\base\view\BaseElement
 {
     // This element needs:
     // Standard Data
@@ -39,13 +39,13 @@ class NameElement extends BaseElement
         }
 
         //div:
-        foreach ($tab_content as $entry) {
+        foreach ($this->tab_content as $entry) {
             $entry_element = '\vrklk\view\elements\\' . $this->active_tab . 'EntryElement';
             $tab_sub_element = new $entry_element($entry);
             $tab_sub_element->show();
         }
         //div:
-        if ($active_tab == "Comments" && $this->user_id > 0) {
+        if ($this->active_tab == "Comments" && $this->user_id > 0) {
             // form: comment form
         }
     }
