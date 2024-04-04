@@ -20,10 +20,11 @@ class MenuItemElement extends \vrklk\base\view\BaseElement
     
     public function show()
     {
+        $link = \Config::LINKBASE . 'index.php?page=' . $this->name;
         echo <<<EOD
         <li class="nav-item px-3">
-            <a class="nav-link" href="\Config::LINKBASEindex.php?page=$this->name">
-            <h1 class="lily">$this->title</h1>
+            <a class="nav-link" href="{$link}">
+            <h1 class="lily">{$this->title}</h1>
         </a></li>
         EOD . PHP_EOL;
     }
