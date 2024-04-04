@@ -4,9 +4,9 @@ namespace vrklk\base\view;
 
 abstract class BaseCollection
 {
-    private $items_info;
-    private $factory;
-    private $items;
+    protected $items_info;
+    protected $factory;
+    protected $items;
 
     public function __construct(
         array $items_info,
