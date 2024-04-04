@@ -11,26 +11,23 @@ class MenuElement extends \vrklk\base\view\BaseElement
     // Variable Data:
     // menu items
 
-    private \vrklk\model\site\SiteDAO $site_dao;
-    private array $item_info;
     private \vrklk\view\collections\MenuCollection $item_collection;
 
     public function __construct(int $user_id)
     {
-        $this->site_dao = \ManKind\ModelManager::getSiteDAO();
-        $this->item_info = $this->site_dao->getMenuItems(boolval($user_id));
         $this->item_collection = new \vrklk\view\collections\MenuCollection(
-            $this->item_info,
+            \ManKind\ModelManager::getSiteDAO()->getMenuItems(boolval($user_id)),
             new \vrklk\view\factories\MenuItemFactory()
         );
     }
 
     public function show()
     {
+        $home_link = \Config::LINKBASE . 'index.php';
         echo <<<EOD
         <div class="offcanvas offcanvas-top row gx-0" style="height:150px" id="main-menu">
             <div class="offcanvas-header col-lg-3 d-flex align-items-center my-auto">
-                <a href="#" class="mx-auto">
+                <a href="{$home_link}" class="mx-auto">
                 <img src="./assets/img/verrukkulluk_logo.png" style="height:100px" alt="Logo homepage">
                 </a>
             </div>
