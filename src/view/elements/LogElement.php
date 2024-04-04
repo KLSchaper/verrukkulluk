@@ -2,7 +2,7 @@
 
 namespace vrklk\view\elements;
 
-class LogElement extends BaseElement
+class LogElement extends \vrklk\base\view\BaseElement
 {
     private int $user_id;
     // This element needs:
@@ -17,8 +17,8 @@ class LogElement extends BaseElement
 
     public function show()
     {
-        if ($user_id > 0) {
-            $this->showLogoutMenu($user_id);
+        if ($this->user_id > 0) {
+            $this->showLogoutMenu($this->user_id);
         } else {
             $this->showLoginMenu();
         }
@@ -32,7 +32,7 @@ class LogElement extends BaseElement
         // div:
             // h: username
             // button: logout
-        echo $content;
+        // echo $content;
     }
 
     private function showLoginMenu()

@@ -1,10 +1,8 @@
 <?php
 
-namespace vrklk\view\elements;
+namespace vrklk\base\view;
 
 abstract class BaseElement
 {
     abstract public function show();
-
-
 }
