@@ -11,14 +11,16 @@ class AgendaDAO extends \vrklk\base\model\BaseDAO implements
     public function getUpcomingEvents(int $amount): array
     {
         // Returns array of events, possibly EventInfo objects later
-        return $this->crud->selectMore(
+        $events = $this->crud->selectMore(
             "SELECT date, name, blurb"
                 . " FROM agenda"
+                . " WHERE date > CURRENT_TIMESTAMP()"
                 . " ORDER BY date ASC"
                 . " LIMIT :amount",
             [
                 'amount' => [$amount, true],
             ],
         );
+        return $events ? $events : [];
     }
 }

@@ -1,3 +1,4 @@
+/* CUSTOM CSS SPECIFIED BY CUSTOMER */
 :root {
     /* FONTS */
     --heading: "pretty_lilyregular";
@@ -23,6 +24,7 @@
     --black: #000;
 }
 
+/* FONT IMPLEMENTATION */
 @font-face {
     font-family: pretty_lilyregular;
     src: url(pretty_lily-webfont.woff);
@@ -36,10 +38,17 @@ div {
     font-family: var(--regular);
 }
 
+/* MAIN MENU BUTTON STYLING */
 .btn-menu {
     font-size: 48px;
     color: var(--darker-orange);
     background-color: rgba(255, 255, 255, 0);
+}
+
+/* AGENDAG BLOCK STYLING */
+div.agenda {
+    width: 22%;
+    background-color: var(--lighter-green);
 }
 
 /* FOOTER FIX */
