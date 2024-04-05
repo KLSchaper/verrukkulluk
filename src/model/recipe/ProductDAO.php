@@ -13,7 +13,7 @@ class ProductDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\inter
         string $select_on = 'price'
     ): array | false {
         // returns the product info best matching parameters from DB
-        
+
         // fetch product list of the ingredient ID into $product_list, with standard_quantity instead of the table's quantity
         // information needed; id, quantity (multiplied by measure quantity), price
         $product_list_query = '
@@ -25,13 +25,11 @@ class ProductDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\inter
         $product_list_parameters = ['ingredient_id' => [$ingredient_id, true]];
         $product_list = $this->crud->selectMore($product_list_query, $product_list_parameters);
 
-        if (empty($product_list)) {
+        if ($product_list) {
+            return $this->getOptimalProducts($quantity, $product_list, INF);
+        } else {
             return false;
         }
-
-        $optimal_products_array = $this->getOptimalProducts($quantity, $product_list, INF);
-        
-        return $optimal_products_array;
     }
 
     public function getProductById(int $product_id): array
@@ -46,17 +44,18 @@ class ProductDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\inter
         ';
         $get_product_parameters = ['product_id' => [$product_id, true]];
         $product_data = $this->crud->selectOne($get_product_query, $get_product_parameters);
-
-        return $product_data;
+        
+        // convert false to empty array in case query execution failed
+        return $product_data ? $product_data : [];
     }
 
 
     //private functions
-    protected function getOptimalProducts(float $required_quantity, array $product_list, float $max_quantity) : array
+    protected function getOptimalProducts(float $required_quantity, array $product_list, float $max_quantity): array
     {
         $lowest_option_price = INF;
         $lowest_option_products = [];
-        foreach($product_list as $product) {
+        foreach ($product_list as $product) {
             if ($product['standard_quantity'] <= $max_quantity) {
                 $option_products = [];
                 if ($product['standard_quantity'] >= $required_quantity - 1E-10) {

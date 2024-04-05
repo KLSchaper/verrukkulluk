@@ -15,7 +15,7 @@ class CommentsTabDAO extends \vrklk\base\model\BaseDAO implements
 
     public function getTabContent(int $recipe_id): array
     {
-        return $this->crud->selectMore(
+        $comments = $this->crud->selectMore(
             "SELECT c.text, u.name, u.img"
                 . " FROM comments AS c"
                 . " INNER JOIN users AS u ON c.user_id = u.id"
@@ -25,5 +25,7 @@ class CommentsTabDAO extends \vrklk\base\model\BaseDAO implements
                 'recipe_id' => [$recipe_id, true],
             ],
         );
+        // convert false to empty array in case query execution failed
+        return $comments ? $comments : [];
     }
 }

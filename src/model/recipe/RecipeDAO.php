@@ -47,6 +47,8 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         $parameters = ["amount" => [$amount, true], "offset" => [$amount * ($page_number-1), true], 'user_id' => [$user_id, true]];
 
         $query_result = $this->crud->selectMore($get_favorite_recipes_query, $parameters);
+        // convert false to empty array in case query execution failed
+        $query_result ?: $query_result = [];
         $favorite_recipes_array = [];
         foreach ($query_result as $entry) {
             $favorite_recipes_array[] = $entry['id'];
@@ -90,6 +92,8 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         $parameters = array_merge($base_parameters, $search_parameters);
 
         $query_result = $this->crud->selectMore($get_search_recipes_query, $parameters);
+        // convert false to empty array in case query execution failed
+        $query_result ?: $query_result = [];
         $search_recipes_array = [];
         foreach ($query_result as $entry) {
             $search_recipes_array[] = $entry['id'];

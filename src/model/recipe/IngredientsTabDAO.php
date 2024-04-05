@@ -26,6 +26,9 @@ class IngredientsTabDAO extends \vrklk\base\model\BaseDAO implements
                 'recipe_id' => [$recipe_id, true],
             ],
         );
+        // convert false to empty array in case query execution failed
+        $ingredients ?: $ingredients = [];
+
         $product_dao = new \vrklk\model\recipe\ProductDAO;
         foreach ($ingredients as $index => $ingredient) {
             $product_match = $product_dao->getIngredientProduct(
