@@ -14,7 +14,8 @@ class FooterElement extends \vrklk\base\view\BaseElement
 
     public function __construct()
     {
-        //get footer data (site_dao->getFooterTitle, site_dao->getContactInfo)
+        $this->footer_title = \ManKind\ModelManager::getSiteDAO()->getFooterTitle();
+        $this->contact_info = \ManKind\ModelManager::getSiteDAO()->getContactInfo();
     }
 
     public function show()
@@ -23,5 +24,21 @@ class FooterElement extends \vrklk\base\view\BaseElement
             //img: verrukkulluk logo
             //h: footer title
             //p: contact info
+        echo <<<EOD
+        <footer class="footer-custom" id="footer">
+            <div class="row">
+                <div class="col-sm-3">
+                    <img src="./assets/img/verrukkulluk_logo.png" class="m-5" style="height:100px" alt="Logo footer">
+                </div>
+                <div class="col-sm-9" style="color:var(--white)">
+                    <h1 class="lily display-3 m-3">{$this->footer_title}</h1>
+                    <p class="my-0 mx-3">{$this->contact_info['url']}</p>
+                    <p class="my-0 mx-3">{$this->contact_info['street']}</p>
+                    <p class="my-0 mx-3">{$this->contact_info['city']}</p>
+                    <p class="my-0 mx-3">{$this->contact_info['email']}</p>
+                </div>
+            </div>
+        </footer>
+        EOD . PHP_EOL;
     }
 }

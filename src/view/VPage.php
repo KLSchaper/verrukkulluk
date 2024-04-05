@@ -150,6 +150,8 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $menu->show();
                 $agenda = new \vrklk\view\elements\AgendaElement();
                 $agenda->show();
+                $footer = new \vrklk\view\elements\FooterElement();
+                $footer->show();
                 break;
             default:
                 echo '<h1>404 pagina niet gevonden</h1>' . PHP_EOL;
