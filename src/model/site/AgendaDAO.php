@@ -21,6 +21,7 @@ class AgendaDAO extends \vrklk\base\model\BaseDAO implements
                 'amount' => [$amount, true],
             ],
         );
+        // convert false to empty array in case query execution failed
         return $events ? $events : [];
     }
 }

@@ -23,7 +23,7 @@ class AgendaElement extends \vrklk\base\view\BaseElement
         echo <<<EOD
         <div class="d-flex flex-column agenda" id="agenda-block">
             <div class="text-center" style="color:var(--white)">
-                <h1 class="lily">Agenda</h1>
+                <h1 class="lily display-3">Agenda</h1>
             </div>
         EOD . PHP_EOL;
         foreach($this->agenda_info as $event) {

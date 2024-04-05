@@ -38,6 +38,10 @@ div {
     font-family: var(--regular);
 }
 
+p {
+    font-size: 12px;
+}
+
 /* MAIN MENU BUTTON STYLING */
 .btn-menu {
     font-size: 48px;
