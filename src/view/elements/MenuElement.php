@@ -13,7 +13,7 @@ class MenuElement extends \vrklk\base\view\BaseElement
 
     private \vrklk\view\collections\MenuCollection $item_collection;
 
-    public function __construct(int $user_id)
+    public function __construct(?int $user_id)
     {
         $this->item_collection = new \vrklk\view\collections\MenuCollection(
             \ManKind\ModelManager::getSiteDAO()->getMenuItems(boolval($user_id)),
@@ -54,10 +54,11 @@ class MenuElement extends \vrklk\base\view\BaseElement
                 </nav>
             </div>
         </div>
-
-        <button class="btn btn-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#main-menu">
-        <i class="fa fa-bars"></i>
-        </button>
+        <div class="btn-menu-position">
+            <button class="btn btn-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#main-menu">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
         EOD . PHP_EOL;
     }
 }
