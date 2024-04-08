@@ -47,6 +47,10 @@ p {
     font-size: 48px;
     color: var(--darker-orange);
     background-color: rgba(255, 255, 255, 0);
+    position: absolute;
+    top: 24px;
+    right: 48px;
+    z-index: 2;
 }
 
 /* AGENDAG BLOCK STYLING */
