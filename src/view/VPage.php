@@ -31,9 +31,9 @@ class VPage extends \vrklk\base\view\HtmlDoc
     
     protected function showBodyContent(): void
     {
-        echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
         switch ($this->title) {
             case 'Site':
+                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
                 $function_calls = [
                     'getDetailMenuItems'    => [],
                     'getFooterTitle'        => [],
@@ -51,6 +51,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('SiteDAO', $function_calls);
                 break;
             case 'Agenda':
+                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
                 $function_calls = [
                     'getUpcomingEvents'     => [
                         'amount'        => 3,
@@ -59,6 +60,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('AgendaDAO', $function_calls);
                 break;
             case 'Favorite':
+                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
                 $function_calls = [
                     'checkFavorite'         => [
                         'recipe_id'     => 1,
@@ -68,6 +70,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('FavoritesDAO', $function_calls);
                 break;
             case 'RecipeForm':
+                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
                 $function_calls = [
                     'getFormInfo'           => [
                         'form_id'       => 1,
@@ -78,6 +81,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('RecipeFormDAO', $function_calls);
                 break;
             case 'MeasureForm':
+                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
                 $function_calls = [
                     'getFormInfo'           => [
                         'form_id'       => 1,
@@ -89,6 +93,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('MeasureFormDAO', $function_calls);
                 break;
             case 'IngredientForm':
+                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
                 $function_calls = [
                     'getFormInfo'           => [
                         'form_id'       => 1,
@@ -101,6 +106,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('IngredientFormDAO', $function_calls);
                 break;
             case 'DetailTabs':
+                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
                 $function_calls = [
                     'getTabName'    => [],
                     'getTabContent' => [
@@ -112,6 +118,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('PrepStepsTabDAO', $function_calls);
                 break;
             case 'Product':
+                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
                 $function_calls = [
                     'getIngredientProduct'  => [
                         'ingredient_id' => 1,
@@ -124,6 +131,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('ProductDAO', $function_calls);
                 break;
             case 'Recipe':
+                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
                 $function_calls = [
                     'getHomeRecipes'        => [
                         'amount'        => 4,
@@ -146,6 +154,8 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('RecipeDAO', $function_calls);
                 break;
             case 'Page':
+                $slideshow = new \vrklk\view\elements\SlideshowElement();
+                $slideshow->show();
                 $menu = new \vrklk\view\elements\MenuElement(1);
                 $menu->show();
                 $agenda = new \vrklk\view\elements\AgendaElement();
