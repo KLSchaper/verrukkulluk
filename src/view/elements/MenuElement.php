@@ -13,7 +13,7 @@ class MenuElement extends \vrklk\base\view\BaseElement
 
     private \vrklk\view\collections\MenuCollection $item_collection;
 
-    public function __construct(int $user_id)
+    public function __construct(?int $user_id)
     {
         $this->item_collection = new \vrklk\view\collections\MenuCollection(
             \ManKind\ModelManager::getSiteDAO()->getMenuItems(boolval($user_id)),
