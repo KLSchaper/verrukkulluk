@@ -47,9 +47,19 @@ p {
     font-size: 48px;
     color: var(--darker-orange);
     background-color: rgba(255, 255, 255, 0);
+}
+
+.btn-menu-position {
     position: absolute;
     top: 24px;
     right: 48px;
+    z-index: 2;
+}
+
+.header-logo {
+    position: absolute;
+    top: 48px;
+    left: 48px;
     z-index: 2;
 }
 
