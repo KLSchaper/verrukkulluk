@@ -20,7 +20,7 @@ class SlideshowElement extends \vrklk\base\view\BaseElement
     public function show()
     {
         echo <<<EOD
-        <div id="main-carousel" class="container carousel slide" data-bs-ride="carousel">
+        <div id="main-carousel" class="carousel slide" style="position:absolute z-index:1" data-bs-ride="carousel">
             <div class="carousel-indicators">
         EOD . PHP_EOL;
         for ($i = 0; $i < count($this->slideshow_images); $i++) {

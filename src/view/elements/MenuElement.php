@@ -54,10 +54,11 @@ class MenuElement extends \vrklk\base\view\BaseElement
                 </nav>
             </div>
         </div>
-
-        <button class="btn btn-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#main-menu">
-        <i class="fa fa-bars"></i>
-        </button>
+        <div class="btn-menu-position">
+            <button class="btn btn-menu" type="button" data-bs-toggle="offcanvas" data-bs-target="#main-menu">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
         EOD . PHP_EOL;
     }
 }
