@@ -159,8 +159,10 @@ class VPage extends \vrklk\base\view\HtmlDoc
                     new \vrklk\view\elements\MenuElement(1),
                 ]);
                 $header->show();
-                $agenda = new \vrklk\view\elements\AgendaElement();
-                $agenda->show();
+                $content = new \vrklk\view\elements\BodyElement([
+                    new \vrklk\view\elements\AgendaElement(),
+                ]);
+                $content->show();
                 $footer = new \vrklk\view\elements\FooterElement();
                 $footer->show();
                 break;
