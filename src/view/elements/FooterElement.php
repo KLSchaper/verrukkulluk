@@ -26,16 +26,16 @@ class FooterElement extends \vrklk\base\view\BaseElement
             //p: contact info
         echo <<<EOD
         <footer class="footer-custom" id="footer">
-            <div class="row">
+            <div class="row m-0">
                 <div class="col-sm-3">
                     <img src="./assets/img/verrukkulluk_logo.png" class="m-5" style="height:100px" alt="Logo footer">
                 </div>
                 <div class="col-sm-9" style="color:var(--white)">
-                    <h1 class="lily display-3 m-3">{$this->footer_title}</h1>
-                    <p class="my-0 mx-3">{$this->contact_info['url']}</p>
-                    <p class="my-0 mx-3">{$this->contact_info['street']}</p>
-                    <p class="my-0 mx-3">{$this->contact_info['city']}</p>
-                    <p class="my-0 mx-3">{$this->contact_info['email']}</p>
+                    <h1 class="lily display-3 my-2 px-2">{$this->footer_title}</h1>
+                    <p class="my-0 px-2">{$this->contact_info['url']}</p>
+                    <p class="my-0 px-2">{$this->contact_info['street']}</p>
+                    <p class="my-0 px-2">{$this->contact_info['city']}</p>
+                    <p class="my-0 px-2">{$this->contact_info['email']}</p>
                 </div>
             </div>
         </footer>
