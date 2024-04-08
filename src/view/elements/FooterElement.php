@@ -25,7 +25,7 @@ class FooterElement extends \vrklk\base\view\BaseElement
             //h: footer title
             //p: contact info
         echo <<<EOD
-        <footer class="footer-custom" id="footer">
+        <footer class="container footer-custom" id="footer">
             <div class="row m-0">
                 <div class="col-sm-3">
                     <img src="./assets/img/verrukkulluk_logo.png" class="m-5" style="height:100px" alt="Logo footer">
