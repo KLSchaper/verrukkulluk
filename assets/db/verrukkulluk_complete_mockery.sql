@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Gegenereerd op: 26 mrt 2024 om 16:12
+-- Gegenereerd op: 09 apr 2024 om 11:10
 -- Serverversie: 10.4.32-MariaDB
 -- PHP-versie: 8.2.12
 
@@ -41,7 +41,15 @@ CREATE TABLE `agenda` (
 INSERT INTO `agenda` (`id`, `name`, `date`, `blurb`) VALUES
 (1, 'Gezond Koken & Eten', '2024-04-07 15:30:00', 'Workshop door Rogier Abbink ter ere van Wereld Gezondheids Dag'),
 (2, 'Wereld Tonijndag', '2024-05-02 00:00:00', ''),
-(3, 'Italiaans Koken', '2024-06-12 19:00:00', 'Workshop door Elske Hulter.');
+(3, 'Italiaans Koken', '2024-06-12 19:00:00', 'Workshop door Elske Hulter.'),
+(4, 'Veganistisch Bakken', '2024-04-22 14:00:00', 'Leer hoe je heerlijke veganistische desserts kunt maken zonder zuivel of eieren met cheft Emily.'),
+(5, 'Sushi Maken voor Beginners', '2024-04-29 19:30:00', 'Stapsgewijze instructie om thuis sushi te maken. Ontdek de kunst van het rollen en snijden met chef Hiroshi Tanaka.'),
+(6, 'Gezonde Salades voor de Zomer', '2024-05-22 13:00:00', 'Leer verfrissende en voedzame zomersalades samenstellen met voedingsdeskundige Sarah Smith.'),
+(7, 'Brood Bakken voor Beginners', '2024-05-29 10:30:00', 'Leer de basisprincipes van broodbakken en maak je eigen versgebakken brood thuis met bakker David Brown.'),
+(8, 'Zomerse Cocktail Workshop', '2024-06-12 14:00:00', 'Leer verfrissende zomercocktails maken met behulp van verse ingrediënten en seizoensfruit. Met mixoloog Michael Johnson.'),
+(9, 'Aziatische Street Food Tour', '2024-06-23 12:00:00', 'Maak kennis met de smaken van Azië tijdens deze culinaire tour langs beroemde Aziatische street food kraampjes, onder leiding van foodblogger Jasmine Lee.'),
+(10, 'BBQ Masterclass', '2024-07-12 15:30:00', 'Leer grillen als een pro met grillmeester Jack Thompson.'),
+(11, 'Desserts en Cocktails Pairing', '2024-07-23 19:30:00', 'Ontdek perfecte dessert- en cocktailcombinaties om indruk te maken op je gasten. Met mixoloog Lisa Davis.');
 
 -- --------------------------------------------------------
 
@@ -504,7 +512,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT voor een tabel `agenda`
 --
 ALTER TABLE `agenda`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT voor een tabel `comments`
