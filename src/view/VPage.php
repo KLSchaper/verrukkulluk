@@ -28,7 +28,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         EOD;
     }
-    
+
     protected function showBodyContent(): void
     {
         switch ($this->title) {
@@ -160,10 +160,13 @@ class VPage extends \vrklk\base\view\HtmlDoc
                     new \vrklk\view\elements\MenuElement($user_id),
                 ]);
                 $header->show();
-                $content = new \vrklk\view\elements\BodyElement([
-                    new \vrklk\view\elements\AgendaElement(),
-                    new \vrklk\view\elements\LogElement($user_id),
-                ]);
+                $content = new \vrklk\view\elements\BodyElement(
+                    [
+                        new \vrklk\view\elements\AgendaElement(),
+                        new \vrklk\view\elements\LogElement($user_id)
+                    ],
+                    new \vrklk\view\elements\RecipePageElement([1, 2], 1),
+                );
                 $content->show();
                 $footer = new \vrklk\view\elements\FooterElement();
                 $footer->show();
