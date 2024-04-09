@@ -69,6 +69,13 @@ div.agenda {
     background-color: var(--lighter-green);
 }
 
+/* FOOTER BLOCK STYLING */
+div.footer-custom {
+    color: var(--white);
+    background-color: var(--lighter-orange);
+    height: 14rem;
+}
+
 /* FOOTER FIX */
 div.page-container {
     position: relative;
@@ -79,10 +86,7 @@ div.content-wrap {
     padding-bottom: 14rem;
 }
 
-footer.footer-custom {
+footer.footer-position {
     /* position: absolute; */
     /* bottom: 0; */
-    width: 100%;
-    height: 14rem;
-    background-color: var(--lighter-orange);
 }
