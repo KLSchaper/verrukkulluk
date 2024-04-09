@@ -24,6 +24,11 @@
     --black: #000;
 }
 
+/* VARIABLES TO CONTROL PAGE LAYOUT */
+:root {
+    --side-block-width: 27%;
+}
+
 /* FONT IMPLEMENTATION */
 @font-face {
     font-family: pretty_lilyregular;
@@ -39,7 +44,7 @@ div {
 }
 
 p {
-    font-size: 14px;
+    font-size: 12px;
 }
 
 /* MAIN MENU BUTTON STYLING */
@@ -63,10 +68,18 @@ p {
     z-index: 2;
 }
 
-/* AGENDAG BLOCK STYLING */
+/* AGENDA BLOCK STYLING */
 div.agenda {
-    width: 25%;
+    width: var(--side-block-width);
+    height: 700px;
     background-color: var(--lighter-green);
+}
+
+/* LOG BLOCK STYLING */
+div.log-block {
+    width: var(--side-block-width);
+    height: 300px;
+    background-color: var(--darker-red);
 }
 
 /* FOOTER BLOCK STYLING */

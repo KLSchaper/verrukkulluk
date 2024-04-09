@@ -5,6 +5,7 @@ namespace vrklk\view\elements;
 class LogElement extends \vrklk\base\view\BaseElement
 {
     private int $user_id;
+    private \vrklk\model\interfaces\iLoginDAO $dao;
     // This element needs:
     // Standard Data
 
@@ -13,18 +14,29 @@ class LogElement extends \vrklk\base\view\BaseElement
     public function __construct(int $user_id)
     {
         $this->user_id = $user_id;
+        $this->dao = \ManKind\ModelManager::getSiteDAO();
     }
 
     public function show()
     {
-        if ($this->user_id > 0) {
-            $this->showLogoutMenu($this->user_id);
+        $title = $this->dao->getLoginTitle(boolval($this->user_id));
+        echo <<<EOD
+        <div class="log-block m-4" id="log-block">
+            <div class="text-center" style="color:var(--white)">
+                <h1 class="lily display-3">{$title}</h1>
+            </div>
+        EOD . PHP_EOL;
+        if ($this->user_id) {
+            $this->showLogoutContent($this->user_id);
         } else {
-            $this->showLoginMenu();
+            $this->showLoginContent();
         }
+        echo <<<EOD
+        </div>
+        EOD . PHP_EOL;
     }
 
-    private function showLogoutMenu($user_id)
+    private function showLogoutContent($user_id)
     {
         // get username of user with matching user_id
 
@@ -35,7 +47,7 @@ class LogElement extends \vrklk\base\view\BaseElement
         // echo $content;
     }
 
-    private function showLoginMenu()
+    private function showLoginContent()
     {
         // get login form
         

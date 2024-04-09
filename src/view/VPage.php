@@ -154,13 +154,15 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $this->showData('RecipeDAO', $function_calls);
                 break;
             case 'Page':
+                $user_id = 1;
                 $header = new \vrklk\view\elements\HeaderElement([
                     new \vrklk\view\elements\SlideshowElement(),
-                    new \vrklk\view\elements\MenuElement(1),
+                    new \vrklk\view\elements\MenuElement($user_id),
                 ]);
                 $header->show();
                 $content = new \vrklk\view\elements\BodyElement([
                     new \vrklk\view\elements\AgendaElement(),
+                    new \vrklk\view\elements\LogElement($user_id),
                 ]);
                 $content->show();
                 $footer = new \vrklk\view\elements\FooterElement();
