@@ -11,11 +11,11 @@ class MenuElement extends \vrklk\base\view\BaseElement
     // Variable Data:
     // menu items
 
-    private \vrklk\view\collections\MenuCollection $item_collection;
+    private \vrklk\view\collections\MenuCollection $menu_item_collection;
 
-    public function __construct(?int $user_id)
+    public function __construct(int $user_id)
     {
-        $this->item_collection = new \vrklk\view\collections\MenuCollection(
+        $this->menu_item_collection = new \vrklk\view\collections\MenuCollection(
             \ManKind\ModelManager::getSiteDAO()->getMenuItems(boolval($user_id)),
             new \vrklk\view\factories\MenuItemFactory()
         );
@@ -36,7 +36,7 @@ class MenuElement extends \vrklk\base\view\BaseElement
                     <ul class="navbar-nav">
         EOD . PHP_EOL;
 
-        $menu_items = $this->item_collection->getItems();
+        $menu_items = $this->menu_item_collection->getItems();
         if ($menu_items) {
             foreach ($menu_items as $menu_item) {
                 $menu_item->show();
