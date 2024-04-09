@@ -63,10 +63,18 @@ p {
     z-index: 2;
 }
 
-/* AGENDAG BLOCK STYLING */
+/* AGENDA BLOCK STYLING */
 div.agenda {
     width: 25%;
+    height: 600px;
     background-color: var(--lighter-green);
+}
+
+/* LOG BLOCK STYLING */
+div.log-block {
+    width: 25%;
+    height: 300px;
+    background-color: var(--darker-red);
 }
 
 /* FOOTER BLOCK STYLING */
