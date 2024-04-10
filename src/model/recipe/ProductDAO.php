@@ -11,7 +11,7 @@ class ProductDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\inter
         int $ingredient_id,
         float $quantity,
         string $select_on = 'price'
-    ): array | false {
+    ): array|false {
         // returns the product info best matching parameters from DB
 
         // fetch product list of the ingredient ID into $product_list, with standard_quantity instead of the table's quantity
@@ -28,11 +28,12 @@ class ProductDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\inter
         if ($product_list) {
             return $this->getOptimalProducts($quantity, $product_list, INF);
         } else {
-            return false;
+            // could be empty array (no results) or false (query failed)
+            return $product_list;
         }
     }
 
-    public function getProductById(int $product_id): array
+    public function getProductById(int $product_id): array|false
     {
         // returns the product info matching the product_id
         $get_product_query = '
@@ -43,10 +44,7 @@ class ProductDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\inter
             WHERE p.id = :product_id;
         ';
         $get_product_parameters = ['product_id' => [$product_id, true]];
-        $product_data = $this->crud->selectOne($get_product_query, $get_product_parameters);
-        
-        // convert false to empty array in case query execution failed
-        return $product_data ? $product_data : [];
+        return $this->crud->selectOne($get_product_query, $get_product_parameters);
     }
 
 

@@ -13,9 +13,9 @@ class PrepStepsTabDAO extends \vrklk\base\model\BaseDAO implements
         return 'prep_steps';
     }
 
-    public function getTabContent(int $recipe_id): array
+    public function getTabContent(int $recipe_id): array|false
     {
-        $prep_steps = $this->crud->selectMore(
+        return $this->crud->selectMore(
             "SELECT number, descr"
                 . " FROM prep_steps"
                 . " WHERE recipe_id = :recipe_id"
@@ -24,7 +24,5 @@ class PrepStepsTabDAO extends \vrklk\base\model\BaseDAO implements
                 'recipe_id' => [$recipe_id, true],
             ],
         );
-        // convert false to empty array in case query execution failed
-        return $prep_steps ? $prep_steps : [];
     }
 }

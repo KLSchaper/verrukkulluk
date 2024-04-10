@@ -8,7 +8,7 @@ class IngredientFormDAO extends \vrklk\model\form\FormDAO implements
     //=========================================================================
     // PUBLIC
     //=========================================================================
-    public function getIngredientList(): array
+    public function getIngredientList(): array|false
     {
         return $this->crud->selectMore(
             "SELECT *"
@@ -18,7 +18,7 @@ class IngredientFormDAO extends \vrklk\model\form\FormDAO implements
     }
 
     // retrieve all measures applicable to ingredient_id from DB
-    public function getMeasures(int $ingredient_id): array
+    public function getMeasures(int $ingredient_id): array|false
     {
         return $this->crud->selectMore(
             "SELECT name, unit, quantity"

@@ -8,7 +8,7 @@ class RecipeFormDAO extends \vrklk\model\form\FormDAO implements
     //=========================================================================
     // PUBLIC
     //=========================================================================
-    public function getCuisineList(): array
+    public function getCuisineList(): array|false
     {
         return $this->crud->selectMore(
             "SELECT c.id, c.name, c.parent_id, c.type,"
@@ -20,7 +20,7 @@ class RecipeFormDAO extends \vrklk\model\form\FormDAO implements
         );
     }
 
-    public function getRecipeTypes(): array
+    public function getRecipeTypes(): array|false
     {
         return $this->crud->selectAsPairs(
             "SELECT value, display"
