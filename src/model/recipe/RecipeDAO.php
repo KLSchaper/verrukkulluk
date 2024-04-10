@@ -103,7 +103,6 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         // includes rating, price, calories, cuisine name, and author name
         
         // 1. get the basic values
-        // TODO check if the function still works with the lookup
         $get_recipe_query = '
             SELECT r.title AS title, r.img AS img, r.blurb AS blurb, r.people AS people, l.display AS display, r.descr AS desct, AVG(ra.rating) AS rating, c.name AS cuisine, u.name AS author
             FROM recipes r
@@ -163,7 +162,6 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
 
         // step 2: insert the product ID's & amounts into the temporary table
         
-        //TODO make this work well with product output
         $product_insert_values = '';
         foreach($products_by_ingredients as $ingredient) {
             $product_list = $ingredient['products'];

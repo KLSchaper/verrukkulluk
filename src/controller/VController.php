@@ -54,6 +54,11 @@ class VController extends \vrklk\base\controller\Controller
             case 'page_test':
                 $page = new \vrklk\view\VPage('Page');
                 break;
+
+            // for temporary form test
+            case 'form_test':
+                $page = new \vrklk\view\VPage('TestForm');
+                break;
             default:
                 $page = new \vrklk\view\VPage('404');
         }
