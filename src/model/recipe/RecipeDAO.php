@@ -32,6 +32,16 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         }
     }
 
+    public function getTotalHomeRecipes(): int|false
+    {
+        $total_recipes = $this->crud->selectOne(
+            "SELECT COUNT(*) AS count"
+                . " FROM recipes",
+            [],
+        );
+        return $total_recipes ? $total_recipes['count'] : $total_recipes;
+    }
+
     public function getFavoriteRecipes(
         int $amount,
         int $page_number,
@@ -48,7 +58,7 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
             ORDER BY date DESC
             LIMIT :amount OFFSET :offset;
         ';
-        $parameters = ["amount" => [$amount, true], "offset" => [$amount * ($page_number-1), true], 'user_id' => [$user_id, true]];
+        $parameters = ["amount" => [$amount, true], "offset" => [$amount * ($page_number - 1), true], 'user_id' => [$user_id, true]];
 
         $query_result = $this->crud->selectMore($get_favorite_recipes_query, $parameters);
         if ($query_result) {
@@ -63,26 +73,29 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         }
     }
 
+    public function getTotalFavoriteRecipes(int $user_id): int|false
+    {
+        $total_recipes = $this->crud->selectOne(
+            "SELECT COUNT(*) AS count"
+                . " FROM recipes AS r"
+                . " INNER JOIN favorites AS f ON r.id = f.recipe_id"
+                . " WHERE f.user_id = :user_id",
+            [
+                'user_id' => [$user_id, true],
+            ],
+        );
+        return $total_recipes ? $total_recipes['count'] : $total_recipes;
+    }
+
     public function getSearchRecipes(
         int $amount,
         int $page_number,
         string $search_query
-    ): array {
+    ): array|false {
         // retrieves amount of recipe_id's, offset by page_number, from DB
         // where recipe_id is a valid match for query
-
-        $search_query_tester = '';
-        $search_parameters = [];
-        $test_elements = ['recipes.title', 'recipes.blurb', 'recipes.descr', 'cuisines.name', 'ingredients.name', 'users.name', 'recipes.type'];
-
-        $i = 0;
-        foreach ($test_elements as $element){
-            $search_query_tester .= empty($search_query_tester) ? '' : ' OR ';
-            $search_query_tester .= $element . ' LIKE :search_query' . $i;
-            $search_parameters['search_query' . $i] = ['%' . $search_query . '%', true];
-            $i++;
-        }
-
+        
+        $search_columns = $this->getSearchColumns($search_query);
         $get_search_recipes_query = '
             SELECT DISTINCT recipes.id
             FROM recipes
@@ -90,12 +103,12 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
             INNER JOIN users ON recipes.user_id = users.id
             INNER JOIN recipe_ingredients ON recipe_ingredients.recipe_id = recipes.id
             INNER JOIN ingredients ON recipe_ingredients.ingredient_id = ingredients.id
-            WHERE '. $search_query_tester .'
+            WHERE ' . $search_columns['sql_string'] . '
             ORDER BY date DESC
             LIMIT :amount OFFSET :offset;
         ';
         $base_parameters = ["amount" => [$amount, true], "offset" => [$amount * ($page_number - 1), true]];
-        $parameters = array_merge($base_parameters, $search_parameters);
+        $parameters = array_merge($base_parameters, $search_columns['sql_parameters']);
 
         $query_result = $this->crud->selectMore($get_search_recipes_query, $parameters);
         if ($query_result) {
@@ -110,10 +123,26 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         }
     }
 
+    public function getTotalSearchRecipes(string $search_query): int|false
+    {
+        $search_columns = $this->getSearchColumns($search_query);
+        $total_recipes = $this->crud->selectOne(
+            "SELECT COUNT(*) AS count"
+                . " FROM recipes"
+                . " INNER JOIN cuisines ON recipes.cuisine_id = cuisines.id"
+                . " INNER JOIN users ON recipes.user_id = users.id"
+                . " INNER JOIN recipe_ingredients ON recipe_ingredients.recipe_id = recipes.id"
+                . " INNER JOIN ingredients ON recipe_ingredients.ingredient_id = ingredients.id"
+                . " WHERE " . $search_columns['sql_string'],
+            $search_columns['sql_parameters'],
+        );
+        return $total_recipes ? $total_recipes['count'] : $total_recipes;
+    }
+
     public function getRecipeDetails(int $recipe_id): array|false
     {
         // includes rating, price, calories, cuisine name, and author name
-        
+
         // 1. get the basic values
         // TODO check if the function still works with the lookup
         $get_recipe_query = '
@@ -132,7 +161,7 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
 
         // 2. get the products for the optimal price
         $product_dao = new \vrklk\model\recipe\ProductDAO($this->crud);
-        
+
         //get ingredients
         $recipe_ingredient_query = '
             SELECT i.id AS id, (ri.quantity * m.quantity) AS quantity_needed
@@ -145,7 +174,7 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         $recipe_ingredients = $this->crud->selectAsPairs($recipe_ingredient_query, $parameters);
 
         $total_price = 0;
-        foreach($recipe_ingredients as $ingredient_id => $required_quantity) {
+        foreach ($recipe_ingredients as $ingredient_id => $required_quantity) {
             $price_product_array = $product_dao->getIngredientProduct($ingredient_id, $required_quantity);
             if ($price_product_array) {
                 $products_by_ingredients[$ingredient_id] = $price_product_array;
@@ -162,8 +191,11 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
     }
 
 
-    //private functions
-    private function getCalories($products_by_ingredients, $recipe_id): float {
+    //=========================================================================
+    // PRIVATE
+    //=========================================================================
+    private function getCalories($products_by_ingredients, $recipe_id): float
+    {
         // step 1: create temporary table for product ID's & amounts
         $create_product_amounts_table = '
             CREATE TEMPORARY TABLE product_amounts (
@@ -174,10 +206,10 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         $this->crud->executeQuery($create_product_amounts_table);
 
         // step 2: insert the product ID's & amounts into the temporary table
-        
+
         //TODO make this work well with product output
         $product_insert_values = '';
-        foreach($products_by_ingredients as $ingredient) {
+        foreach ($products_by_ingredients as $ingredient) {
             $product_list = $ingredient['products'];
             foreach ($product_list as $product_id => $product_amount) {
                 $product_insert_values .= (empty($product_insert_values)) ? '' : ', ';
@@ -223,5 +255,29 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         $this->crud->doDelete($drop_product_amounts_table);
 
         return $total_calories;
+    }
+
+    private function getSearchColumns(string $search_query): array
+    {
+        $sql_string = '';
+        $sql_parameters = [];
+        $test_elements = [
+            'recipes.title',
+            'recipes.blurb',
+            'recipes.descr',
+            'cuisines.name',
+            'ingredients.name',
+            'users.name',
+            'recipes.type'
+        ];
+        foreach ($test_elements as $index => $element) {
+            $sql_string .= empty($sql_string) ? '' : ' OR ';
+            $sql_string .= $element . ' LIKE :search_query' . $index;
+            $sql_parameters['search_query' . $index] = ['%' . $search_query . '%', true];
+        }
+        return [
+            'sql_string' => $sql_string,
+            'sql_parameters' => $sql_parameters,
+        ];
     }
 }

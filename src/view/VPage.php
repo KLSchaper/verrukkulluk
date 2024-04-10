@@ -137,14 +137,22 @@ class VPage extends \vrklk\base\view\HtmlDoc
                         'amount'        => 4,
                         'page_number'   => 1,
                     ],
+                    'getTotalHomeRecipes'   => [],
                     'getFavoriteRecipes'    => [
                         'amount'        => 4,
                         'page_number'   => 1,
                         'user_id'       => 1,
                     ],
+                    'getTotalFavoriteRecipes'   =>
+                    [
+                        'user_id'       => 1,
+                    ],
                     'getSearchRecipes'      => [
                         'amount'        => 4,
                         'page_number'   => 1,
+                        'search_query'  => 'uovo',
+                    ],
+                    'getTotalSearchRecipes' => [
                         'search_query'  => 'uovo',
                     ],
                     'getRecipeDetails'      => [
