@@ -7,16 +7,16 @@ interface iRecipeDAO
     public function getHomeRecipes(
         int $amount,
         int $page_number
-    ): array;
+    ): array|false;
     public function getFavoriteRecipes(
         int $amount,
         int $page_number,
         int $user_id
-    ): array;
+    ): array|false;
     public function getSearchRecipes(
         int $amount,
         int $page_number,
         string $searchQuery
-    ): array;
-    public function getRecipeDetails(int $recipe_id): array;
+    ): array|false;
+    public function getRecipeDetails(int $recipe_id): array|false;
 }

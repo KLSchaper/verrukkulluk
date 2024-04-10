@@ -8,7 +8,7 @@ interface iProductDAO
         int $ingredient_id,
         float $quantity,
         string $select_on = 'price'
-    ): array | false;
-  
-    public function getProductById(int $product_id): array;
+    ): array|false;
+
+    public function getProductById(int $product_id): array|false;
 }
