@@ -163,6 +163,10 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 break;
             case 'Page':
                 $user_id = 1;
+                $page_number = 1;
+                $recipes_per_page = 4;
+                $recipe_ids = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes($recipes_per_page, $page_number);
+                $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalHomeRecipes() / $recipes_per_page);
                 $header = new \vrklk\view\elements\HeaderElement([
                     new \vrklk\view\elements\SlideshowElement(),
                     new \vrklk\view\elements\MenuElement($user_id),
@@ -173,7 +177,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
                         new \vrklk\view\elements\AgendaElement(),
                         new \vrklk\view\elements\LogElement($user_id)
                     ],
-                    new \vrklk\view\elements\RecipePageElement([1, 2], 1),
+                    new \vrklk\view\elements\RecipePageElement($recipe_ids, $page_number, $total_pages),
                 );
                 $content->show();
                 $footer = new \vrklk\view\elements\FooterElement();
