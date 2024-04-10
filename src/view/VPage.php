@@ -179,6 +179,13 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 $footer = new \vrklk\view\elements\FooterElement();
                 $footer->show();
                 break;
+            
+            // for the temporary form test
+            case 'TestForm':
+                $test_form = new \vrklk\view\elements\FormElement(1, ['form_values' => [], 'form_errors' => []]);
+                $test_form->show();
+                break;
+            
             default:
                 echo '<h1>404 pagina niet gevonden</h1>' . PHP_EOL;
         }
