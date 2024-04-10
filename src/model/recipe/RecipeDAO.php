@@ -145,7 +145,7 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
 
         // 1. get the basic values
         $get_recipe_query = '
-            SELECT r.title AS title, r.img AS img, r.blurb AS blurb, r.people AS people, l.display AS display, r.descr AS desct, AVG(ra.rating) AS rating, c.name AS cuisine, u.name AS author
+            SELECT r.title AS title, r.img AS img, r.blurb AS blurb, r.people AS people, l.display AS display, r.descr AS descr, AVG(ra.rating) AS rating, c.name AS cuisine, u.name AS author
             FROM recipes r
             INNER JOIN ratings ra ON r.id = ra.recipe_id
             INNER JOIN cuisines c ON r.cuisine_id = c.id
