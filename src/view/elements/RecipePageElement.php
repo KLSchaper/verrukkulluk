@@ -17,10 +17,12 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
     private \vrklk\model\recipe\RecipeDAO $recipe_dao;
     private array $recipe_details;
     private int $page_number;
+    private int $total_pages;
 
     public function __construct(
         array $recipe_id_array,
-        int $page_number
+        int $page_number,
+        int $total_pages
     ) {
         $this->recipe_dao = \ManKind\ModelManager::getRecipeDAO();
         foreach ($recipe_id_array as $recipe_id) {
@@ -32,6 +34,9 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
                 $this->recipe_dao->getRecipeDetails($recipe_id);
         }
         ksort($this->recipe_details);
+        // end of testing code
+        $this->page_number = $page_number;
+        $this->total_pages = $total_pages;
     }
 
     public function show()
@@ -71,8 +76,21 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
             </div>
             EOD . PHP_EOL;
         }
-        // div: page buttons
         echo <<<EOD
+        </div>
+        <div class="d-flex justify-content-center">
+            <ul class="pagination pagination-sm">
+        EOD . PHP_EOL;
+        for ($i = 1; $i <= $this->total_pages; $i++) {
+            $active = '';
+            if ($i === $this->page_number)
+                $active = ' rp-active';
+            echo <<<EOD
+                    <li class="page-item{$active}"><a class="rp-page-link" href="#">{$i}</a></li>
+            EOD . PHP_EOL;
+        }
+        echo <<<EOD
+            </ul>
         </div>
         EOD . PHP_EOL;
     }
