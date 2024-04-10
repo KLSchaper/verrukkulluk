@@ -24,11 +24,6 @@
     --black: #000;
 }
 
-/* VARIABLES TO CONTROL PAGE LAYOUT */
-:root {
-    --side-block-width: 27%;
-}
-
 /* FONT IMPLEMENTATION */
 @font-face {
     font-family: pretty_lilyregular;
@@ -39,8 +34,20 @@
     font-family: var(--heading);
 }
 
+.white-lily {
+    font-family: var(--heading);
+    color: var(--white);
+}
+
+.red-white-lily {
+    font-family: var(--heading);
+    background-color: var(--lighter-red);
+    color: var(--white);
+}
+
 div {
     font-family: var(--regular);
+    border: 1px solid #000;
 }
 
 p {
@@ -70,16 +77,23 @@ p {
 
 /* AGENDA BLOCK STYLING */
 div.agenda {
-    width: var(--side-block-width);
     height: 700px;
     background-color: var(--lighter-green);
 }
 
 /* LOG BLOCK STYLING */
 div.log-block {
-    width: var(--side-block-width);
     height: 300px;
     background-color: var(--darker-red);
+}
+
+/* RECIPE PAGE STYLING */
+div.recipe-page {
+    width: 100%;
+}
+
+div.recipe-card {
+    width: 45%;
 }
 
 /* FOOTER BLOCK STYLING */

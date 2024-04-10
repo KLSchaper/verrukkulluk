@@ -4,5 +4,5 @@ namespace vrklk\model\interfaces;
 
 interface iMeasureFormDAO
 {
-    public function getUnit(int $ingredient_id): string;
+    public function getUnit(int $ingredient_id): string|false;
 }

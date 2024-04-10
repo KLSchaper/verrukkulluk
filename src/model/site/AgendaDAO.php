@@ -8,10 +8,10 @@ class AgendaDAO extends \vrklk\base\model\BaseDAO implements
     //=========================================================================
     // PUBLIC
     //=========================================================================
-    public function getUpcomingEvents(int $amount): array
+    public function getUpcomingEvents(int $amount): array|false
     {
         // Returns array of events, possibly EventInfo objects later
-        $events = $this->crud->selectMore(
+        return $this->crud->selectMore(
             "SELECT date, name, blurb"
                 . " FROM agenda"
                 . " WHERE date > CURRENT_TIMESTAMP()"
@@ -21,7 +21,5 @@ class AgendaDAO extends \vrklk\base\model\BaseDAO implements
                 'amount' => [$amount, true],
             ],
         );
-        // convert false to empty array in case query execution failed
-        return $events ? $events : [];
     }
 }

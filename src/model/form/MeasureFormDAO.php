@@ -8,16 +8,17 @@ class MeasureFormDAO extends \vrklk\model\form\FormDAO implements
     //=========================================================================
     // PUBLIC
     //=========================================================================
-    public function getUnit(int $ingredient_id): string
+    public function getUnit(int $ingredient_id): string|false
     {
         // retrieve the type of unit for ingredient_id from DB
-        return $this->crud->selectOne(
+        $ingredient = $this->crud->selectOne(
             "SELECT unit"
                 . " FROM ingredients"
                 . " WHERE id=:ingredient_id",
             [
                 'ingredient_id' => [$ingredient_id, true],
             ],
-        )['unit'];
+        );
+        return $ingredient ? $ingredient['unit'] : $ingredient;
     }
 }
