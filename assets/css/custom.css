@@ -24,12 +24,6 @@
     --black: #000;
 }
 
-/* VARIABLES TO CONTROL PAGE LAYOUT */
-:root {
-    --side-block-width: 27%;
-    --main-block-width: 60%;
-}
-
 /* FONT IMPLEMENTATION */
 @font-face {
     font-family: pretty_lilyregular;
@@ -38,6 +32,17 @@
 
 .lily {
     font-family: var(--heading);
+}
+
+.white-lily {
+    font-family: var(--heading);
+    color: var(--white);
+}
+
+.red-white-lily {
+    font-family: var(--heading);
+    background-color: var(--lighter-red);
+    color: var(--white);
 }
 
 div {
@@ -84,8 +89,11 @@ div.log-block {
 
 /* RECIPE PAGE STYLING */
 div.recipe-page {
-    float: left;
-    width: var(--main-block-width);
+    width: 100%;
+}
+
+div.recipe-card {
+    width: 45%;
 }
 
 /* FOOTER BLOCK STYLING */
