@@ -96,6 +96,25 @@ div.recipe-card {
     width: 45%;
 }
 
+.rp-page-link {
+    position: relative;
+    display: block;
+    padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+    font-size: var(--bs-pagination-font-size);
+    color: var(--black);
+    text-decoration: none;
+    background-color: var(--white);
+    border: var(--bs-pagination-border-width) solid var(--bs-pagination-border-color);
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.rp-active > .rp-page-link {
+    z-index: 3;
+    color: var(--white);
+    background-color: var(--black);
+    border-color: var(--black);
+}
+
 /* FOOTER BLOCK STYLING */
 div.footer-custom {
     color: var(--white);
