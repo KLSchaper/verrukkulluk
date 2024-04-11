@@ -180,11 +180,11 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
                 $total_price += $price_product_array['price'];
             }
         }
-        $recipe_result['price'] = $total_price;
+        $recipe_result['price'] = number_format($total_price, 2, ',', '.');
 
         // 3. get the total calories
         $calories = $this->getCalories($products_by_ingredients, $recipe_id);
-        $recipe_result['calories'] = $calories;
+        $recipe_result['calories'] = (int)round($calories);
 
         return $recipe_result;
     }
