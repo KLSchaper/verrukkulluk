@@ -194,18 +194,4 @@ class VPage extends \vrklk\base\view\HtmlDoc
                 echo '<h1>404 pagina niet gevonden</h1>' . PHP_EOL;
         }
     }
-
-    //=========================================================================
-    // PRIVATE
-    //=========================================================================
-    private function showData(string $class, array $function_calls): void
-    {
-        $model_call = '\ManKind\ModelManager::get' . $class;
-        $dao = $model_call();
-        foreach ($function_calls as $function => $parameters) {
-            echo "<p>Testing {$class}::{$function}()</p>";
-            $data = $dao->$function(...$parameters);
-            echo '<pre>' . var_export($data, true) . '</pre>';
-        }
-    }
 }
