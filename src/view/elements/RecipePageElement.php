@@ -49,7 +49,7 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">{$recipe_data['blurb']}</p>
+                    <p class="card-text text-truncate-3">{$recipe_data['blurb']}</p>
                 </div>
                 <div class="card-footer d-flex align-items-center">
                     <button type="button" class="btn btn-card p-0">

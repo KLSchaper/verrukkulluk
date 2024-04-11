@@ -35,8 +35,8 @@ class AgendaElement extends \vrklk\base\view\BaseElement
                             <p>{$date->format('H:i')}</p>
                         </div>
                         <div class="col-sm-8 ms-2 p-0">
-                            <h3 class="lily">{$event['name']}</h3>
-                            <p>{$event['blurb']}</p>
+                            <h3 class="lily text-truncate pe-3">{$event['name']}</h3>
+                            <p class="text-truncate-3 pe-3">{$event['blurb']}</p>
                         </div>
                     </div>
             EOD . PHP_EOL;

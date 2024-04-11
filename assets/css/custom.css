@@ -47,11 +47,19 @@
 
 div {
     font-family: var(--regular);
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
 }
 
 p {
     font-size: 14px;
+}
+
+p.text-truncate-3 {
+    -webkit-line-clamp: 3;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 
 /* MAIN MENU BUTTON STYLING */
