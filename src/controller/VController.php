@@ -10,7 +10,21 @@ class VController extends \vrklk\base\controller\Controller
     protected function validateGet(): void
     {
         switch ($this->request['page']) {
-            // needs to be extended
+            case 'site_test':
+            case 'agenda_test':
+            case 'favorite_test':
+            case 'recipeform_test':
+            case 'measureform_test':
+            case 'ingredientform_test':
+            case 'detailtabs_test':
+            case 'product_test':
+            case 'recipe_test':
+                $this->response['page'] = 'test';
+                $this->response['title'] = 
+                    \vrklk\model\site\TestDAO::getTestTitle($this->request['page']);
+                $this->response['function_calls'] = 
+                    \vrklk\model\site\TestDAO::getTestFunctions($this->request['page']);
+                break;
         }
     }
 
@@ -24,44 +38,24 @@ class VController extends \vrklk\base\controller\Controller
     protected function showResponse(): void
     {
         switch ($this->response['page']) {
-            case 'site_test':
-                $page = new \vrklk\view\VPage('Site');
+            case 'test':
+                $title = $this->response['title'];
+                $main_element = new \vrklk\view\elements\DataElement(
+                    $this->response['title'],
+                    $this->response['function_calls'],
+                );
                 break;
-            case 'agenda_test':
-                $page = new \vrklk\view\VPage('Agenda');
-                break;
-            case 'favorite_test':
-                $page = new \vrklk\view\VPage('Favorite');
-                break;
-            case 'recipeform_test':
-                $page = new \vrklk\view\VPage('RecipeForm');
-                break;
-            case 'measureform_test':
-                $page = new \vrklk\view\VPage('MeasureForm');
-                break;
-            case 'ingredientform_test':
-                $page = new \vrklk\view\VPage('IngredientForm');
-                break;
-            case 'detailtabs_test':
-                $page = new \vrklk\view\VPage('DetailTabs');
-                break;
-            case 'product_test':
-                $page = new \vrklk\view\VPage('Product');
-                break;
-            case 'recipe_test':
-                $page = new \vrklk\view\VPage('Recipe');
-                break;
-            case 'page_test':
-                $page = new \vrklk\view\VPage('Page');
-                break;
-
-            // for temporary form test
             case 'form_test':
                 $page = new \vrklk\view\VPage('TestForm');
+                break;
+            
+            case 'page_test':
+                $page = new \vrklk\view\VPage('Page');
                 break;
             default:
                 $page = new \vrklk\view\VPage('404');
         }
+        $page = new \vrklk\view\VPage($title, $main_element);
         $page->show();
     }
 
