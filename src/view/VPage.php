@@ -4,12 +4,20 @@ namespace vrklk\view;
 
 class VPage extends \vrklk\base\view\HtmlDoc
 {
+    protected $main_element;
+    protected $user_id;
+    
     //=========================================================================
     // PUBLIC
     //=========================================================================
-    public function __construct(string $title)
-    {
+    public function __construct(
+        string $title,
+        \vrklk\base\view\BaseElement $main_element,
+        int $user_id,
+    ) {
         parent::__construct($title, \Config::AUTHOR);
+        $this->main_element = $main_element;
+        $this->user_id = $user_id;
     }
 
     //=========================================================================
@@ -31,167 +39,20 @@ class VPage extends \vrklk\base\view\HtmlDoc
 
     protected function showBodyContent(): void
     {
-        switch ($this->title) {
-            case 'Site':
-                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
-                $function_calls = [
-                    'getDetailMenuItems'    => [],
-                    'getFooterTitle'        => [],
-                    'getContactInfo'        => [],
-                    'getLoginTitle'         => [
-                        'logged_user'   => true,
-                    ],
-                    'getLoginContent'       => [
-                        'logged_user'   => true,
-                    ],
-                    'getMenuItems'          => [
-                        'logged_user'   => true,
-                    ],
-                ];
-                $this->showData('SiteDAO', $function_calls);
-                break;
-            case 'Agenda':
-                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
-                $function_calls = [
-                    'getUpcomingEvents'     => [
-                        'amount'        => 3,
-                    ],
-                ];
-                $this->showData('AgendaDAO', $function_calls);
-                break;
-            case 'Favorite':
-                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
-                $function_calls = [
-                    'checkFavorite'         => [
-                        'recipe_id'     => 1,
-                        'user_id'       => 1,
-                    ],
-                ];
-                $this->showData('FavoritesDAO', $function_calls);
-                break;
-            case 'RecipeForm':
-                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
-                $function_calls = [
-                    'getFormInfo'           => [
-                        'form_id'       => 1,
-                    ],
-                    'getCuisineList'    => [],
-                    'getRecipeTypes'    => [],
-                ];
-                $this->showData('RecipeFormDAO', $function_calls);
-                break;
-            case 'MeasureForm':
-                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
-                $function_calls = [
-                    'getFormInfo'           => [
-                        'form_id'       => 1,
-                    ],
-                    'getUnit'               => [
-                        'ingredient_id' => 1,
-                    ],
-                ];
-                $this->showData('MeasureFormDAO', $function_calls);
-                break;
-            case 'IngredientForm':
-                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
-                $function_calls = [
-                    'getFormInfo'           => [
-                        'form_id'       => 1,
-                    ],
-                    'getIngredientList'     => [],
-                    'getMeasures'       => [
-                        'ingredient_id' => 4,
-                    ],
-                ];
-                $this->showData('IngredientFormDAO', $function_calls);
-                break;
-            case 'DetailTabs':
-                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
-                $function_calls = [
-                    'getTabName'    => [],
-                    'getTabContent' => [
-                        'recipe_id' => 1,
-                    ],
-                ];
-                $this->showData('CommentsTabDAO', $function_calls);
-                $this->showData('IngredientsTabDAO', $function_calls);
-                $this->showData('PrepStepsTabDAO', $function_calls);
-                break;
-            case 'Product':
-                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
-                $function_calls = [
-                    'getIngredientProduct'  => [
-                        'ingredient_id' => 1,
-                        'quantity'      => 1,
-                    ],
-                    'getProductById'        => [
-                        'product_id'    => 1
-                    ],
-                ];
-                $this->showData('ProductDAO', $function_calls);
-                break;
-            case 'Recipe':
-                echo '<h1>Class ' . $this->title . '</h1>' . PHP_EOL;
-                $function_calls = [
-                    'getHomeRecipes'        => [
-                        'amount'        => 4,
-                        'page_number'   => 1,
-                    ],
-                    'getTotalHomeRecipes'   => [],
-                    'getFavoriteRecipes'    => [
-                        'amount'        => 4,
-                        'page_number'   => 1,
-                        'user_id'       => 1,
-                    ],
-                    'getTotalFavoriteRecipes'   =>
-                    [
-                        'user_id'       => 1,
-                    ],
-                    'getSearchRecipes'      => [
-                        'amount'        => 4,
-                        'page_number'   => 1,
-                        'search_query'  => 'uovo',
-                    ],
-                    'getTotalSearchRecipes' => [
-                        'search_query'  => 'uovo',
-                    ],
-                    'getRecipeDetails'      => [
-                        'recipe_id'     => 1,
-                    ],
-                ];
-                $this->showData('RecipeDAO', $function_calls);
-                break;
-            case 'Page':
-                $user_id = 1;
-                $page_number = 1;
-                $recipes_per_page = 4;
-                $recipe_ids = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes($recipes_per_page, $page_number);
-                $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalHomeRecipes() / $recipes_per_page);
-                $header = new \vrklk\view\elements\HeaderElement([
-                    new \vrklk\view\elements\SlideshowElement(),
-                    new \vrklk\view\elements\MenuElement($user_id),
-                ]);
-                $header->show();
-                $content = new \vrklk\view\elements\BodyElement(
-                    [
-                        new \vrklk\view\elements\AgendaElement(),
-                        new \vrklk\view\elements\LogElement($user_id)
-                    ],
-                    new \vrklk\view\elements\RecipePageElement($recipe_ids, $page_number, $total_pages),
-                );
-                $content->show();
-                $footer = new \vrklk\view\elements\FooterElement();
-                $footer->show();
-                break;
-            
-            // for the temporary form test
-            case 'TestForm':
-                $test_form = new \vrklk\view\elements\FormElement(1, ['form_values' => [], 'form_errors' => []]);
-                $test_form->show();
-                break;
-            
-            default:
-                echo '<h1>404 pagina niet gevonden</h1>' . PHP_EOL;
-        }
+        $header = new \vrklk\view\elements\HeaderElement([
+            new \vrklk\view\elements\SlideshowElement(),
+            new \vrklk\view\elements\MenuElement($this->user_id),
+        ]);
+        $header->show();
+        $content = new \vrklk\view\elements\BodyElement(
+            [
+                new \vrklk\view\elements\AgendaElement(),
+                new \vrklk\view\elements\LogElement($this->user_id)
+            ],
+            $this->main_element,
+        );
+        $content->show();
+        $footer = new \vrklk\view\elements\FooterElement();
+        $footer->show();
     }
 }
