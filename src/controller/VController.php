@@ -71,7 +71,10 @@ class VController extends \vrklk\base\controller\Controller
                 );
                 break;
             default:
-                $page = new \vrklk\view\VPage('404');
+                $main_element = new \vrklk\view\elements\TextElement(
+                    'De gevraagde pagina is niet gevonden',
+                    '404',
+                );
         }
         $user_id = 1; // TODO read from session
         $page = new \vrklk\view\VPage($this->response['title'], $main_element, $user_id);
