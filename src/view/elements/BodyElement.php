@@ -27,7 +27,7 @@ class BodyElement extends \vrklk\base\view\BaseElement
         }
         echo <<<EOD
                 </aside>
-                <div class="col-sm-8">
+                <div class="col-sm-8 pt-2">
         EOD . PHP_EOL;
 
         $this->main_element->show();
