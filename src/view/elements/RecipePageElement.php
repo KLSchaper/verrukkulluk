@@ -4,16 +4,6 @@ namespace vrklk\view\elements;
 
 class RecipePageElement extends \vrklk\base\view\BaseElement
 {
-    // This element needs:
-    // Standard Data:
-        // people image
-        // euro sign image
-        // calories image
-    // Variable Data:
-        // recipe details per recipe
-        // page title
-        // page number
-
     private \vrklk\model\recipe\RecipeDAO $recipe_dao;
     private array $recipe_details;
     private int $page_number;
@@ -41,37 +31,39 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
 
     public function show()
     {
-        // h: page title
         echo <<<EOD
         <div class="d-flex flex-wrap recipe-page" id="recipe-page">
         EOD . PHP_EOL;
         foreach ($this->recipe_details as $recipe_id => $recipe_data) {
-            // img: recipe image (recipe_data['img'])
-            // div:
-                // h: recipe name (recipe_data['title'])
-                // div: recipe rating (recipe_data['rating'])
-            // p: recipe blurb (recipe_data['blurb'])
-            // div:
-                // button: "smullen"
-                // img: "people"
-                // p: recipe people (recipe_data['people'])
-                // img: "euro sign"
-                // p: price (recipe_data['price'])
-                // img: "calories image"
-                // p: calories (recipe_data['calories'])
             echo <<<EOD
             <div class="card recipe-card m-3" id="recipe-card-{$recipe_id}">
-                <img src="./assets/img/recipes/{$recipe_data['img']}" alt="{$recipe_data['title']}" class="img-fluid">
+                <img class="card-img-top" src="./assets/img/recipes/{$recipe_data['img']}" alt="{$recipe_data['title']}">
                 <div class="card-header">
-                    <h1 class="lily" style="color: var(--darker-green)">{$recipe_data['title']}</h1>
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <h1 class="card-title lily text-truncate" style="color: var(--darker-green)">{$recipe_data['title']}</h1>
+                        </div>
+                        <div class="col-sm-4">
+                            Rating: {$recipe_data['rating']}/10
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
-                    <p>{$recipe_data['blurb']}</p>
+                    <p class="card-text">{$recipe_data['blurb']}</p>
                 </div>
-                <div class="card-footer">
-                    <button type="button" class="btn btn-outline-dark p-0">
+                <div class="card-footer d-flex align-items-center">
+                    <button type="button" class="btn btn-card p-0">
                         <h1 class="m-0"><span class="badge rounded-pill red-white-lily">Smullen!</span></h1>
                     </button>
+                    <div class="ms-auto">
+                        <i class="fa-solid fa-user-group red ms-2 me-1"></i>{$recipe_data['people']}
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-euro-sign red ms-2 me-1"></i>{$recipe_data['price']}
+                    </div>
+                    <div>
+                        <i class="fa-solid fa-fire-flame-curved red ms-2 me-1"></i>{$recipe_data['calories']}
+                    </div>
                 </div>
             </div>
             EOD . PHP_EOL;
