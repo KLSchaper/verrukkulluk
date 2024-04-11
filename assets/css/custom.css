@@ -96,6 +96,14 @@ div.recipe-card {
     width: 45%;
 }
 
+.btn-card {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+i.red {
+    color: var(--lighter-red);
+}
+
 .rp-page-link {
     position: relative;
     display: block;
