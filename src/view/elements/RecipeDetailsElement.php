@@ -4,19 +4,13 @@ namespace vrklk\view\elements;
 
 class RecipeDetailsElement extends \vrklk\base\view\BaseElement
 {
-    // This element needs:
-    // Standard Data
-
-    // Variable Data
-
-    private array $recipe_data;
+    private array $recipe_details;
     private bool $is_favorite;
 
-    public function __construct($recipe_id, $user_id)
+    public function __construct(int $recipe_id, int $user_id)
     {
-        // get recipe details from RecipeDAO
-        // get whether it's a favorite for this user form FavoritesDAO
-
+        $this->recipe_details = \ManKind\ModelManager::getRecipeDAO()->getRecipeDetails($recipe_id);
+        $this->is_favorite = \ManKind\ModelManager::getFavoritesDAO()->checkFavorite($recipe_id, $user_id);
     }
 
     public function show()
@@ -43,6 +37,7 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                 // p: recipe description (from recipe data)
             //div:
                 // button: "op lijst" (put ingredients in shopping list)
+        
         if ($this->is_favorite) {
                 // button: filled-in heart symbol (removes favorite)
         } else {
