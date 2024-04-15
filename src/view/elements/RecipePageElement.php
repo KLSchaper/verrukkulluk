@@ -32,7 +32,7 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
     public function show()
     {
         echo <<<EOD
-        <div class="d-flex flex-wrap recipe-page" id="recipe-page">
+        <div class="d-flex flex-wrap container-fluid" id="recipe-page">
         EOD . PHP_EOL;
         foreach ($this->recipe_details as $recipe_id => $recipe_data) {
             echo <<<EOD
@@ -41,7 +41,7 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-8">
-                            <h1 class="card-title lily text-truncate" style="color: var(--darker-green)">{$recipe_data['title']}</h1>
+                            <h1 class="card-title green-lily text-truncate">{$recipe_data['title']}</h1>
                         </div>
                         <div class="col-sm-4">
                             Rating: {$recipe_data['rating']}/10
@@ -49,7 +49,7 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
                     </div>
                 </div>
                 <div class="card-body">
-                    <p class="card-text">{$recipe_data['blurb']}</p>
+                    <p class="card-text text-truncate-3">{$recipe_data['blurb']}</p>
                 </div>
                 <div class="card-footer d-flex align-items-center">
                     <button type="button" class="btn btn-card p-0">

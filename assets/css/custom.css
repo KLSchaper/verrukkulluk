@@ -39,6 +39,11 @@
     color: var(--white);
 }
 
+.green-lily {
+    font-family: var(--heading);
+    color: var(--darker-green);
+}
+
 .red-white-lily {
     font-family: var(--heading);
     background-color: var(--lighter-red);
@@ -51,7 +56,15 @@ div {
 }
 
 p {
-    font-size: 12px;
+    font-size: 14px;
+}
+
+p.text-truncate-3 {
+    -webkit-line-clamp: 3;
+    overflow : hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
 }
 
 /* MAIN MENU BUTTON STYLING */
@@ -88,10 +101,6 @@ div.log-block {
 }
 
 /* RECIPE PAGE STYLING */
-div.recipe-page {
-    width: 100%;
-}
-
 div.recipe-card {
     width: 45%;
 }
@@ -121,6 +130,37 @@ i.red {
     color: var(--white);
     background-color: var(--black);
     border-color: var(--black);
+}
+
+/* RECIPE DETAIL STYLING */
+.detail-main {
+    width: 100%;
+    height: 500px;
+}
+
+.detail-image-container {
+    width: auto; /* Set desired width */
+    height: 100%; /* Set desired height */
+    overflow: hidden; /* Hide overflow */
+}
+  
+.detail-image-container > .detail-image {
+    width: 100%; /* Ensure the image takes the full width of its container */
+    height: 100%; /* Maintain aspect ratio */
+    object-fit: cover; /* Cover the container */
+    object-position: center; /* Center the image */
+}
+
+.detail-tab {
+    width: 100%;
+    height: 500px;
+}
+
+div.ps-number {
+    width: 50px;
+    height: 50px;
+    color: var(--white);
+    background-color: var(--lighter-orange);
 }
 
 /* FOOTER BLOCK STYLING */
