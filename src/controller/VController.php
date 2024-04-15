@@ -29,6 +29,9 @@ class VController extends \vrklk\base\controller\Controller
             case 'home':
                 $this->response['title'] = 'Home';
                 break;
+            case 'favorites':
+                $this->response['title'] = 'Mijn Favorieten';
+                break;
             default:
                 $this->response['title'] = '404';
         }
@@ -43,6 +46,7 @@ class VController extends \vrklk\base\controller\Controller
 
     protected function showResponse(): void
     {
+        $user_id = 1; // TODO read from session
         switch ($this->response['page']) {
             case 'dao_test':
                 $main_element = new \vrklk\view\elements\DataElement(
@@ -70,13 +74,15 @@ class VController extends \vrklk\base\controller\Controller
                     total_pages: $total_pages,
                 );
                 break;
+            case 'favorites':
+                $main_element = new \vrklk\view\elements\RecipeDetailsElement(1, $user_id);
+                break;
             default:
                 $main_element = new \vrklk\view\elements\TextElement(
                     'De gevraagde pagina is niet gevonden',
                     '404',
                 );
         }
-        $user_id = 1; // TODO read from session
         $page = new \vrklk\view\VPage($this->response['title'], $main_element, $user_id);
         $page->show();
     }
