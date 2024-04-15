@@ -122,7 +122,7 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
 
 
         // 2. get the products for the optimal price
-        $product_dao = new \vrklk\model\recipe\ProductDAO($this->crud);
+        $product_dao = \ManKind\ModelManager::getProductDAO();
         
         //get ingredients
         $recipe_ingredient_query = '

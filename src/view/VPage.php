@@ -171,8 +171,10 @@ class VPage extends \vrklk\base\view\HtmlDoc
             
             // for the temporary form test
             case 'TestForm':
-                $test_form = new \vrklk\view\elements\FormElement(1, ['form_values' => [], 'form_errors' => []]);
-                $test_form->show();
+                for ($id = 1; $id <= 6; $id++) {
+                    $test_form = new \vrklk\view\elements\FormElement($id, ['form_values' => [], 'form_errors' => []]);
+                    $test_form->show();
+                }
                 break;
             
             default:

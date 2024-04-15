@@ -73,8 +73,21 @@ class FormDAO  extends \vrklk\base\model\BaseDAO implements
     public function getFieldInfo($field_id, $field_type): array
     {
         switch ($field_type) {
-            case '':
-                // specific cases
+            case 'numeric':
+                $field_info_query = '
+                    SELECT name, label, type, label_class, input_class, error_class, required, value, min_value, max_value
+                    FROM fields f
+                    INNER JOIN fields_numeric f_n ON f_n.field_id = f.id
+                    WHERE id = :field_id;
+                ';
+                break;
+            case 'comment':
+                $field_info_query = '
+                    SELECT name, type, text
+                    FROM fields f
+                    INNER JOIN fields_comments f_c ON f_c.field_id = f.id
+                    WHERE id = :field_id;
+                ';
                 break;
             default:
                 $field_info_query = '
@@ -88,5 +101,52 @@ class FormDAO  extends \vrklk\base\model\BaseDAO implements
         $field_info = $this->crud->selectOne($field_info_query, $parameters);
 
         return $field_info;
+    }
+
+    public function getDropdownInfo($field_id): array
+    {
+        switch($field_id) {
+            case 7:
+                // still needs to be grouped and ordered by category.
+                $dropdown_query = '
+                    SELECT `name`
+                    FROM `cuisines`;
+                ';
+                break;
+            case 8:
+                $dropdown_query = '
+                    SELECT `value`, `display`
+                    FROM `lookup`
+                    WHERE `group` = "recipe_types";
+                ';
+                break;
+            case 13:
+                $dropdown_query = '
+                    SELECT `name`
+                    FROM `ingredients`;
+                ';
+                break;
+            case 15:
+                // This needs to be replaced with measures based on ingredients, but that can only be done using AJAX
+                // The current solution just gets all measures, but is a temporary replacement.
+                $dropdown_query = '
+                    SELECT `name`
+                    FROM `measures`;
+                ';
+                break;
+            case 26:
+                $dropdown_query = '
+                    SELECT `name`
+                    FROM `measures`
+                    WHERE `id` IN (1, 3, 5);
+                ';
+                break;
+            default:
+                $dropdown_query = '';
+        }
+
+        $parameters = [];
+        $dropdown_info = $this->crud->selectMore($dropdown_query, $parameters);
+        return $dropdown_info;
     }
 }
