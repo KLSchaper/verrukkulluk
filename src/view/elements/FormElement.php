@@ -44,7 +44,7 @@ class FormElement extends \vrklk\base\view\BaseElement
         // close form
         if ($this->form_info['submit_text']) {
             echo <<<EOD
-                <input type = "button" value = {$this->form_info['submit_text']}>
+                <input type = "button" value = "{$this->form_info['submit_text']}">
             EOD;
         }
         
