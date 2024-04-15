@@ -13,7 +13,7 @@ class IngredientsTabDAO extends \vrklk\base\model\BaseDAO implements
         return 'ingredients';
     }
 
-    public function getTabContent(int $recipe_id): array
+    public function getTabContent(int $recipe_id): array|false
     {
         $ingredients = $this->crud->selectMore(
             "SELECT i.id, i.name AS ingredient, r.quantity, m.name AS measure"
@@ -26,8 +26,10 @@ class IngredientsTabDAO extends \vrklk\base\model\BaseDAO implements
                 'recipe_id' => [$recipe_id, true],
             ],
         );
-        // convert false to empty array in case query execution failed
-        $ingredients ?: $ingredients = [];
+        // exit with false or empty array in case query execution failed
+        // or no result was found
+        if (!$ingredients) 
+            return $ingredients;
 
         $product_dao = new \vrklk\model\recipe\ProductDAO;
         foreach ($ingredients as $index => $ingredient) {

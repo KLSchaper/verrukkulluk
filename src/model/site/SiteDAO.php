@@ -11,7 +11,7 @@ class SiteDAO extends \vrklk\base\model\BaseDAO implements
     //=========================================================================
     // PUBLIC
     //=========================================================================
-    public function getDetailMenuItems(): array
+    public function getDetailMenuItems(): array|false
     {
         return $this->crud->selectAsPairs(
             "SELECT value, display"
@@ -48,7 +48,7 @@ class SiteDAO extends \vrklk\base\model\BaseDAO implements
         return [];
     }
 
-    public function getMenuItems(bool $logged_user): array
+    public function getMenuItems(bool $logged_user): array|false
     {
         $logged_in_menu = [
             'favorites'     => [
@@ -74,6 +74,8 @@ class SiteDAO extends \vrklk\base\model\BaseDAO implements
                 'display_order' => 30,
             ],
         ];
+        // false return not possible yet, but it will be when we move
+        // this data to DB and try to retrieve it through CRUD functions
         return $logged_user ? $logged_in_menu : $logged_out_menu;
     }
 }

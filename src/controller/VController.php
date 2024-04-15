@@ -10,7 +10,27 @@ class VController extends \vrklk\base\controller\Controller
     protected function validateGet(): void
     {
         switch ($this->request['page']) {
-            // needs to be extended
+            case 'site_test':
+            case 'agenda_test':
+            case 'favorite_test':
+            case 'recipeform_test':
+            case 'measureform_test':
+            case 'ingredientform_test':
+            case 'detailtabs_test':
+            case 'product_test':
+            case 'recipe_test':
+                $this->response['page'] = 'dao_test';
+                $this->response['title'] = \vrklk\model\site\TestDAO::getTestTitle($this->request['page']);
+                $this->response['function_calls'] = \vrklk\model\site\TestDAO::getTestFunctions($this->request['page']);
+                break;
+            case 'form_test':
+                $this->response['title'] = 'TestForm';
+                break;
+            case 'home':
+                $this->response['title'] = 'Home';
+                break;
+            default:
+                $this->response['title'] = '404';
         }
     }
 
@@ -24,44 +44,40 @@ class VController extends \vrklk\base\controller\Controller
     protected function showResponse(): void
     {
         switch ($this->response['page']) {
-            case 'site_test':
-                $page = new \vrklk\view\VPage('Site');
+            case 'dao_test':
+                $main_element = new \vrklk\view\elements\DataElement(
+                    $this->response['title'],
+                    $this->response['function_calls'],
+                );
                 break;
-            case 'agenda_test':
-                $page = new \vrklk\view\VPage('Agenda');
-                break;
-            case 'favorite_test':
-                $page = new \vrklk\view\VPage('Favorite');
-                break;
-            case 'recipeform_test':
-                $page = new \vrklk\view\VPage('RecipeForm');
-                break;
-            case 'measureform_test':
-                $page = new \vrklk\view\VPage('MeasureForm');
-                break;
-            case 'ingredientform_test':
-                $page = new \vrklk\view\VPage('IngredientForm');
-                break;
-            case 'detailtabs_test':
-                $page = new \vrklk\view\VPage('DetailTabs');
-                break;
-            case 'product_test':
-                $page = new \vrklk\view\VPage('Product');
-                break;
-            case 'recipe_test':
-                $page = new \vrklk\view\VPage('Recipe');
-                break;
-            case 'page_test':
-                $page = new \vrklk\view\VPage('Page');
-                break;
-
-            // for temporary form test
             case 'form_test':
-                $page = new \vrklk\view\VPage('TestForm');
+                $main_element = new \vrklk\view\elements\FormElement(
+                    1,
+                    [
+                        'form_values' => [], 
+                        'form_errors' => []
+                    ]
+                );
+                break;
+            
+            case 'home':
+                $page_number = 1; // TODO read from url request
+                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes(4, $page_number);
+                $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalHomeRecipes() / 4);
+                $main_element = new \vrklk\view\elements\RecipePageElement(
+                    recipe_id_array: $recipe_id_array,
+                    page_number: $page_number,
+                    total_pages: $total_pages,
+                );
                 break;
             default:
-                $page = new \vrklk\view\VPage('404');
+                $main_element = new \vrklk\view\elements\TextElement(
+                    'De gevraagde pagina is niet gevonden',
+                    '404',
+                );
         }
+        $user_id = 1; // TODO read from session
+        $page = new \vrklk\view\VPage($this->response['title'], $main_element, $user_id);
         $page->show();
     }
 

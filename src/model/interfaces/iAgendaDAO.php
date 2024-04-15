@@ -4,5 +4,5 @@ namespace vrklk\model\interfaces;
 
 interface iAgendaDAO
 {
-    public function getUpcomingEvents(int $amount): array;
+    public function getUpcomingEvents(int $amount): array|false;
 }

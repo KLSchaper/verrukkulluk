@@ -4,5 +4,5 @@ namespace vrklk\model\interfaces;
 
 interface iDetailMenuDAO
 {
-    public function getDetailMenuItems(): array;
+    public function getDetailMenuItems(): array|false;
 }
