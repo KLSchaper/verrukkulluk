@@ -32,7 +32,7 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
     public function show()
     {
         echo <<<EOD
-        <div class="d-flex flex-wrap recipe-page" id="recipe-page">
+        <div class="d-flex flex-wrap container-fluid" id="recipe-page">
         EOD . PHP_EOL;
         foreach ($this->recipe_details as $recipe_id => $recipe_data) {
             echo <<<EOD

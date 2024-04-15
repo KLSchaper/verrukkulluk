@@ -47,7 +47,7 @@
 
 div {
     font-family: var(--regular);
-    /* border: 1px solid #000; */
+    border: 1px solid #000;
 }
 
 p {
@@ -96,10 +96,6 @@ div.log-block {
 }
 
 /* RECIPE PAGE STYLING */
-div.recipe-page {
-    width: 100%;
-}
-
 div.recipe-card {
     width: 45%;
 }
