@@ -21,9 +21,9 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
         $this->recipe_details = \ManKind\ModelManager::getRecipeDAO()->getRecipeDetails($recipe_id);
         $this->is_favorite = \ManKind\ModelManager::getFavoritesDAO()->checkFavorite($recipe_id, $user_id);
 
-        $this->ingredients_tab_title = \ManKind\ModelManager::getIngredientsTabDAO()->getTabName();
-        $this->prep_steps_tab_title = \ManKind\ModelManager::getPrepStepsTabDAO()->getTabName();
-        $this->comments_tab_title = \ManKind\ModelManager::getCommentsTabDAO()->getTabName();
+        $this->ingredients_tab_title = \ManKind\ModelManager::getIngredientsTabDAO()->getTabName(); //TODO add display lookup to SiteDAO and translate to that or something idk
+        $this->prep_steps_tab_title = \ManKind\ModelManager::getPrepStepsTabDAO()->getTabName(); //TODO add display lookup to SiteDAO and translate to that or something idk
+        $this->comments_tab_title = \ManKind\ModelManager::getCommentsTabDAO()->getTabName(); //TODO add display lookup to SiteDAO and translate to that or something idk
         $this->ingredients_tab_content = \ManKind\ModelManager::getIngredientsTabDAO()->getTabContent($recipe_id);
         $this->prep_steps_tab_content = \ManKind\ModelManager::getPrepStepsTabDAO()->getTabContent($recipe_id);
         $this->comments_tab_content = \ManKind\ModelManager::getCommentsTabDAO()->getTabContent($recipe_id);
