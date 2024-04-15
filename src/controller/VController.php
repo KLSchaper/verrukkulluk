@@ -32,6 +32,10 @@ class VController extends \vrklk\base\controller\Controller
             case 'favorites':
                 $this->response['title'] = 'Mijn Favorieten';
                 break;
+            case 'details':
+                $this->response['recipe_id'] = 1; // TODO read from URL request
+                $this->response['title'] = 'Recept Details';
+                break;
             default:
                 $this->response['title'] = '404';
         }
@@ -75,6 +79,9 @@ class VController extends \vrklk\base\controller\Controller
                 );
                 break;
             case 'favorites':
+                $main_element = new \vrklk\view\elements\RecipePageElement([], 1, 1);
+                break;
+            case 'details':
                 $main_element = new \vrklk\view\elements\RecipeDetailsElement(1, $user_id);
                 break;
             default:
