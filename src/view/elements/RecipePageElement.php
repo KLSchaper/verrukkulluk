@@ -41,7 +41,7 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
                 <div class="card-header">
                     <div class="row">
                         <div class="col-sm-8">
-                            <h1 class="card-title lily text-truncate" style="color: var(--darker-green)">{$recipe_data['title']}</h1>
+                            <h1 class="card-title green-lily text-truncate">{$recipe_data['title']}</h1>
                         </div>
                         <div class="col-sm-4">
                             Rating: {$recipe_data['rating']}/10
