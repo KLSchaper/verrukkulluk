@@ -8,7 +8,14 @@ class UsersDAO extends \vrklk\base\model\BaseDAO implements
     //=========================================================================
     // PUBLIC
     //=========================================================================
-    public function getUserById(int $user_id): array {
-        return [];
+    public function getUserById(int $user_id): array|false {
+        return $this->crud->selectOne(
+            "SELECT *"
+                . " FROM users"
+                . " WHERE id=:user_id",
+            [
+                'user_id' => [$user_id, true],
+            ],
+        );
     }
 }
