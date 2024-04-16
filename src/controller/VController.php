@@ -41,6 +41,12 @@ class VController extends \vrklk\base\controller\Controller
             case 'shopping_list';
                 $this->response['title'] = 'Mijn Boodschappenlijst';
                 break;
+            case 'add_to_list';
+                $this->response['page'] = 'details';
+                $this->response['title'] = 'Recept Details';
+                $this->response['recipe_id'] = $this->getRequestVar('recipe_id', false, 0, true);
+                $this->addRecipeToShoppingList($this->response['recipe_id']);
+                break;
             default:
                 $this->response['title'] = '404';
         }
@@ -145,6 +151,10 @@ class VController extends \vrklk\base\controller\Controller
     //=========================================================================
     // PRIVATE
     //=========================================================================
+    private function addRecipeToShoppingList(int $recipe_id): void {
+        echo 'adding recipe ' . $recipe_id . ' to shopping list!';
+    }
+    
     private function getKeyValue(
         array $arr,
         string $key,
