@@ -36,6 +36,9 @@ class VController extends \vrklk\base\controller\Controller
                 $this->response['recipe_id'] = 1; // TODO read from URL request
                 $this->response['title'] = 'Recept Details';
                 break;
+            case 'cart';
+                $this->response['title'] = 'Mijn Boodschappenlijst';
+                break;
             default:
                 $this->response['title'] = '404';
         }
@@ -83,6 +86,22 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'details':
                 $main_element = new \vrklk\view\elements\RecipeDetailsElement(1, $user_id);
+                break;
+            case 'cart':
+                $main_element = new \vrklk\view\elements\ShoppingListElement([
+                    10  => 10,
+                    2   => 10,
+                    13  => 10,
+                    8   => 10,
+                    12  => 10,
+                ], 
+                [
+                    1   => 1,
+                    3   => 1,
+                    16  => 1,
+                    17  => 1,
+                    18  => -1,
+                ]);
                 break;
             default:
                 $main_element = new \vrklk\view\elements\TextElement(
