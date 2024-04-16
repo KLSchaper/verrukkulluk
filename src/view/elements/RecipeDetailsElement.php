@@ -4,6 +4,7 @@ namespace vrklk\view\elements;
 
 class RecipeDetailsElement extends \vrklk\base\view\BaseElement
 {
+    private int $recipe_id;
     private array $recipe_details;
     private bool $is_favorite;
     private string $ingredients_tab_title;
@@ -18,6 +19,7 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
     //=========================================================================
     public function __construct(int $recipe_id, int $user_id)
     {
+        $this->recipe_id = $recipe_id;
         $this->recipe_details = \ManKind\ModelManager::getRecipeDAO()->getRecipeDetails($recipe_id);
         $this->is_favorite = \ManKind\ModelManager::getFavoritesDAO()->checkFavorite($recipe_id, $user_id);
 
@@ -53,6 +55,8 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                 // p: recipe description (from recipe data)
             //div:
                 // button: "op lijst" (put ingredients in shopping list)
+        $add_link = \Config::LINKBASE . 'index.php?page=add_to_list&recipe_id=' . $this->recipe_id;
+        
         if ($this->is_favorite) {
             $heart = 'fa-solid';
         } else {
@@ -91,8 +95,8 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                                 <div><p class="my-auto ps-1">{$this->recipe_details['cuisine']}</p></div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            Rating: {$this->recipe_details['rating']}/10
+                        <div class="col-sm-4 d-flex flex-column">
+                            <div>Rating: {$this->recipe_details['rating']}/10</div>
                             <div class="d-flex align-items-center mt-auto">
                                 <div><h4 class="green-lily my-auto">Type: </h4></div>
                                 <div><p class="my-auto ps-1">{$this->recipe_details['display']}</p></div>
@@ -103,9 +107,9 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                         <p>{$this->recipe_details['descr']}</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <button type="button" class="btn btn-card p-0">
+                        <a href="{$add_link}" class="btn p-0">
                             <h1 class="m-0"><span class="badge rounded-pill red-white-lily">Op Lijst</span></h1>
-                        </button>
+                        </a>
                         <div class="ms-auto">
                             <h2><i class="{$heart} fa-heart red me-4" id="favorite-heart"></i></h2>
                         </div>

@@ -28,16 +28,24 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'home':
                 $this->response['title'] = 'Home';
+                $this->response['page_number'] = $this->getRequestVar('page_number', false, 1, true);
                 break;
             case 'favorites':
                 $this->response['title'] = 'Mijn Favorieten';
+                $this->response['page_number'] = $this->getRequestVar('page_number', false, 1, true);
                 break;
             case 'details':
-                $this->response['recipe_id'] = 1; // TODO read from URL request
                 $this->response['title'] = 'Recept Details';
+                $this->response['recipe_id'] = $this->getRequestVar('recipe_id', false, 0, true);
                 break;
-            case 'cart';
+            case 'shopping_list';
                 $this->response['title'] = 'Mijn Boodschappenlijst';
+                break;
+            case 'add_to_list';
+                $this->response['page'] = 'details';
+                $this->response['title'] = 'Recept Details';
+                $this->response['recipe_id'] = $this->getRequestVar('recipe_id', false, 0, true);
+                $this->addRecipeToShoppingList($this->response['recipe_id']);
                 break;
             default:
                 $this->response['title'] = '404';
@@ -70,15 +78,17 @@ class VController extends \vrklk\base\controller\Controller
                     ]
                 );
                 break;
-            
             case 'home':
-                $page_number = 1; // TODO read from url request
-                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes(4, $page_number);
+                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes(
+                    4,
+                    $this->response['page_number'],
+                );
                 $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalHomeRecipes() / 4);
                 $main_element = new \vrklk\view\elements\RecipePageElement(
                     recipe_id_array: $recipe_id_array,
-                    page_number: $page_number,
+                    page_number: $this->response['page_number'],
                     total_pages: $total_pages,
+                    page: $this->response['page'],
                 );
                 break;
             case 'register':
@@ -94,12 +104,37 @@ class VController extends \vrklk\base\controller\Controller
                 $main_element = new \vrklk\view\elements\FormPageElement('Recept Toevoegen', 4, $this->response['controller_form_data']);
                 break;
             case 'favorites':
-                $main_element = new \vrklk\view\elements\RecipePageElement([], 1, 1);
+                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getFavoriteRecipes(
+                    4,
+                    $this->response['page_number'],
+                    $user_id,
+                );
+                $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalFavoriteRecipes($user_id) / 4);
+                $main_element = new \vrklk\view\elements\RecipePageElement(
+                    recipe_id_array: $recipe_id_array,
+                    page_number: $this->response['page_number'],
+                    total_pages: $total_pages,
+                    page: $this->response['page'],
+                );
+                break;
+            case 'search':
+                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getSearchRecipes(
+                    4,
+                    $this->response['page_number'],
+                    $this->$search_query,
+                );
+                $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalSearchRecipes($this->$search_query) / 4);
+                $main_element = new \vrklk\view\elements\RecipePageElement(
+                    recipe_id_array: $recipe_id_array,
+                    page_number: $this->response['page_number'],
+                    total_pages: $total_pages,
+                    page: $this->response['page'],
+                );
                 break;
             case 'details':
-                $main_element = new \vrklk\view\elements\RecipeDetailsElement(1, $user_id);
+                $main_element = new \vrklk\view\elements\RecipeDetailsElement($this->response['recipe_id'], $user_id);
                 break;
-            case 'cart':
+            case 'shopping_list':
                 $main_element = new \vrklk\view\elements\ShoppingListElement([
                     10  => 10,
                     2   => 10,
@@ -128,6 +163,10 @@ class VController extends \vrklk\base\controller\Controller
     //=========================================================================
     // PRIVATE
     //=========================================================================
+    private function addRecipeToShoppingList(int $recipe_id): void {
+        echo 'adding recipe ' . $recipe_id . ' to shopping list!';
+    }
+    
     private function getKeyValue(
         array $arr,
         string $key,

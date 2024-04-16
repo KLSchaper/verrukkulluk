@@ -13,7 +13,7 @@ class HeaderElement extends \vrklk\base\view\BaseElement
     
     public function show()
     {
-        $home_link = \Config::LINKBASE . 'index.php';
+        $home_link = \Config::LINKBASE . 'index.php?page=home';
         echo <<<EOD
         <header class="container" style="position:relative">
         <div class="header-logo">
