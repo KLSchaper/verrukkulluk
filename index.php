@@ -17,6 +17,7 @@ try {
             'PrepStepsTabDAO'   => 'vrklk\model\recipe\PrepStepsTabDAO',
             'ProductDAO'        => 'vrklk\model\recipe\ProductDAO',
             'RecipeDAO'         => 'vrklk\model\recipe\RecipeDAO',
+            'UsersDAO'           => 'vrklk\model\user\UsersDAO',
             'FormDAO'           => 'vrklk\model\form\FormDAO',
         ]
     );
