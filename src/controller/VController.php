@@ -28,7 +28,7 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'log_out':
                 $this->response['page'] = 'home';
-                $this->logOutUser($this->getRequestVar('user_id', false, 0, true));
+                \vrklk\controller\ControllerData::logOutUser($this->getRequestVar('user_id', false, 0, true));
                 // no break, falls through
             case 'home':
                 $this->response['title'] = 'Home';
@@ -40,7 +40,7 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'add_to_list';
                 $this->response['page'] = 'details';
-                $this->addRecipeToShoppingList($this->getRequestVar('recipe_id', false, 0, true));
+                \vrklk\controller\ControllerData::addRecipeToShoppingList($this->getRequestVar('recipe_id', false, 0, true));
                 // no break, falls through
             case 'details':
                 $this->response['title'] = 'Recept Details';
@@ -63,7 +63,7 @@ class VController extends \vrklk\base\controller\Controller
 
     protected function showResponse(): void
     {
-        $user_id = 1; // TODO read from session
+        $user_id = \vrklk\controller\ControllerData::getLoggedUser();
         switch ($this->response['page']) {
             case 'dao_test':
                 $main_element = new \vrklk\view\elements\DataElement(
@@ -165,14 +165,6 @@ class VController extends \vrklk\base\controller\Controller
     //=========================================================================
     // PRIVATE
     //=========================================================================
-    private function addRecipeToShoppingList(int $recipe_id): void {
-        echo 'adding recipe ' . $recipe_id . ' to shopping list!';
-    }
-
-    private function logOutUser(int $user_id): void {
-        echo 'logging out user ' . $user_id;
-    }
-
     private function getKeyValue(
         array $arr,
         string $key,
