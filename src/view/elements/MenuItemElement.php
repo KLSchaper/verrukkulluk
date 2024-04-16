@@ -7,17 +7,17 @@ class MenuItemElement extends \vrklk\base\view\BaseElement
     private $name;
     private $title;
     private $display_order;
-    
+
     public function __construct(
-        string $name, 
-        string $title, 
+        string $name,
+        string $title,
         int $display_order
     ) {
         $this->name = $name;
         $this->title = $title;
         $this->display_order = $display_order;
     }
-    
+
     public function show()
     {
         $link = \Config::LINKBASE . 'index.php?page=' . $this->name;

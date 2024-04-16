@@ -23,7 +23,7 @@ class MenuElement extends \vrklk\base\view\BaseElement
 
     public function show()
     {
-        $home_link = \Config::LINKBASE . 'index.php';
+        $home_link = \Config::LINKBASE . 'index.php?page=home';
         echo <<<EOD
         <div class="offcanvas offcanvas-top row gx-0" style="height:150px" id="main-menu">
             <div class="offcanvas-header col-lg-3 d-flex align-items-center my-auto">
