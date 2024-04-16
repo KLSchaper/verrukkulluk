@@ -32,6 +32,7 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'favorites':
                 $this->response['title'] = 'Mijn Favorieten';
+                $this->response['page_number'] = $this->getRequestVar('page_number', false, 1, true);
                 break;
             case 'details':
                 $this->response['recipe_id'] = 1; // TODO read from URL request
@@ -71,19 +72,31 @@ class VController extends \vrklk\base\controller\Controller
                     ]
                 );
                 break;
-            
             case 'home':
-                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes(4, $this->response['page_number']);
+                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes(
+                    4,
+                    $this->response['page_number'],
+                );
                 $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalHomeRecipes() / 4);
+            case 'favorites':
+                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getFavoriteRecipes(
+                    4,
+                    $this->response['page_number'],
+                    $user_id,
+                );
+            case 'search':
+                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getSearchRecipes(
+                    4,
+                    $this->response['page_number'],
+                    $this->$search_query,
+                );
+                $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalSearchRecipes($this->$search_query) / 4);
                 $main_element = new \vrklk\view\elements\RecipePageElement(
                     recipe_id_array: $recipe_id_array,
                     page_number: $this->response['page_number'],
                     total_pages: $total_pages,
                     page: $this->response['page'],
                 );
-                break;
-            case 'favorites':
-                $main_element = new \vrklk\view\elements\RecipePageElement([], 1, 1);
                 break;
             case 'details':
                 $main_element = new \vrklk\view\elements\RecipeDetailsElement(1, $user_id);
