@@ -28,6 +28,7 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'home':
                 $this->response['title'] = 'Home';
+                $this->response['page_number'] = $this->getRequestVar('page_number', false, 1, true);
                 break;
             case 'favorites':
                 $this->response['title'] = 'Mijn Favorieten';
@@ -36,7 +37,7 @@ class VController extends \vrklk\base\controller\Controller
                 $this->response['recipe_id'] = 1; // TODO read from URL request
                 $this->response['title'] = 'Recept Details';
                 break;
-            case 'cart';
+            case 'shopping_list';
                 $this->response['title'] = 'Mijn Boodschappenlijst';
                 break;
             default:
@@ -72,13 +73,13 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             
             case 'home':
-                $page_number = 1; // TODO read from url request
-                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes(4, $page_number);
+                $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes(4, $this->response['page_number']);
                 $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalHomeRecipes() / 4);
                 $main_element = new \vrklk\view\elements\RecipePageElement(
                     recipe_id_array: $recipe_id_array,
-                    page_number: $page_number,
+                    page_number: $this->response['page_number'],
                     total_pages: $total_pages,
+                    page: $this->response['page'],
                 );
                 break;
             case 'favorites':
@@ -87,7 +88,7 @@ class VController extends \vrklk\base\controller\Controller
             case 'details':
                 $main_element = new \vrklk\view\elements\RecipeDetailsElement(1, $user_id);
                 break;
-            case 'cart':
+            case 'shopping_list':
                 $main_element = new \vrklk\view\elements\ShoppingListElement([
                     10  => 10,
                     2   => 10,
