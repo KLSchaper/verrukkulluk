@@ -52,7 +52,7 @@
 
 div {
     font-family: var(--regular);
-    /* border: 1px solid #000; */
+    border: 1px solid #000;
 }
 
 p {
@@ -98,6 +98,17 @@ div.agenda {
 div.log-block {
     min-height: 300px;
     background-color: var(--darker-red);
+}
+
+.submit-logout {
+    background-color: var(--lighter-orange);
+    border: none;
+    text-align: center;
+    font-size: 36px;
+    width: 50%;
+    margin: auto;
+    display: block;
+    border-radius: 12px;
 }
 
 /* RECIPE PAGE STYLING */

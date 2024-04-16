@@ -6,10 +6,6 @@ class LogElement extends \vrklk\base\view\BaseElement
 {
     private int $user_id;
     private \vrklk\model\interfaces\iLoginDAO $dao;
-    // This element needs:
-    // Standard Data
-
-    // Variable Data
 
     public function __construct(int $user_id)
     {
@@ -22,8 +18,8 @@ class LogElement extends \vrklk\base\view\BaseElement
         $title = $this->dao->getLoginTitle(boolval($this->user_id));
         echo <<<EOD
         <div class="log-block m-4" id="log-block">
-            <div class="text-center" style="color:var(--white)">
-                <h1 class="lily display-3">{$title}</h1>
+            <div class="text-center">
+                <h1 class="white-lily display-3">{$title}</h1>
             </div>
         EOD . PHP_EOL;
         if ($this->user_id) {
@@ -36,28 +32,23 @@ class LogElement extends \vrklk\base\view\BaseElement
         EOD . PHP_EOL;
     }
 
-    private function showLogoutContent($user_id)
+    private function showLogoutContent(int $user_id)
     {
-        // get username of user with matching user_id
-
-        // content:
-        // div:
-            // h: username
-            // button: logout
-        // echo $content;
+        $name = \ManKind\ModelManager::getUsersDAO()->getUserById($user_id)['name'];
+        $log_out_link = \Config::LINKBASE . 'index.php?page=log_out&user_id=' . $user_id;
+        echo <<<EOD
+        <div class="text-center my-4">
+            <p style="color: var(--white)">Ingelogd als {$name}</p>
+        </div>
+        <a href="{$log_out_link}" class="btn submit-logout p-0">
+            <h1 class="white-lily m-0">Log uit</h1>
+        </a>
+        EOD . PHP_EOL;
     }
 
     private function showLoginContent()
     {
-        // get login form
-        
-        // content:
-        //div:
-            // form: loginform
-            // button: link naar registration page
-
-            // Still include form data
-            $login_form = new \Vrklk\view\elements\FormElement(1, []);
-            $login_form->show();
+        $login_form = new \Vrklk\view\elements\FormElement(1, []);
+        $login_form->show();
     }
 }

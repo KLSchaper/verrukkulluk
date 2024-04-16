@@ -26,6 +26,10 @@ class VController extends \vrklk\base\controller\Controller
             case 'form_test':
                 $this->response['title'] = 'TestForm';
                 break;
+            case 'log_out':
+                $this->response['page'] = 'home';
+                $this->logOutUser($this->getRequestVar('user_id', false, 0, true));
+                // no break, falls through
             case 'home':
                 $this->response['title'] = 'Home';
                 $this->response['page_number'] = $this->getRequestVar('page_number', false, 1, true);
@@ -34,18 +38,16 @@ class VController extends \vrklk\base\controller\Controller
                 $this->response['title'] = 'Mijn Favorieten';
                 $this->response['page_number'] = $this->getRequestVar('page_number', false, 1, true);
                 break;
+            case 'add_to_list';
+                $this->response['page'] = 'details';
+                $this->addRecipeToShoppingList($this->getRequestVar('recipe_id', false, 0, true));
+                // no break, falls through
             case 'details':
                 $this->response['title'] = 'Recept Details';
                 $this->response['recipe_id'] = $this->getRequestVar('recipe_id', false, 0, true);
                 break;
             case 'shopping_list';
                 $this->response['title'] = 'Mijn Boodschappenlijst';
-                break;
-            case 'add_to_list';
-                $this->response['page'] = 'details';
-                $this->response['title'] = 'Recept Details';
-                $this->response['recipe_id'] = $this->getRequestVar('recipe_id', false, 0, true);
-                $this->addRecipeToShoppingList($this->response['recipe_id']);
                 break;
             default:
                 $this->response['title'] = '404';
@@ -166,7 +168,11 @@ class VController extends \vrklk\base\controller\Controller
     private function addRecipeToShoppingList(int $recipe_id): void {
         echo 'adding recipe ' . $recipe_id . ' to shopping list!';
     }
-    
+
+    private function logOutUser(int $user_id): void {
+        echo 'logging out user ' . $user_id;
+    }
+
     private function getKeyValue(
         array $arr,
         string $key,
