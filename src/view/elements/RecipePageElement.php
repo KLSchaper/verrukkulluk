@@ -38,6 +38,7 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
         <div class="d-flex flex-wrap container-fluid" id="recipe-page">
         EOD . PHP_EOL;
         foreach ($this->recipe_details as $recipe_id => $recipe_data) {
+            $details_link = \Config::LINKBASE . 'index.php?page=details&recipe_id=' . $recipe_id;
             echo <<<EOD
             <div class="card recipe-card m-3" id="recipe-card-{$recipe_id}">
                 <img class="card-img-top" src="./assets/img/recipes/{$recipe_data['img']}" alt="{$recipe_data['title']}">
@@ -55,9 +56,9 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
                     <p class="card-text text-truncate-3">{$recipe_data['blurb']}</p>
                 </div>
                 <div class="card-footer d-flex align-items-center">
-                    <button type="button" class="btn btn-card p-0">
+                    <a href="{$details_link}" class="btn btn-card p-0">
                         <h1 class="m-0"><span class="badge rounded-pill red-white-lily">Smullen!</span></h1>
-                    </button>
+                    </a>
                     <div class="ms-auto">
                         <i class="fa-solid fa-user-group red ms-2 me-1"></i>{$recipe_data['people']}
                     </div>
@@ -80,7 +81,7 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
             $active = '';
             if ($i === $this->page_number)
                 $active = ' rp-active';
-            $page_link = \Config::LINKBASE . 'index.php?page=' . $this->page . 'page_number=' . $i;
+            $page_link = \Config::LINKBASE . 'index.php?page=' . $this->page . '&page_number=' . $i;
             echo <<<EOD
                     <li class="page-item{$active}"><a class="rp-page-link" href="{$page_link}">{$i}</a></li>
             EOD . PHP_EOL;
