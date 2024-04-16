@@ -33,7 +33,7 @@ class FormDAO  extends \vrklk\base\model\BaseDAO implements
         $parameters = ['form_id' => [$form_id, true]];
 
         $form_info_query = '
-            SELECT name, action, method, classes, attributes, submit_text
+            SELECT name, action, method, classes, attributes, submit_text, submit_class
             FROM forms
             WHERE id = :form_id;
         ';
@@ -62,7 +62,8 @@ class FormDAO  extends \vrklk\base\model\BaseDAO implements
         $fields_query = '
             SELECT id, type
             FROM fields
-            WHERE form_id = :form_id;
+            WHERE form_id = :form_id
+            ORDER BY field_order ASC;
         ';
         $fields = $this->crud->selectAsPairs($fields_query, $parameters);
         $form_info['fields'] = $fields;

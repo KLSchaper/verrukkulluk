@@ -16,7 +16,7 @@ class NumericFieldElement extends \vrklk\view\elements\field_elements\BaseFieldE
                 </label>
             </div>
             <div class = "{$this->layout_data['input_layout_class']}">
-                <input class = "{$this->field_info['input_class']}" type = "{$this->field_info['type']}"
+                <input class = "{$this->field_info['input_class']}" type = "number"
                 id = "{$this->field_info['name']}" name = "{$this->field_info['name']}" value = "{$this->field_info['value']}"
                 min = "{$this->field_info['min_value']}" max = "{$this->field_info['max_value']}">
             </div>

@@ -63,7 +63,7 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'form_test':
                 $main_element = new \vrklk\view\elements\FormElement(
-                    1,
+                    6,
                     [
                         'form_values' => [], 
                         'form_errors' => []
@@ -80,6 +80,18 @@ class VController extends \vrklk\base\controller\Controller
                     page_number: $page_number,
                     total_pages: $total_pages,
                 );
+                break;
+            case 'register':
+                // test only
+                $this->response['controller_form_data'] = ['form_values' => [], 'form_errors' => []];
+                //
+                $main_element = new \vrklk\view\elements\FormPageElement('Registreren', 6, $this->response['controller_form_data']);
+                break;
+            case 'add_recipe':
+                // test only
+                $this->response['controller_form_data'] = ['form_values' => [], 'form_errors' => []];
+                //
+                $main_element = new \vrklk\view\elements\FormPageElement('Recept Toevoegen', 4, $this->response['controller_form_data']);
                 break;
             case 'favorites':
                 $main_element = new \vrklk\view\elements\RecipePageElement([], 1, 1);

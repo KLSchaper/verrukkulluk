@@ -42,6 +42,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
         $header = new \vrklk\view\elements\HeaderElement([
             new \vrklk\view\elements\SlideshowElement(),
             new \vrklk\view\elements\MenuElement($this->user_id),
+            new \vrklk\view\elements\FormElement(3, [])
         ]);
         $header->show();
         $content = new \vrklk\view\elements\BodyElement(
