@@ -53,8 +53,11 @@ class LogElement extends \vrklk\base\view\BaseElement
         
         // content:
         //div:
-            // h: "login"
             // form: loginform
             // button: link naar registration page
+
+            // Still include form data
+            $login_form = new \Vrklk\view\elements\FormElement(1, []);
+            $login_form->show();
     }
 }

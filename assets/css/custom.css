@@ -39,6 +39,11 @@
     color: var(--white);
 }
 
+.green-lily {
+    font-family: var(--heading);
+    color: var(--darker-green);
+}
+
 .red-white-lily {
     font-family: var(--heading);
     background-color: var(--lighter-red);
@@ -83,7 +88,7 @@ div.agenda {
 
 /* LOG BLOCK STYLING */
 div.log-block {
-    height: 300px;
+    min-height: 300px;
     background-color: var(--darker-red);
 }
 
@@ -143,4 +148,68 @@ div.content-wrap {
 footer.footer-position {
     position: absolute;
     bottom: 0;
+}
+
+/* FORM CLASSES */
+form.login-class {
+    color: var(--white);
+    font-size: 12px;
+}
+
+input.submit-login {
+    background-color: var(--lighter-orange);
+    border: none;
+    text-align: center;
+    font-size: 36px;
+    width: 50%;
+    margin: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+form.search-class {
+    z-index: 2;
+    position: absolute;
+    top: 40px;
+    right: 128px;
+}
+
+form.register-class {
+    color: var(--darker-green);
+    font-size: 26px;
+}
+
+input.submit-register {
+    background-color: var(--lighter-orange);
+    border: none;
+    text-align: center;
+    font-size: 40px;
+    width: 50%;
+    margin: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+input.submit-recipe {
+    background-color: var(--lighter-orange);
+    border: none;
+    text-align: center;
+    font-size: 40px;
+    width: 50%;
+    margin: auto;
+    display: block;
+    border-radius: 12px;
+}
+
+button.minor-button {
+    background-color: var(--darker-green);
+    border: none;
+    text-align: center;
+    font-size: 24px;
+    width: 25%;
+    border-radius: 12px;
+}
+
+h2.form_subtitle {
+    font-size: 24px;
 }
