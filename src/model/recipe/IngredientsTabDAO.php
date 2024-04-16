@@ -35,7 +35,7 @@ class IngredientsTabDAO extends \vrklk\base\model\BaseDAO implements
         foreach ($ingredients as $index => $ingredient) {
             $product_match = $product_dao->getIngredientProduct(
                 $ingredient['id'],
-                1
+                1 // standard minimum quantity because quantity isn't relevant here
             );
             if ($product_match) {
                 $product_id = array_keys($product_match['products'])[0];
