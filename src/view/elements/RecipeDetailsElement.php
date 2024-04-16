@@ -91,8 +91,8 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                                 <div><p class="my-auto ps-1">{$this->recipe_details['cuisine']}</p></div>
                             </div>
                         </div>
-                        <div class="col-sm-4">
-                            Rating: {$this->recipe_details['rating']}/10
+                        <div class="col-sm-4 d-flex flex-column">
+                            <div>Rating: {$this->recipe_details['rating']}/10</div>
                             <div class="d-flex align-items-center mt-auto">
                                 <div><h4 class="green-lily my-auto">Type: </h4></div>
                                 <div><p class="my-auto ps-1">{$this->recipe_details['display']}</p></div>
