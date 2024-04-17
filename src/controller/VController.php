@@ -48,6 +48,8 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'shopping_list';
                 $this->response['title'] = 'Mijn Boodschappenlijst';
+                $this->response['shopping_list'] = \vrklk\controller\ControllerData::getShoppingList();
+                $this->response['user_adaptations'] = \vrklk\controller\ControllerData::getUserAdaptations();
                 break;
             default:
                 $this->response['title'] = '404';
@@ -137,20 +139,10 @@ class VController extends \vrklk\base\controller\Controller
                 $main_element = new \vrklk\view\elements\RecipeDetailsElement($this->response['recipe_id'], $user_id);
                 break;
             case 'shopping_list':
-                $main_element = new \vrklk\view\elements\ShoppingListElement([
-                    10  => 10,
-                    2   => 10,
-                    13  => 10,
-                    8   => 10,
-                    12  => 10,
-                ], 
-                [
-                    1   => 1,
-                    3   => 1,
-                    16  => 1,
-                    17  => 1,
-                    18  => -1,
-                ]);
+                $main_element = new \vrklk\view\elements\ShoppingListElement(
+                    $this->response['shopping_list'],
+                    $this->response['user_adaptations'],
+                );
                 break;
             default:
                 $main_element = new \vrklk\view\elements\TextElement(
