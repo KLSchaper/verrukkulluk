@@ -11,6 +11,15 @@ class AddUserDAO extends \vrklk\base\model\BaseDAO implements
         string $password,
         string $img
     ): int|false {
-        return 0; // TODO implement function
+        return $this->crud->doInsert(
+            "INSERT INTO users (name, email, password, img)"
+                . " VALUES (:name, :email, :password, :img)",
+            [
+                'name' => [$name, false],
+                'email' => [$email, false],
+                'password' => [$password, false],
+                'img' => [$img, false],
+            ]
+        );
     }
 }
