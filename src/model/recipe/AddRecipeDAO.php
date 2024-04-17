@@ -1,6 +1,6 @@
 <?php
 
-namespace vrklk\model\user;
+namespace vrklk\model\recipe;
 
 use PDOException;
 
