@@ -2,7 +2,7 @@
 
 namespace vrklk\model\user;
 
-class RecipeAddDAO extends \vrklk\base\model\BaseDAO implements
+class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
     \vrklk\model\interfaces\iAddMeasure,
     \vrklk\model\interfaces\iAddRecipe
 {
