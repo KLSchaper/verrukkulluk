@@ -2,8 +2,6 @@
 
 namespace vrklk\model\recipe;
 
-use PDOException;
-
 class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
     \vrklk\model\interfaces\iAddMeasure,
     \vrklk\model\interfaces\iAddRecipe
@@ -61,7 +59,7 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
             }
             $this->crud->commit();
             return $recipe_id;
-        } catch (PDOException $e) {
+        } catch (\PDOException $e) {
             $this->crud->rollBack();
             \ManKind\tools\dev\Logger::_error($e);
             return false;
