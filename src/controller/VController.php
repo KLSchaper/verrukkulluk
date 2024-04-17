@@ -144,6 +144,52 @@ class VController extends \vrklk\base\controller\Controller
                     $this->response['user_adaptations'],
                 );
                 break;
+            case 'add_test':
+                $user_dao = new \vrklk\model\user\AddUserDAO();
+                $user = $user_dao->registerUser('koen', 'kls@mail.com', 'pass', 'img.jpg');
+                $comment_dao = new \vrklk\model\user\AddCommentDAO();
+                $comment = $comment_dao->addComment(1, 1, 'test');
+                $recipe_dao = new \vrklk\model\recipe\AddRecipeDAO();
+                $measure = $recipe_dao->addMeasure(1, 'snufje', 'gram', 0.5);
+                $recipe = $recipe_dao->storeNewRecipe([
+                    'title' => 'stamppot',
+                    'img' => 'stamppot.webp',
+                    'blurb' => 'lekker',
+                    'people' => 4,
+                    'cuisine_id' => 6,
+                    'type' => 'meat',
+                    'descr' => 'een winterse klassieker',
+                    'user_id' => 1
+                ], [
+                    [
+                        'ingredient_id' => 1,
+                        'quantity' => 3.14,
+                        'measure_id' => $measure
+                    ],
+                    [
+                        'ingredient_id' => 11,
+                        'quantity' => 8,
+                        'measure_id' => 6
+                    ],
+                    [
+                        'ingredient_id' => 13,
+                        'quantity' => 0.5,
+                        'measure_id' => 2
+                    ],
+                ], [
+                    1 => 'doe iets',
+                    2 => 'doe nog iets',
+                    3 => 'wacht even',
+                    4 => 'eet smakelijk!'
+                ]);
+                $main_element = new \vrklk\view\elements\TextElement(
+                    'user added: ' . $user . '<br>'
+                        . 'comment added: ' . $comment . '<br>'
+                        . 'measure added: ' . $measure . '<br>'
+                        . 'recipe added: ' . $recipe . '<br>',
+                    'Add DAO test results',
+                );
+                break;
             default:
                 $main_element = new \vrklk\view\elements\TextElement(
                     'De gevraagde pagina is niet gevonden',

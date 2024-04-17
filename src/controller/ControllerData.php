@@ -2,7 +2,7 @@
 
 namespace vrklk\controller;
 
-abstract class ControllerData
+class ControllerData
 {
     public static function logInUser(int $user_id): void
     {

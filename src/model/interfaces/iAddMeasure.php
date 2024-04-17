@@ -7,7 +7,7 @@ interface iAddMeasure
     public function addMeasure(
         int $ingredient_id,
         string $name,
-        string $category,
+        string $unit,
         float $quantity
     ): int | false;
 }
