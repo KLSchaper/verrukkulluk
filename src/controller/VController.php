@@ -144,6 +144,17 @@ class VController extends \vrklk\base\controller\Controller
                     $this->response['user_adaptations'],
                 );
                 break;
+            case 'add_test':
+                $user_dao = new \vrklk\model\user\AddUserDAO();
+                $user = $user_dao->registerUser('koen', 'kls@mail.com', 'pass', 'img.jpg');
+                $comment_dao = new \vrklk\model\user\AddCommentDAO();
+                $comment = $comment_dao->addComment(1, 1, 'test');
+                $main_element = new \vrklk\view\elements\TextElement(
+                    'user added: ' . $user . '<br>' .
+                    'comment added: ' . $comment . '<br>',
+                    'Add DAO test results',
+                );
+                break;
             default:
                 $main_element = new \vrklk\view\elements\TextElement(
                     'De gevraagde pagina is niet gevonden',
