@@ -71,10 +71,19 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
     public function addMeasure(
         int $ingredient_id,
         string $name,
-        string $category,
+        string $unit,
         float $quantity
     ): int|false {
-        return 0; // TODO implement function
+        return $this->crud->doInsert(
+            "INSERT INTO measures (ingredient_id, name, unit, quantity)"
+                . " VALUES (:ingredient_id, :name, :unit, :quantity)",
+            [
+                'ingredient_id' => [$ingredient_id, true],
+                'name' => [$name, false],
+                'unit' => [$unit, false],
+                'quantity' => [$quantity, true],
+            ]
+        );
     }
 
     //=========================================================================
