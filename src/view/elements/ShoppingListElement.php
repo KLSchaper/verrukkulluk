@@ -29,12 +29,12 @@ class ShoppingListElement extends \vrklk\base\view\BaseElement
         foreach ($user_adaptions as $product_id => $amount) {
             if (isset($this->products[$product_id])) {
                 $this->products[$product_id]['amount'] += $amount;
-                if ($this->products[$product_id]['amount'] <= 0) {
-                    unset($this->products[$product_id]);
-                }
             } else {
                 $this->products[$product_id] = $product_dao->getProductById($product_id);
                 $this->products[$product_id]['amount'] = $amount;
+            }
+            if ($this->products[$product_id]['amount'] <= 0) {
+                unset($this->products[$product_id]);
             }
         }
     }
