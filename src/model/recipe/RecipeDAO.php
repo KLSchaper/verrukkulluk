@@ -147,7 +147,7 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         $get_recipe_query = '
             SELECT r.title AS title, r.img AS img, r.blurb AS blurb, r.people AS people, l.display AS display, r.descr AS descr, AVG(ra.rating) AS rating, c.name AS cuisine, u.name AS author
             FROM recipes r
-            INNER JOIN ratings ra ON r.id = ra.recipe_id
+            LEFT JOIN ratings ra ON r.id = ra.recipe_id
             INNER JOIN cuisines c ON r.cuisine_id = c.id
             INNER JOIN users u ON r.user_id = u.id
             INNER JOIN lookup l ON (l.group = "recipe_types" AND r.type = l.value)
