@@ -39,4 +39,18 @@ abstract class ControllerData
     public static function getShoppingList(): array {
         return isset($_SESSION['shopping_list']) ? $_SESSION['shopping_list'] : [];
     }
+
+    public static function addUserAdaptation(int $product_id, int $amount): void
+    {
+        echo 'adding ' . $amount . ' of product ' . $product_id . ' to user adaptations';
+        if (isset($_SESSION['user_adaptations'][$product_id])) {
+            $_SESSION['user_adaptations'][$product_id] += $amount;
+        } else {
+            $_SESSION['user_adaptations'][$product_id] = $amount;
+        }
+    }
+
+    public static function getUserAdaptations(): array {
+        return isset($_SESSION['user_adaptations']) ? $_SESSION['user_adaptations'] : [];
+    }
 }
