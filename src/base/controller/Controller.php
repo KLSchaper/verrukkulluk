@@ -47,11 +47,12 @@ class Controller
         mixed $default = "",
         bool $asnumber = FALSE
     ): mixed {
-        $filter = $asnumber ? FILTER_SANITIZE_NUMBER_FLOAT : FILTER_SANITIZE_STRING;
+        $filter = $asnumber ? FILTER_SANITIZE_NUMBER_FLOAT : FILTER_UNSAFE_RAW;
         $result = filter_input(($frompost ? INPUT_POST : INPUT_GET),
             $key,
             $filter
         );
+        $result = $asnumber ? $result : htmlspecialchars($result);
         return ($result === FALSE || $result === NULL) ? $default : $result;
     }
 

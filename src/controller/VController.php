@@ -28,7 +28,7 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'log_out':
                 $this->response['page'] = 'home';
-                $this->logOutUser($this->getRequestVar('user_id', false, 0, true));
+                \vrklk\controller\ControllerData::logOutUser($this->getRequestVar('user_id', false, 0, true));
                 // no break, falls through
             case 'home':
                 $this->response['title'] = 'Home';
@@ -40,7 +40,7 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'add_to_list';
                 $this->response['page'] = 'details';
-                $this->addRecipeToShoppingList($this->getRequestVar('recipe_id', false, 0, true));
+                \vrklk\controller\ControllerData::addRecipeToShoppingList($this->getRequestVar('recipe_id', false, 0, true));
                 // no break, falls through
             case 'details':
                 $this->response['title'] = 'Recept Details';
@@ -48,6 +48,8 @@ class VController extends \vrklk\base\controller\Controller
                 break;
             case 'shopping_list';
                 $this->response['title'] = 'Mijn Boodschappenlijst';
+                $this->response['shopping_list'] = \vrklk\controller\ControllerData::getShoppingList();
+                $this->response['user_adaptations'] = \vrklk\controller\ControllerData::getUserAdaptations();
                 break;
             default:
                 $this->response['title'] = '404';
@@ -63,7 +65,7 @@ class VController extends \vrklk\base\controller\Controller
 
     protected function showResponse(): void
     {
-        $user_id = 1; // TODO read from session
+        $user_id = \vrklk\controller\ControllerData::getLoggedUser();
         switch ($this->response['page']) {
             case 'dao_test':
                 $main_element = new \vrklk\view\elements\DataElement(
@@ -137,20 +139,10 @@ class VController extends \vrklk\base\controller\Controller
                 $main_element = new \vrklk\view\elements\RecipeDetailsElement($this->response['recipe_id'], $user_id);
                 break;
             case 'shopping_list':
-                $main_element = new \vrklk\view\elements\ShoppingListElement([
-                    10  => 10,
-                    2   => 10,
-                    13  => 10,
-                    8   => 10,
-                    12  => 10,
-                ], 
-                [
-                    1   => 1,
-                    3   => 1,
-                    16  => 1,
-                    17  => 1,
-                    18  => -1,
-                ]);
+                $main_element = new \vrklk\view\elements\ShoppingListElement(
+                    $this->response['shopping_list'],
+                    $this->response['user_adaptations'],
+                );
                 break;
             default:
                 $main_element = new \vrklk\view\elements\TextElement(
@@ -165,14 +157,6 @@ class VController extends \vrklk\base\controller\Controller
     //=========================================================================
     // PRIVATE
     //=========================================================================
-    private function addRecipeToShoppingList(int $recipe_id): void {
-        echo 'adding recipe ' . $recipe_id . ' to shopping list!';
-    }
-
-    private function logOutUser(int $user_id): void {
-        echo 'logging out user ' . $user_id;
-    }
-
     private function getKeyValue(
         array $arr,
         string $key,
