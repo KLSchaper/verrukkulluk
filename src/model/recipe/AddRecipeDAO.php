@@ -12,7 +12,7 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
     /*  EXPECTED VALUES:
         
         $recipe_values = [
-            'name' => 'stamppot',
+            'title' => 'stamppot',
             'img' => 'stamppot.webp',
             'blurb' => 'lekker',
             'people' => 4,
@@ -23,12 +23,12 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
         ]
 
         $ingredient_values = [
-            0 => [
+            [
                 'ingredient_id' => 9,
                 'quantity' => 3.14,
                 'measure_id' => 2
             ],
-            1 => [
+            [
                 'ingredient_id' => 5,
                 'quantity' => 2.71,
                 'measure_id' => 7
@@ -88,7 +88,7 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
     // PRIVATE
     //=========================================================================
     private function addRecipe(
-        string $name,
+        string $title,
         string $img,
         string $blurb,
         int $people,
@@ -98,10 +98,10 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
         int $user_id,
     ): int|false {
         return $this->crud->doInsert(
-            "INSERT INTO recipes (name, img, blurb, people, cuisine_id, type, descr, user_id)"
-                . " VALUES (:name, :img, :blurb, :people, :cuisine_id, :type, :descr, :user_id)",
+            "INSERT INTO recipes (title, img, blurb, people, cuisine_id, type, descr, user_id)"
+                . " VALUES (:title, :img, :blurb, :people, :cuisine_id, :type, :descr, :user_id)",
             [
-                'name' => [$name, false],
+                'title' => [$title, false],
                 'img' => [$img, false],
                 'blurb' => [$blurb, false],
                 'people' => [$people, true],
@@ -137,7 +137,7 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
         string $descr
     ): bool {
         return $this->crud->doInsert(
-            "INSERT INTO recipe_ingredients (recipe_id, number, descr)"
+            "INSERT INTO prep_steps (recipe_id, number, descr)"
                 . " VALUES (:recipe_id, :number, :descr)",
             [
                 'recipe_id' => [$recipe_id, true],
