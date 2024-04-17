@@ -13,11 +13,9 @@ abstract class ControllerData
     public static function logOutUser(int $user_id): void
     {
         echo 'logging out user ' . $user_id; // TODO replace with nice alert
-        unset($_SESSION['user_id']);
-        // could destroy whole session instead but idk if we want that
-        // session_unset();
-        // session_destroy();
-        // session_start();
+        session_unset();
+        session_destroy();
+        session_start();
     }
 
     public static function getLoggedUser(): int
@@ -27,6 +25,18 @@ abstract class ControllerData
 
     public static function addRecipeToShoppingList(int $recipe_id): void
     {
-        echo 'adding recipe ' . $recipe_id . ' to shopping list!';
+        echo 'adding recipe ' . $recipe_id . ' to shopping list!'; // TODO replace with nice alert
+        $ingredients = \ManKind\ModelManager::getRecipeDAO()->getRecipeIngredients($recipe_id);
+        foreach ($ingredients as $ingredient_id => $quantity) {
+            if (isset($_SESSION['shopping_list'][$ingredient_id])) {
+                $_SESSION['shopping_list'][$ingredient_id] += $quantity;
+            } else {
+                $_SESSION['shopping_list'][$ingredient_id] = $quantity;
+            }
+        }
+    }
+
+    public static function getShoppingList(): array {
+        return isset($_SESSION['shopping_list']) ? $_SESSION['shopping_list'] : [];
     }
 }
