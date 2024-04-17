@@ -121,7 +121,16 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
         float $quantity,
         int $measure_id
     ): bool {
-        return false; // TODO implement function
+        return $this->crud->doInsert(
+            "INSERT INTO recipe_ingredients (recipe_id, ingredient_id, quantity, measure_id)"
+                . " VALUES (:recipe_id, :ingredient_id, :quantity, :measure_id)",
+            [
+                'recipe_id' => [$recipe_id, true],
+                'ingredient_id' => [$ingredient_id, true],
+                'quantity' => [$quantity, true],
+                'measure_id' => [$measure_id, true],
+            ]
+        );
     }
 
     private function addRecipeStep(
@@ -129,6 +138,14 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
         int $number,
         string $descr
     ): bool {
-        return false; // TODO implement function
+        return $this->crud->doInsert(
+            "INSERT INTO recipe_ingredients (recipe_id, number, descr)"
+                . " VALUES (:recipe_id, :number, :descr)",
+            [
+                'recipe_id' => [$recipe_id, true],
+                'number' => [$number, true],
+                'descr' => [$descr, false],
+            ]
+        );
     }
 }
