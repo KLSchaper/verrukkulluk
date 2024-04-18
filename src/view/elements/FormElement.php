@@ -11,9 +11,11 @@ class FormElement extends \vrklk\base\view\BaseElement
 
     private array $field_elements;
     private array $form_info;
+    private int $form_id;
 
     public function __construct(int $form_id, array $controller_form_data)
     {
+        $this->form_id = $form_id;
         $form_dao = \ManKind\ModelManager::getFormDAO();
         $this->form_info = $form_dao->getFormInfo($form_id);
 
@@ -34,6 +36,7 @@ class FormElement extends \vrklk\base\view\BaseElement
         echo <<<EOD
         <form action = "{$this->form_info['action']}" method = "{$this->form_info['method']}"
         class = "{$this->form_info['classes']}" attributes = "{$this->form_info['attributes']}">
+        <input type = "hidden" id = "form_id" name = "form_id" value = "{$this->form_id}">
         EOD;
 
         // display fields

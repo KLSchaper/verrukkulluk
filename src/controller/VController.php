@@ -4,6 +4,8 @@ namespace vrklk\controller;
 
 class VController extends \vrklk\base\controller\Controller
 {
+    protected array $controller_form_array;
+
     //=========================================================================
     // PROTECTED
     //=========================================================================
@@ -58,8 +60,45 @@ class VController extends \vrklk\base\controller\Controller
 
     protected function validatePost(): void
     {
-        switch ($this->request['page']) {
-            // needs to be extended
+        $form_validity = true;
+        $form_id = htmlspecialchars($_POST['form_id']);
+
+        $form_dao = \ManKind\ModelManager::getFormDAO();
+        $form_info = $form_dao->getFormInfo($form_id);
+
+        $form_fields = [];
+        foreach($form_info['fields'] as $field_id => $field_type) {
+            $field_info = $form_dao->getFieldInfo($field_id, $field_type);
+            if($field_info['grouping_id'] == 0) {
+                $validate_array = $this->validateField($field_info, $form_dao);
+                if(!$validate_array['valid']) {
+                    $form_validity = false;
+                }
+                $this->controller_form_array['value'][$field_id] = $validate_array['value'];
+                $this->controller_form_array['error'][$field_id] = $validate_array['error'];
+            } else {
+                $group_info = $form_dao->getFieldInfo($field_info['grouping_id'], 'numeric_int');
+                $group_number = htmlspecialchars($_POST[$group_info['name']]);
+                $this->controller_form_array['error'][$field_id] = '';
+                for ($i=1; $i<=$group_number; $i++) {
+                    $validate_array = $this->validateField($field_info, $form_dao);
+                    if(!$validate_array['valid']) {
+                        $form_validity = false;
+                    }
+                    $this->controller_form_array['value'][$field_id][] = $validate_array['value'];
+                    $this->controller_form_array['error'][$field_id] .= $validate_array['error'];
+                }
+            }
+            
+            //$form_fields[$field_info['name']] = $field_info;
+        }
+
+        if ($form_validity) {
+            $form_validity = $this->validateForm($form_id, $form_dao);
+        }
+
+        if ($form_validity) {
+            $this->handlePost($form_id);
         }
     }
 
@@ -76,10 +115,7 @@ class VController extends \vrklk\base\controller\Controller
             case 'form_test':
                 $main_element = new \vrklk\view\elements\FormElement(
                     6,
-                    [
-                        'form_values' => [], 
-                        'form_errors' => []
-                    ]
+                    []
                 );
                 break;
             case 'home':
@@ -125,9 +161,9 @@ class VController extends \vrklk\base\controller\Controller
                 $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getSearchRecipes(
                     4,
                     $this->response['page_number'],
-                    $this->$search_query,
+                    $this->response['search_query'],
                 );
-                $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalSearchRecipes($this->$search_query) / 4);
+                $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalSearchRecipes($this->response['search_query']) / 4);
                 $main_element = new \vrklk\view\elements\RecipePageElement(
                     recipe_id_array: $recipe_id_array,
                     page_number: $this->response['page_number'],
@@ -209,5 +245,170 @@ class VController extends \vrklk\base\controller\Controller
         mixed $default = false
     ): mixed {
         return (isset($arr[$key]) ? $arr[$key] : $default);
+    }
+
+    private function validateField($field_info, $form_dao): array {
+        $posted_value = isset($_POST[$field_info['name']]) ? $_POST[$field_info['name']] : '';
+        $validate_array['valid'] = true;
+        $validate_array['error'] = '';
+
+        if ($posted_value) {
+            switch ($field_info['validation']) {
+                case 'text_validation':
+                    $posted_value = htmlspecialchars($posted_value);
+                    break;
+
+                case 'email_validation':
+                    $posted_value = filter_var($posted_value, FILTER_VALIDATE_EMAIL);
+                    break;
+
+                case 'file_validation':
+                    // can't be done in time
+                    
+                    // test on extensions (jpg, jpeg, gif, png, (webp))
+                    // the actual translation is done later, after the post is done.
+                    break;
+
+                case 'dropdown_validation':
+                    $posted_value = htmlspecialchars($posted_value);
+                    $dropdown_options = $form_dao->getDropdownInfo[$field_info['id']];
+                    if (!in_array($posted_value, $dropdown_options)) {
+                        $posted_value = false;
+                    }
+                    break;
+
+                case 'numeric_non_zero_validation':
+                    $filter_options = [];
+                    if (isset($field_info['min_value'])) {
+                        $filter_options['min_range'] = $field_info['min_value'];
+                    }
+                    if (isset($field_info['max_value'])) {
+                        $filter_options['max_range'] = $field_info['max_value'];
+                    }
+                    $posted_value = filter_var($posted_value, FILTER_VALIDATE_FLOAT, ['options' => $filter_options]);
+                    if ($posted_value === 0) {
+                        $posted_value = false;
+                    }
+                    break;
+
+                case 'numeric_int_validation':
+                    $filter_options = [];
+                    if (isset($field_info['min_value'])) {
+                        $filter_options['min_range'] = $field_info['min_value'];
+                    }
+                    if (isset($field_info['max_value'])) {
+                        $filter_options['max_range'] = $field_info['max_value'];
+                    }
+                    $posted_value = filter_var($posted_value, FILTER_VALIDATE_INT, ['options' => $filter_options]);
+                    break;
+
+                default:
+                    $posted_value = false;
+            }
+        }
+
+        $validate_array['value'] = $posted_value;
+
+        if ($posted_value === false) {
+            $validate_array['valid'] = false;
+            $validate_array['error'] = 'invalid input';
+        }
+
+        if ($posted_value === '' && $field_info['required']) {
+            $validate_array['valid'] = false;
+            $validate_array['error'] = $field_info['name'] . ' is empty';
+        }
+
+        return $validate_array;
+    }
+
+    private function validateForm($form_id): bool {
+        $form_values = $this->controller_form_array['form_values'];
+        
+        switch ($form_id) {
+            case 1:
+                //login
+                $user_dao =  \ManKind\ModelManager::getUserDAO();
+                $user_array = $user_dao->checkUserLogin($form_values['email']);
+                if (!empty($user_array)) {
+                    if ($form_values['password'] == $user_array['password']) {
+                        $valid = true;
+                        // store user id
+                        logInUser($form_values['user_id']);
+                    } else {
+                        $valid = false;
+                        $this->controller_form_array['form_errors']['2'] = 'incorrect password';
+                    }
+                } else {
+                    $valid = false;
+                    $this->controller_form_array['form_errors']['1'] = 'no user with that email address exists';
+                }
+                break;
+
+            case 2:
+                $valid = true;
+                break;
+
+            case 3:
+                $valid = true;
+                break;
+
+            case 4:
+                //recipe
+
+                break;
+
+            case 5:
+                //measure
+                break;
+
+            case 6:
+                //register
+                $user_dao =  \ManKind\ModelManager::getUserDAO();
+                if ($user_dao->checkUserRegister($form_values['email'])) {
+                    $valid = false;
+                    $this->controller_form_array['form_errors']['28'] = 'email address already in use';
+                } else {
+                    if ($form_values['password'] == $form_values['repeat_password']) {
+                        $valid = true;
+                    } else {
+                        $valid = false;
+                        $this->controller_form_array['form_errors']['30'] = 'repeat password doesn\'t match password';
+                    }
+                }
+                break;
+            default:
+                $valid = false;
+        }
+
+        return $valid;
+    }
+
+    private function handlePost($form_id) {
+        switch ($form_id) {
+            case '1':
+                // login
+                break;
+
+            case '2':
+                // comment
+                break;
+
+            case '3':
+                // search
+                break;
+
+            case '4':
+                // recipe
+                break;
+
+            case '5':
+                // measure
+                break;
+
+            case '6':
+                // register
+                break;
+        }
     }
 }

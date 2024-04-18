@@ -18,4 +18,24 @@ class UsersDAO extends \vrklk\base\model\BaseDAO implements
             ],
         );
     }
+    public function checkUserLogin($email): array {
+        $check_login_query = '
+            SELECT id, password
+            FROM users
+            WHERE email = :email
+        ';
+        $parameters = ['email' => $email];
+        $user_array = $this->crud->selectOne($check_login_query, $parameters);
+        return $user_array;
+    }
+
+    public function checkUserRegister($email): bool {
+        $check_register_query = '
+            SELECT id
+            FROM users
+            WHERE email = :email
+        ';
+        $parameters = ['email' => $email];
+        return boolval ($this->crud->selectOne($check_register_query, $parameters));
+    }
 }

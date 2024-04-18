@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 11:02 AM
+-- Generation Time: Apr 18, 2024 at 09:56 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,46 +39,50 @@ CREATE TABLE `fields` (
   `error_class` varchar(255) DEFAULT NULL,
   `value` varchar(255) DEFAULT NULL,
   `validation` varchar(255) DEFAULT NULL,
-  `field_order` int(11) NOT NULL DEFAULT 1
+  `field_order` int(11) NOT NULL DEFAULT 1,
+  `grouping_id` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 --
 -- Dumping data for table `fields`
 --
 
-INSERT INTO `fields` (`id`, `form_id`, `name`, `type`, `label`, `required`, `label_class`, `input_class`, `error_class`, `value`, `validation`, `field_order`) VALUES
-(1, 1, 'email', 'email', 'Email:', 1, 'form-label', 'form-control', 'text-warning', '', 'email_validation', 1),
-(2, 1, 'password', 'password', 'Wachtwoord:', 1, 'form-label', 'form-control', 'text-warning', '', 'password_validation', 2),
-(3, 2, 'comment', 'textarea', 'Reactie:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1),
-(4, 3, 'search', 'search', '', 1, '', 'form-control', '', '', 'text_validation', 1),
-(5, 4, 'recipe_name', 'text', 'Naam:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1),
-(6, 4, 'recipe_img', 'file', 'Afbeelding:', 1, 'form-label', 'form-control', 'text-warning', '', 'file_validation', 2),
-(7, 4, 'cuisine_choice', 'dropdown', 'Keuken:', 1, 'form-label', 'form-control', 'text-warning', '', 'dropdown_validation', 4),
-(8, 4, 'type', 'dropdown', 'Type:', 1, 'form-label', 'form-control', 'text-warning', '', 'dropdown_validation', 5),
-(9, 4, 'recipe_blurb', 'textarea', 'Korte Omschrijving:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validaton', 6),
-(10, 4, 'recipe_description', 'textarea', 'Uitgebreide Omschrijving:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 7),
-(11, 4, 'ingredient_title', 'comment', '', 0, '', '', '', '', '', 8),
-(12, 4, 'open_ingredient_div', 'comment', '', 0, '', '', '', '', '', 9),
-(13, 4, 'ingredient_choice', 'dropdown', 'Ingrediënt:', 1, 'form-label', 'form-control', 'text-warning', '', 'dropdown_validation', 10),
-(14, 4, 'quantity', 'numeric', 'Hoeveelheid:', 1, 'form-label', 'form-control', 'text-warning', '', 'numeric_validation', 11),
-(15, 4, 'measure_choice', 'dropdown', '', 1, '', 'form-control', 'text-warning', '', 'dropdown_validation', 12),
-(16, 4, 'measure_button', 'comment', '', 0, '', '', '', '', '', 13),
-(17, 4, 'close_ingredient_div', 'comment', '', 0, '', '', '', '', '', 14),
-(18, 4, 'ingredient_button', 'comment', '', 0, '', '', '', '', '', 15),
-(19, 4, 'prep_step_title', 'comment', '', 0, '', '', '', '', '', 16),
-(20, 4, 'open_prep_step_div', 'comment', '', 0, '', '', '', '', '', 17),
-(21, 4, 'prep_step', 'textarea', 'Stap bereidingswijze:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 18),
-(22, 4, 'close_prep_step_div', 'comment', '', 0, '', '', '', '', '', 19),
-(23, 4, 'prep_step_button', 'comment', '', 0, '', '', '', '', '', 20),
-(24, 5, 'measure', 'text', 'Maateenheid:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1),
-(25, 5, 'measure_quantity', 'numeric', 'Hoeveelheid:', 1, 'form-label', 'form-control', 'text-warning', '', 'numeric_validation', 2),
-(26, 5, 'measure_unit', 'dropdown', '', 1, '', 'form-control', 'text-warning', '', 'dropdown_validation', 3),
-(27, 6, 'username', 'text', 'Naam:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1),
-(28, 6, 'email', 'email', 'Email:', 1, 'form-label', 'form-control', 'text-warning', '', 'email_validation', 2),
-(29, 6, 'password', 'password', 'Wachtwoord:', 1, 'form-label', 'form-control', 'text-warning', '', 'password_validation', 3),
-(30, 6, 'repeat_password', 'password', 'Herhaal Wachtwoord:', 1, 'form-label', 'form-control', 'text-warning', '', 'repeat_password_validation', 4),
-(31, 6, 'profile_picture', 'file', 'Profielfoto:', 0, 'form-label', 'form-control', 'text-warning', '', 'file_validation', 5),
-(32, 4, 'people', 'numeric', 'Aantal Personen:', 1, 'form-label', 'form-control', 'text-warning', '', 'numeric_validation', 3);
+INSERT INTO `fields` (`id`, `form_id`, `name`, `type`, `label`, `required`, `label_class`, `input_class`, `error_class`, `value`, `validation`, `field_order`, `grouping_id`) VALUES
+(1, 1, 'email', 'email', 'Email:', 1, 'form-label', 'form-control', 'text-warning', '', 'email_validation', 1, 0),
+(2, 1, 'password', 'password', 'Wachtwoord:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 2, 0),
+(3, 2, 'comment', 'textarea', 'Reactie:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1, 0),
+(4, 3, 'search', 'search', '', 1, '', 'form-control', '', '', 'text_validation', 1, 0),
+(5, 4, 'recipe_name', 'text', 'Naam:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1, 0),
+(6, 4, 'recipe_img', 'file', 'Afbeelding:', 0, 'form-label', 'form-control', 'text-warning', '', 'file_validation', 2, 0),
+(7, 4, 'cuisine_choice', 'dropdown', 'Keuken:', 1, 'form-label', 'form-control', 'text-warning', '', 'dropdown_validation', 4, 0),
+(8, 4, 'type', 'dropdown', 'Type:', 1, 'form-label', 'form-control', 'text-warning', '', 'dropdown_validation', 5, 0),
+(9, 4, 'recipe_blurb', 'textarea', 'Korte Omschrijving:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validaton', 6, 0),
+(10, 4, 'recipe_description', 'textarea', 'Uitgebreide Omschrijving:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 7, 0),
+(11, 4, 'ingredient_title', 'comment', '', 0, '', '', '', '', '', 8, 0),
+(12, 4, 'open_ingredient_div', 'comment', '', 0, '', '', '', '', '', 9, 0),
+(13, 4, 'ingredient_choice_1', 'dropdown', 'Ingrediënt:', 1, 'form-label', 'form-control', 'text-warning', '', 'dropdown_validation', 10, 34),
+(14, 4, 'quantity_1', 'numeric', 'Hoeveelheid:', 1, 'form-label', 'form-control', 'text-warning', '', 'numeric_non_zero_validation', 11, 34),
+(15, 4, 'measure_choice_1', 'dropdown', '', 1, '', 'form-control', 'text-warning', '', 'text_validation', 12, 34),
+(16, 4, 'measure_button', 'comment', '', 0, '', '', '', '', '', 13, 0),
+(17, 4, 'close_ingredient_div', 'comment', '', 0, '', '', '', '', '', 14, 0),
+(18, 4, 'ingredient_button', 'comment', '', 0, '', '', '', '', '', 15, 0),
+(19, 4, 'prep_step_title', 'comment', '', 0, '', '', '', '', '', 16, 0),
+(20, 4, 'open_prep_step_div', 'comment', '', 0, '', '', '', '', '', 17, 0),
+(21, 4, 'prep_step_1', 'textarea', 'Stap bereidingswijze:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 18, 35),
+(22, 4, 'close_prep_step_div', 'comment', '', 0, '', '', '', '', '', 19, 0),
+(23, 4, 'prep_step_button', 'comment', '', 0, '', '', '', '', '', 20, 0),
+(24, 5, 'measure', 'text', 'Maateenheid:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1, 0),
+(25, 5, 'measure_quantity', 'numeric', 'Hoeveelheid:', 1, 'form-label', 'form-control', 'text-warning', '', 'numeric_non_zero_validation', 2, 0),
+(26, 5, 'measure_unit', 'dropdown', '', 1, '', 'form-control', 'text-warning', '', 'dropdown_validation', 3, 0),
+(27, 6, 'username', 'text', 'Naam:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1, 0),
+(28, 6, 'email', 'email', 'Email:', 1, 'form-label', 'form-control', 'text-warning', '', 'email_validation', 2, 0),
+(29, 6, 'password', 'password', 'Wachtwoord:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 3, 0),
+(30, 6, 'repeat_password', 'password', 'Herhaal Wachtwoord:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 4, 0),
+(31, 6, 'profile_picture', 'file', 'Profielfoto:', 0, 'form-label', 'form-control', 'text-warning', '', 'file_validation', 5, 0),
+(32, 4, 'people', 'numeric', 'Aantal Personen:', 1, 'form-label', 'form-control', 'text-warning', '', 'numeric_int_validation', 3, 0),
+(33, 4, 'user_id', 'hidden', '', 1, '', '', '', '0', 'numeric_int', 21, 0),
+(34, 4, 'number_of_ingredients', 'hidden', '', 1, '', '', '', '1', 'numeric_int', 22, 0),
+(35, 4, 'number_of_steps', 'hidden', '', 1, '', '', '', '1', 'numeric_int', 23, 0);
 
 -- --------------------------------------------------------
 
@@ -123,8 +127,8 @@ CREATE TABLE `fields_numeric` (
 --
 
 INSERT INTO `fields_numeric` (`field_id`, `min_value`, `max_value`) VALUES
-(14, 1, NULL),
-(25, 1, NULL),
+(14, 0, NULL),
+(25, 0, NULL),
 (32, 1, NULL);
 
 -- --------------------------------------------------------
@@ -192,6 +196,12 @@ ALTER TABLE `forms`
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `fields`
+--
+ALTER TABLE `fields`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `forms`
