@@ -4,24 +4,9 @@ namespace vrklk\model\interfaces;
 
 interface iAddRecipe
 {
-    public function storeRecipe(
-        string $name,
-        string $img,
-        string $blurb,
-        int $people,
-        int $cuisine_id,
-        string $type,
-        string $descr
+    public function storeNewRecipe(
+        array $recipe_values,
+        array $ingredient_values,
+        array $prep_step_values
     ): int | false;
-    public function storeRecipeIngredient(
-        int $recipe_id,
-        int $ingredient_id,
-        float $quantity,
-        int $measure_id
-    ): bool;
-    public function storeRecipeStep(
-        int $recipe_id,
-        int $number,
-        string $descr
-    ): bool;
 }

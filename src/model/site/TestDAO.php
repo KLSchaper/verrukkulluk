@@ -132,6 +132,9 @@ class TestDAO extends \vrklk\base\model\BaseDAO
                     'getTotalSearchRecipes' => [
                         'search_query'  => 'uovo',
                     ],
+                    'getRecipeIngredients'  => [
+                        'recipe_id'     => 1,
+                    ],
                     'getRecipeDetails'      => [
                         'recipe_id'     => 1,
                     ],

@@ -28,6 +28,10 @@ class VController extends \vrklk\base\controller\Controller
             case 'form_test':
                 $this->response['title'] = 'TestForm';
                 break;
+            case 'log_out':
+                $this->response['page'] = 'home';
+                \vrklk\controller\ControllerData::logOutUser($this->getRequestVar('user_id', false, 0, true));
+                // no break, falls through
             case 'home':
                 $this->response['title'] = 'Home';
                 $this->response['page_number'] = $this->getRequestVar('page_number', false, 1, true);
@@ -36,18 +40,18 @@ class VController extends \vrklk\base\controller\Controller
                 $this->response['title'] = 'Mijn Favorieten';
                 $this->response['page_number'] = $this->getRequestVar('page_number', false, 1, true);
                 break;
+            case 'add_to_list';
+                $this->response['page'] = 'details';
+                \vrklk\controller\ControllerData::addRecipeToShoppingList($this->getRequestVar('recipe_id', false, 0, true));
+                // no break, falls through
             case 'details':
                 $this->response['title'] = 'Recept Details';
                 $this->response['recipe_id'] = $this->getRequestVar('recipe_id', false, 0, true);
                 break;
             case 'shopping_list';
                 $this->response['title'] = 'Mijn Boodschappenlijst';
-                break;
-            case 'add_to_list';
-                $this->response['page'] = 'details';
-                $this->response['title'] = 'Recept Details';
-                $this->response['recipe_id'] = $this->getRequestVar('recipe_id', false, 0, true);
-                $this->addRecipeToShoppingList($this->response['recipe_id']);
+                $this->response['shopping_list'] = \vrklk\controller\ControllerData::getShoppingList();
+                $this->response['user_adaptations'] = \vrklk\controller\ControllerData::getUserAdaptations();
                 break;
             default:
                 $this->response['title'] = '404';
@@ -100,7 +104,7 @@ class VController extends \vrklk\base\controller\Controller
 
     protected function showResponse(): void
     {
-        $user_id = 1; // TODO read from session
+        $user_id = \vrklk\controller\ControllerData::getLoggedUser();
         switch ($this->response['page']) {
             case 'dao_test':
                 $main_element = new \vrklk\view\elements\DataElement(
@@ -171,20 +175,56 @@ class VController extends \vrklk\base\controller\Controller
                 $main_element = new \vrklk\view\elements\RecipeDetailsElement($this->response['recipe_id'], $user_id);
                 break;
             case 'shopping_list':
-                $main_element = new \vrklk\view\elements\ShoppingListElement([
-                    10  => 10,
-                    2   => 10,
-                    13  => 10,
-                    8   => 10,
-                    12  => 10,
-                ], 
-                [
-                    1   => 1,
-                    3   => 1,
-                    16  => 1,
-                    17  => 1,
-                    18  => -1,
+                $main_element = new \vrklk\view\elements\ShoppingListElement(
+                    $this->response['shopping_list'],
+                    $this->response['user_adaptations'],
+                );
+                break;
+            case 'add_test':
+                $user_dao = new \vrklk\model\user\AddUserDAO();
+                $user = $user_dao->registerUser('koen', 'kls@mail.com', 'pass', 'img.jpg');
+                $comment_dao = new \vrklk\model\user\AddCommentDAO();
+                $comment = $comment_dao->addComment(1, 1, 'test');
+                $recipe_dao = new \vrklk\model\recipe\AddRecipeDAO();
+                $measure = $recipe_dao->addMeasure(1, 'snufje', 'gram', 0.5);
+                $recipe = $recipe_dao->storeNewRecipe([
+                    'title' => 'stamppot',
+                    'img' => 'stamppot.webp',
+                    'blurb' => 'lekker',
+                    'people' => 4,
+                    'cuisine_id' => 6,
+                    'type' => 'meat',
+                    'descr' => 'een winterse klassieker',
+                    'user_id' => 1
+                ], [
+                    [
+                        'ingredient_id' => 1,
+                        'quantity' => 3.14,
+                        'measure_id' => $measure
+                    ],
+                    [
+                        'ingredient_id' => 11,
+                        'quantity' => 8,
+                        'measure_id' => 6
+                    ],
+                    [
+                        'ingredient_id' => 13,
+                        'quantity' => 0.5,
+                        'measure_id' => 2
+                    ],
+                ], [
+                    1 => 'doe iets',
+                    2 => 'doe nog iets',
+                    3 => 'wacht even',
+                    4 => 'eet smakelijk!'
                 ]);
+                $main_element = new \vrklk\view\elements\TextElement(
+                    'user added: ' . $user . '<br>'
+                        . 'comment added: ' . $comment . '<br>'
+                        . 'measure added: ' . $measure . '<br>'
+                        . 'recipe added: ' . $recipe . '<br>',
+                    'Add DAO test results',
+                );
                 break;
             default:
                 $main_element = new \vrklk\view\elements\TextElement(
@@ -199,10 +239,6 @@ class VController extends \vrklk\base\controller\Controller
     //=========================================================================
     // PRIVATE
     //=========================================================================
-    private function addRecipeToShoppingList(int $recipe_id): void {
-        echo 'adding recipe ' . $recipe_id . ' to shopping list!';
-    }
-    
     private function getKeyValue(
         array $arr,
         string $key,

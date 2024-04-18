@@ -147,7 +147,7 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         $get_recipe_query = '
             SELECT r.title AS title, r.img AS img, r.blurb AS blurb, r.people AS people, l.display AS display, r.descr AS descr, AVG(ra.rating) AS rating, c.name AS cuisine, u.name AS author
             FROM recipes r
-            INNER JOIN ratings ra ON r.id = ra.recipe_id
+            LEFT JOIN ratings ra ON r.id = ra.recipe_id
             INNER JOIN cuisines c ON r.cuisine_id = c.id
             INNER JOIN users u ON r.user_id = u.id
             INNER JOIN lookup l ON (l.group = "recipe_types" AND r.type = l.value)
@@ -162,15 +162,16 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         $product_dao = \ManKind\ModelManager::getProductDAO();
 
         //get ingredients
-        $recipe_ingredient_query = '
-            SELECT i.id AS id, (ri.quantity * m.quantity) AS quantity_needed
-            FROM ingredients i
-            INNER JOIN recipe_ingredients ri ON ri.ingredient_id = i.id
-            INNER JOIN recipes r ON ri.recipe_id = r.id
-            INNER JOIN measures m ON ri.measure_id = m.id
-            WHERE r.id = :recipe_id;
-        ';
-        $recipe_ingredients = $this->crud->selectAsPairs($recipe_ingredient_query, $parameters);
+        // $recipe_ingredient_query = '
+        //     SELECT i.id AS id, (ri.quantity * m.quantity) AS quantity_needed
+        //     FROM ingredients i
+        //     INNER JOIN recipe_ingredients ri ON ri.ingredient_id = i.id
+        //     INNER JOIN recipes r ON ri.recipe_id = r.id
+        //     INNER JOIN measures m ON ri.measure_id = m.id
+        //     WHERE r.id = :recipe_id;
+        // ';
+        // $recipe_ingredients = $this->crud->selectAsPairs($recipe_ingredient_query, $parameters);
+        $recipe_ingredients = $this->getRecipeIngredients($recipe_id);
 
         $total_price = 0;
         foreach ($recipe_ingredients as $ingredient_id => $required_quantity) {
@@ -189,6 +190,20 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         return $recipe_result;
     }
 
+    public function getRecipeIngredients(int $recipe_id): array|false
+    {
+        return $this->crud->selectAsPairs(
+            "SELECT i.id AS id, (ri.quantity * m.quantity) AS quantity_needed"
+                . " FROM ingredients AS i"
+                . " INNER JOIN recipe_ingredients AS ri ON ri.ingredient_id = i.id"
+                . " INNER JOIN recipes AS r ON ri.recipe_id = r.id"
+                . " INNER JOIN measures m ON ri.measure_id = m.id"
+                . " WHERE r.id = :recipe_id",
+            [
+                'recipe_id' => [$recipe_id, true],
+            ],
+        );
+    }
 
     //=========================================================================
     // PRIVATE

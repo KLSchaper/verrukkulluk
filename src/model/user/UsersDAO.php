@@ -18,7 +18,6 @@ class UsersDAO extends \vrklk\base\model\BaseDAO implements
             ],
         );
     }
-
     public function checkUserLogin($email): array {
         $check_login_query = '
             SELECT id, password
