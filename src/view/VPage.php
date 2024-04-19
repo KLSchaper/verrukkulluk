@@ -61,7 +61,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
         <div id="gw-dlg-overlay"></div>
         <div id="gw-dlg-box"> 
             <div id="gw-dlg-box-head">
-                <img alt="logo" id="gw-dlg-logo" src="./assets/img/verrukkulluk-logo.png" />
+                <img alt="logo" id="gw-dlg-logo" src="./assets/img/verrukkulluk_logo.png" />
                 <div id="gw-dlg-box-title"></div>
             </div>
             <div id="gw-dlg-box-body"></div>
