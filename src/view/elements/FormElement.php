@@ -13,11 +13,13 @@ class FormElement extends \vrklk\base\view\BaseElement
     private array $form_info;
     private int $form_id;
 
-    public function __construct(int $form_id, array $controller_form_data)
+    public function __construct(int $form_id, array $controller_form_data, $page)
     {
         $this->form_id = $form_id;
         $form_dao = \ManKind\ModelManager::getFormDAO();
         $this->form_info = $form_dao->getFormInfo($form_id);
+
+        $this->form_info['page'] = $page;
 
         $this->field_elements = [];
         foreach ($this->form_info['fields'] as $field_id => $field_type) {
@@ -37,6 +39,7 @@ class FormElement extends \vrklk\base\view\BaseElement
         <form action = "{$this->form_info['action']}" method = "{$this->form_info['method']}"
         class = "{$this->form_info['classes']}" attributes = "{$this->form_info['attributes']}">
         <input type = "hidden" id = "form_id" name = "form_id" value = "{$this->form_id}">
+        <input type = "hidden" id = "page" name = "page" value = "{$this->form_info['page']}">
         EOD;
 
         // display fields

@@ -7,10 +7,10 @@ class FormPageElement extends \vrklk\base\view\BaseElement
     private string $title;
     private \vrklk\view\elements\FormElement $form;
     
-    public function __construct(string $title, int $form_id, array $controller_form_data)
+    public function __construct(string $title, int $form_id, array $controller_form_data, $page)
     {
         $this->title = $title;
-        $this->form = new \vrklk\view\elements\FormElement($form_id, $controller_form_data);
+        $this->form = new \vrklk\view\elements\FormElement($form_id, $controller_form_data, $page);
     }
 
     public function show()

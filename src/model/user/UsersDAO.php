@@ -18,13 +18,13 @@ class UsersDAO extends \vrklk\base\model\BaseDAO implements
             ],
         );
     }
-    public function checkUserLogin($email): array {
+    public function checkUserLogin($email): array|false {
         $check_login_query = '
             SELECT id, password
             FROM users
             WHERE email = :email
         ';
-        $parameters = ['email' => $email];
+        $parameters = ['email' => [$email, false]];
         $user_array = $this->crud->selectOne($check_login_query, $parameters);
         return $user_array;
     }
@@ -35,7 +35,7 @@ class UsersDAO extends \vrklk\base\model\BaseDAO implements
             FROM users
             WHERE email = :email
         ';
-        $parameters = ['email' => $email];
+        $parameters = ['email' => [$email, false]];
         return boolval ($this->crud->selectOne($check_register_query, $parameters));
     }
 }

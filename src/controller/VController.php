@@ -12,6 +12,19 @@ class VController extends \vrklk\base\controller\Controller
     protected function validateGet(): void
     {
         switch ($this->request['page']) {
+            case 'register':
+                $this->controller_form_array = ['form_values' => [], 'form_errors' => []];
+                break;
+            case 'add_recipe':
+                $this->controller_form_array = ['form_values' => [], 'form_errors' => []];
+                break;
+        }
+
+    }
+    
+    protected function validateGeneral(): void
+    {
+        switch ($this->request['page']) {
             case 'site_test':
             case 'agenda_test':
             case 'favorite_test':
@@ -53,6 +66,12 @@ class VController extends \vrklk\base\controller\Controller
                 $this->response['shopping_list'] = \vrklk\controller\ControllerData::getShoppingList();
                 $this->response['user_adaptations'] = \vrklk\controller\ControllerData::getUserAdaptations();
                 break;
+            case 'register':
+                $this->response['title'] = 'Registreren';  
+                break;
+            case 'add_recipe':
+                $this->response['title'] = 'Recept Toevoegen';
+                break;
             default:
                 $this->response['title'] = '404';
         }
@@ -66,31 +85,34 @@ class VController extends \vrklk\base\controller\Controller
         $form_dao = \ManKind\ModelManager::getFormDAO();
         $form_info = $form_dao->getFormInfo($form_id);
 
-        $form_fields = [];
+        $this->response['post_values'] = [];
         foreach($form_info['fields'] as $field_id => $field_type) {
             $field_info = $form_dao->getFieldInfo($field_id, $field_type);
-            if($field_info['grouping_id'] == 0) {
-                $validate_array = $this->validateField($field_info, $form_dao);
-                if(!$validate_array['valid']) {
-                    $form_validity = false;
-                }
-                $this->controller_form_array['value'][$field_id] = $validate_array['value'];
-                $this->controller_form_array['error'][$field_id] = $validate_array['error'];
-            } else {
-                $group_info = $form_dao->getFieldInfo($field_info['grouping_id'], 'numeric_int');
-                $group_number = htmlspecialchars($_POST[$group_info['name']]);
-                $this->controller_form_array['error'][$field_id] = '';
-                for ($i=1; $i<=$group_number; $i++) {
+            if($field_info['type']!='comment') {
+                if($field_info['grouping_id'] == 0) {
                     $validate_array = $this->validateField($field_info, $form_dao);
                     if(!$validate_array['valid']) {
                         $form_validity = false;
                     }
-                    $this->controller_form_array['value'][$field_id][] = $validate_array['value'];
-                    $this->controller_form_array['error'][$field_id] .= $validate_array['error'];
+                    $this->controller_form_array['form_values'][$field_id] = $validate_array['value'];
+                    $this->controller_form_array['form_errors'][$field_id] = $validate_array['error'];
+                    $this->response['post_values'][$field_info['name']] = $validate_array['value'];
+                } else {
+                    $group_info = $form_dao->getFieldInfo($field_info['grouping_id'], 'numeric_int');
+                    $group_number = htmlspecialchars($_POST[$group_info['name']]);
+                    $this->controller_form_array['error'][$field_id] = '';
+                    for ($i=1; $i<=$group_number; $i++) {
+                        $validate_array = $this->validateField($field_info, $form_dao);
+                        if(!$validate_array['valid']) {
+                            $form_validity = false;
+                        }
+                        //TODO solve for multiple inputs of the same ID
+                        $this->controller_form_array['form_values'][$field_id] = $validate_array['value'];
+                        $this->controller_form_array['form_errors'][$field_id] = $validate_array['error'];
+                        $this->response['post_values'][$field_info['name']] = $validate_array['value'];
+                    }
                 }
             }
-            
-            //$form_fields[$field_info['name']] = $field_info;
         }
 
         if ($form_validity) {
@@ -103,7 +125,7 @@ class VController extends \vrklk\base\controller\Controller
     }
 
     protected function showResponse(): void
-    {
+    {   
         $user_id = \vrklk\controller\ControllerData::getLoggedUser();
         switch ($this->response['page']) {
             case 'dao_test':
@@ -115,7 +137,8 @@ class VController extends \vrklk\base\controller\Controller
             case 'form_test':
                 $main_element = new \vrklk\view\elements\FormElement(
                     6,
-                    []
+                    [],
+                    $this->response['page']
                 );
                 break;
             case 'home':
@@ -132,16 +155,10 @@ class VController extends \vrklk\base\controller\Controller
                 );
                 break;
             case 'register':
-                // test only
-                $this->response['controller_form_data'] = ['form_values' => [], 'form_errors' => []];
-                //
-                $main_element = new \vrklk\view\elements\FormPageElement('Registreren', 6, $this->response['controller_form_data']);
+                $main_element = new \vrklk\view\elements\FormPageElement('Registreren', 6, $this->controller_form_array, $this->response['page']);
                 break;
             case 'add_recipe':
-                // test only
-                $this->response['controller_form_data'] = ['form_values' => [], 'form_errors' => []];
-                //
-                $main_element = new \vrklk\view\elements\FormPageElement('Recept Toevoegen', 4, $this->response['controller_form_data']);
+                $main_element = new \vrklk\view\elements\FormPageElement('Recept Toevoegen', 4, $this->controller_form_array, $this->response['page']);
                 break;
             case 'favorites':
                 $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getFavoriteRecipes(
@@ -232,7 +249,7 @@ class VController extends \vrklk\base\controller\Controller
                     '404',
                 );
         }
-        $page = new \vrklk\view\VPage($this->response['title'], $main_element, $user_id);
+        $page = new \vrklk\view\VPage($this->response['title'], $main_element, $user_id, $this->response['page']);
         $page->show();
     }
 
@@ -251,7 +268,6 @@ class VController extends \vrklk\base\controller\Controller
         $posted_value = isset($_POST[$field_info['name']]) ? $_POST[$field_info['name']] : '';
         $validate_array['valid'] = true;
         $validate_array['error'] = '';
-
         if ($posted_value) {
             switch ($field_info['validation']) {
                 case 'text_validation':
@@ -271,7 +287,12 @@ class VController extends \vrklk\base\controller\Controller
 
                 case 'dropdown_validation':
                     $posted_value = htmlspecialchars($posted_value);
-                    $dropdown_options = $form_dao->getDropdownInfo[$field_info['id']];
+                    $dropdown_info = $form_dao->getDropdownInfo($field_info['id']);
+                    $dropdown_options = [];
+                    foreach ($dropdown_info as $option) {
+                        $dropdown_options[] = isset($option['value']) ? $option['value'] : $option['name'];
+                    }
+
                     if (!in_array($posted_value, $dropdown_options)) {
                         $posted_value = false;
                     }
@@ -323,18 +344,17 @@ class VController extends \vrklk\base\controller\Controller
     }
 
     private function validateForm($form_id): bool {
-        $form_values = $this->controller_form_array['form_values'];
+        $form_values = $this->response['post_values'];
         
         switch ($form_id) {
             case 1:
                 //login
-                $user_dao =  \ManKind\ModelManager::getUserDAO();
+                $user_dao =  \ManKind\ModelManager::getUsersDAO();
                 $user_array = $user_dao->checkUserLogin($form_values['email']);
                 if (!empty($user_array)) {
                     if ($form_values['password'] == $user_array['password']) {
                         $valid = true;
-                        // store user id
-                        logInUser($form_values['user_id']);
+                        \vrklk\controller\ControllerData::logInUser($user_array['id']);
                     } else {
                         $valid = false;
                         $this->controller_form_array['form_errors']['2'] = 'incorrect password';
@@ -355,16 +375,28 @@ class VController extends \vrklk\base\controller\Controller
 
             case 4:
                 //recipe
-
+                $valid = true;
+                $add_recipe_dao = \ManKind\ModelManager::getAddRecipeDAO();
+                if ($add_recipe_dao->checkRecipeName($form_values['recipe_name'])){
+                    $valid = false;
+                } else {
+                    for ($i = 1; $i <= $form_values['number_of_ingredients']; $i++) {
+                        $ingredient_name = $form_values['ingredient_choice_'.$i];
+                        $measure_name = $form_values['measure_choice_'.$i];
+                        $valid = $add_recipe_dao->checkIngredientMeasure($ingredient_name, $measure_name);
+                    }
+                }
                 break;
 
             case 5:
                 //measure
+                $add_recipe_dao = \ManKind\ModelManager::getAddRecipeDAO();
+                $valid = !$add_recipe_dao->checkMeasureName($form_values['measure_name']);
                 break;
 
             case 6:
                 //register
-                $user_dao =  \ManKind\ModelManager::getUserDAO();
+                $user_dao =  \ManKind\ModelManager::getUsersDAO();
                 if ($user_dao->checkUserRegister($form_values['email'])) {
                     $valid = false;
                     $this->controller_form_array['form_errors']['28'] = 'email address already in use';
@@ -385,29 +417,93 @@ class VController extends \vrklk\base\controller\Controller
     }
 
     private function handlePost($form_id) {
+        $form_values = $this->response['post_values'];
         switch ($form_id) {
             case '1':
                 // login
+                // already done in validation.
                 break;
 
             case '2':
                 // comment
+                $user_id = \vrklk\controller\ControllerData::getLoggedUser();
+                $recipe_id = $this->response['recipe_id'];
+                $text = $form_values['comment'];
+
+                $comment_dao = \ManKind\ModelManager::getAddCommentDAO();
+                $comment_dao->addComment($recipe_id, $user_id, $text);
                 break;
 
             case '3':
                 // search
+                $this->response['page'] = 'search';
+                $this->response['search_query'] = $form_values['search'];
+                $this->response['page_number'] = 1;
                 break;
 
             case '4':
                 // recipe
+                $add_recipe_dao = \ManKind\ModelManager::getAddRecipeDAO();
+
+                $title = $form_values['recipe_name'];
+                $img = '';
+                $blurb = $form_values['recipe_blurb'];
+                $people = $form_values['people'];
+                $cuisine_id = $add_recipe_dao->getCuisineByName($form_values['cuisine_choice']);
+                $type = $add_recipe_dao->getTypeByName($form_values['type']);
+                $descr = $form_values['recipe_description'];
+                $user_id = \vrklk\controller\ControllerData::getLoggedUser();
+                
+                $recipe_values = [
+                    'title' => $title,
+                    'img' => $img,
+                    'blurb' => $blurb,
+                    'people' => $people,
+                    'cuisine_id' => $cuisine_id,
+                    'type' => $type,
+                    'descr' => $descr,
+                    'user_id' => $user_id
+                ];
+
+                $ingredient_values = [];
+                for ($i = 1; $i <= $form_values['number_of_ingredients']; $i++) {
+                    $ingredient_id = $add_recipe_dao->getIngredientByName($form_values['ingredient_choice_'.$i]);
+                    $quantity = $form_values['quantity_'.$i];
+                    $measure = $add_recipe_dao->getMeasureByName($form_values['measure_choice_'.$i]);
+
+                    $ingredient_values[] = ['ingredient_id' => $ingredient_id, 'quantity'=> $quantity,'measure_id'=> $measure];
+                }
+
+                $prep_step_values = [];
+                for ($i = 1; $i <= $form_values['number_of_steps']; $i++) {
+                    $prep_step_values[strval($i)] = $form_values['prep_step_'.$i];
+                }
+
+                $add_recipe_dao->testRecipe($recipe_values, $ingredient_values, $prep_step_values);
                 break;
 
             case '5':
                 // measure
+                $add_recipe_dao = \ManKind\ModelManager::getAddRecipeDAO();
+                $ingredient_id = /* hidden field in post */ $form_values['measure_ingredient_id'];
+                $name = $form_values['measure_name'];
+                $unit = $form_values['measure_unit'];
+                $quantity = $form_values['measure_quantity'];
+
+                $add_recipe_dao->addMeasure($ingredient_id, $name, $unit, $quantity);
                 break;
 
             case '6':
                 // register
+                $name = $form_values['username'];
+                $email = $form_values['email'];
+                $password = $form_values['password'];
+
+                $add_user_dao = \ManKind\ModelManager::getAddUserDAO();
+                $new_user_id = $add_user_dao->registerUser($name, $email, $password, '');
+                \vrklk\controller\ControllerData::logInUser($new_user_id);
+                $this->request['page'] = 'home';
+                $this->response['page'] = 'home';
                 break;
         }
     }
