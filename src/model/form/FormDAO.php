@@ -33,7 +33,7 @@ class FormDAO  extends \vrklk\base\model\BaseDAO implements
         $parameters = ['form_id' => [$form_id, true]];
 
         $form_info_query = '
-            SELECT name, action, method, classes, attributes, submit_text, submit_class, page
+            SELECT name, action, method, classes, attributes, submit_text, submit_class
             FROM forms
             WHERE id = :form_id;
         ';
