@@ -32,6 +32,7 @@ class VPage extends \vrklk\base\view\HtmlDoc
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="./assets/css/custom.css">
+        <link rel="stylesheet" href="./assets/css/dialogs.css">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://kit.fontawesome.com/83ed522242.js" crossorigin="anonymous"></script>
         EOD;
@@ -55,5 +56,23 @@ class VPage extends \vrklk\base\view\HtmlDoc
         $content->show();
         $footer = new \vrklk\view\elements\FooterElement();
         $footer->show();
+        echo <<<EOD
+        <!-- BEGIN class GWDialog JS Component Html -->
+        <div id="gw-dlg-overlay"></div>
+        <div id="gw-dlg-box"> 
+            <div id="gw-dlg-box-head">
+                <img alt="logo" id="gw-dlg-logo" src="./assets/img/verrukkulluk-logo.png" />
+                <div id="gw-dlg-box-title"></div>
+            </div>
+            <div id="gw-dlg-box-body"></div>
+            <div id="gw-dlg-box-foot">
+                <button id="gw-dlg-btn-ok" class="btn btn-success">OK</button>
+                <button id="gw-dlg-btn-cancel" class="btn btn-default">Cancel</button>
+            </div>
+        </div>
+        <!-- END class GWDialog JS Component Html -->
+        <script src="./assets/js/dialog.js"></script>
+        <script src="./assets/js/gw_dialog.js"></script>
+        EOD;
     }
 }
