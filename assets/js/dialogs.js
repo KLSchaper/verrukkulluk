@@ -68,9 +68,12 @@ const edit_name_options = (title, name) => {
 
 const add_to_list_options = (recipe) => {
     return {
-        title: 'Toegevoegd aan boodschappenlijst',
+        title: recipe + ' toegevoegd aan boodschappenlijst',
         cancel_func: 'NOP',
-        body: '<div class="alert alert-succes">Ingrediënten voor ' + recipe + ' toegevoegd aan boodschappenlijst</div>',
+        body: '<div class="alert alert-succes">'
+            + '<p>Je kunt je boodschappenlijst terugvinden via het menu bovenaan de pagina.</p>'
+            + '<p>(maar je boodschappen staan er nog niet op want nog geen AJAX toegevoegd)</p>'
+            + '</div>',
     };
 };
 
@@ -107,7 +110,7 @@ function editName() {
 }
 
 function addToList() {
-    const recipe = 'Stamppot';
+    const recipe = document.getElementById('recipe-title').innerHTML;
     gwprompt.show(add_to_list_options(recipe));
 }
 
@@ -115,7 +118,7 @@ function addToList() {
 /* INIT */
 const initPage = () => {
     console.log('initPage');
-    document.getElementById('show-dlg').addEventListener('click', editName);
+    // document.getElementById('show-dlg').addEventListener('click', editName);
     document.getElementById('add-to-list').addEventListener('click', addToList);
 }
 

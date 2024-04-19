@@ -89,7 +89,7 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                     </div>
                     <div class="row">
                         <div class="col-sm-8">
-                            <h1 class="green-lily text-truncate">{$this->recipe_details['title']}</h1>
+                            <h1 class="green-lily text-truncate" id="recipe-title">{$this->recipe_details['title']}</h1>
                             <div class="d-flex align-items-center">
                                 <div><h4 class="green-lily my-auto">Keuken: </h4></div>
                                 <div><p class="my-auto ps-1">{$this->recipe_details['cuisine']}</p></div>
@@ -107,9 +107,11 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                         <p>{$this->recipe_details['descr']}</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <a href="{$add_link}" class="btn p-0">
+                        <!-- <a href="{$add_link}" class="btn p-0" id="add-to-list"> -->
+                        <button class="btn p-0" id="add-to-list">
                             <h1 class="m-0"><span class="badge rounded-pill red-white-lily">Op Lijst</span></h1>
-                        </a>
+                        </button>
+                        <!-- </a> -->
                         <div class="ms-auto">
                             <h2><i class="{$heart} fa-heart red me-4" id="favorite-heart"></i></h2>
                         </div>
