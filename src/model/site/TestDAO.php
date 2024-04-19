@@ -143,4 +143,47 @@ class TestDAO extends \vrklk\base\model\BaseDAO
                 return [];
         }
     }
+    public static function getRecipeData(string $data_type): array
+    {
+        switch ($data_type) {
+            case 'add_recipe_details':
+                return [
+                    'title' => 'stamppot',
+                    'img' => 'stamppot.webp',
+                    'blurb' => 'lekker',
+                    'people' => 4,
+                    'cuisine_id' => 6,
+                    'type' => 'meat',
+                    'descr' => 'een winterse klassieker',
+                    'user_id' => 1
+                ];
+            case 'add_recipe_ingredients':
+                return [
+                    [
+                        'ingredient_id' => 1,
+                        'quantity' => 3.14,
+                        'measure_id' => 1,
+                    ],
+                    [
+                        'ingredient_id' => 11,
+                        'quantity' => 8,
+                        'measure_id' => 6
+                    ],
+                    [
+                        'ingredient_id' => 13,
+                        'quantity' => 0.5,
+                        'measure_id' => 2
+                    ],
+                ];
+            case 'add_recipe_steps':
+                return [
+                    1 => 'doe iets',
+                    2 => 'doe nog iets',
+                    3 => 'wacht even',
+                    4 => 'eet smakelijk!'
+                ];
+            default:
+                return [];
+        }
+    }
 }
