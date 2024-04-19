@@ -33,7 +33,7 @@ class FormDAO  extends \vrklk\base\model\BaseDAO implements
         $parameters = ['form_id' => [$form_id, true]];
 
         $form_info_query = '
-            SELECT name, action, method, classes, attributes, submit_text, submit_class
+            SELECT name, action, method, classes, attributes, submit_text, submit_class, page
             FROM forms
             WHERE id = :form_id;
         ';
@@ -76,7 +76,7 @@ class FormDAO  extends \vrklk\base\model\BaseDAO implements
         switch ($field_type) {
             case 'numeric':
                 $field_info_query = '
-                    SELECT name, label, type, label_class, input_class, error_class, required, value, min_value, max_value, grouping_id
+                    SELECT id, name, label, type, label_class, input_class, error_class, required, value, min_value, max_value, grouping_id, validation
                     FROM fields f
                     INNER JOIN fields_numeric f_n ON f_n.field_id = f.id
                     WHERE id = :field_id;
@@ -92,7 +92,7 @@ class FormDAO  extends \vrklk\base\model\BaseDAO implements
                 break;
             default:
                 $field_info_query = '
-                    SELECT name, label, type, label_class, input_class, error_class, required, value, grouping_id
+                    SELECT id, name, label, type, label_class, input_class, error_class, required, value, grouping_id, validation
                     FROM fields
                     WHERE id = :field_id;
                 ';

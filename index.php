@@ -17,8 +17,10 @@ try {
             'PrepStepsTabDAO'   => 'vrklk\model\recipe\PrepStepsTabDAO',
             'ProductDAO'        => 'vrklk\model\recipe\ProductDAO',
             'RecipeDAO'         => 'vrklk\model\recipe\RecipeDAO',
-            'UsersDAO'           => 'vrklk\model\user\UsersDAO',
+            'UsersDAO'          => 'vrklk\model\user\UsersDAO',
             'FormDAO'           => 'vrklk\model\form\FormDAO',
+            'AddUserDAO'        => 'vrklk\model\user\addUserDAO',
+            'AddRecipeDAO'      => 'vrklk\model\recipe\addRecipeDAO',
         ]
     );
     $maincontroller = new vrklk\controller\VController();

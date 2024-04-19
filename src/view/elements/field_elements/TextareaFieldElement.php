@@ -15,9 +15,8 @@ class TextareaFieldElement extends \vrklk\view\elements\field_elements\BaseField
                 </label>
             </div>
             <div class = "{$this->layout_data['input_layout_class']}">      
-                <textarea class = "{$this->field_info['input_class']}" id = "{$this->field_info['name']}">
-                {$this->field_info['value']}
-                </textarea>
+                <textarea class = "{$this->field_info['input_class']}" id = "{$this->field_info['name']}"
+                name = "{$this->field_info['name']}">{$this->field_info['value']}</textarea>
             </div>
             <div class = "{$this->layout_data['error_layout_class']}">
                 <span class = "{$this->field_info['error_class']}">

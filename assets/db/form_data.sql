@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2024 at 09:56 AM
+-- Generation Time: Apr 19, 2024 at 01:24 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -56,7 +56,7 @@ INSERT INTO `fields` (`id`, `form_id`, `name`, `type`, `label`, `required`, `lab
 (6, 4, 'recipe_img', 'file', 'Afbeelding:', 0, 'form-label', 'form-control', 'text-warning', '', 'file_validation', 2, 0),
 (7, 4, 'cuisine_choice', 'dropdown', 'Keuken:', 1, 'form-label', 'form-control', 'text-warning', '', 'dropdown_validation', 4, 0),
 (8, 4, 'type', 'dropdown', 'Type:', 1, 'form-label', 'form-control', 'text-warning', '', 'dropdown_validation', 5, 0),
-(9, 4, 'recipe_blurb', 'textarea', 'Korte Omschrijving:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validaton', 6, 0),
+(9, 4, 'recipe_blurb', 'textarea', 'Korte Omschrijving:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 6, 0),
 (10, 4, 'recipe_description', 'textarea', 'Uitgebreide Omschrijving:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 7, 0),
 (11, 4, 'ingredient_title', 'comment', '', 0, '', '', '', '', '', 8, 0),
 (12, 4, 'open_ingredient_div', 'comment', '', 0, '', '', '', '', '', 9, 0),
@@ -71,7 +71,7 @@ INSERT INTO `fields` (`id`, `form_id`, `name`, `type`, `label`, `required`, `lab
 (21, 4, 'prep_step_1', 'textarea', 'Stap bereidingswijze:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 18, 35),
 (22, 4, 'close_prep_step_div', 'comment', '', 0, '', '', '', '', '', 19, 0),
 (23, 4, 'prep_step_button', 'comment', '', 0, '', '', '', '', '', 20, 0),
-(24, 5, 'measure', 'text', 'Maateenheid:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1, 0),
+(24, 5, 'measure_name', 'text', 'Maateenheid:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1, 0),
 (25, 5, 'measure_quantity', 'numeric', 'Hoeveelheid:', 1, 'form-label', 'form-control', 'text-warning', '', 'numeric_non_zero_validation', 2, 0),
 (26, 5, 'measure_unit', 'dropdown', '', 1, '', 'form-control', 'text-warning', '', 'dropdown_validation', 3, 0),
 (27, 6, 'username', 'text', 'Naam:', 1, 'form-label', 'form-control', 'text-warning', '', 'text_validation', 1, 0),
@@ -81,8 +81,8 @@ INSERT INTO `fields` (`id`, `form_id`, `name`, `type`, `label`, `required`, `lab
 (31, 6, 'profile_picture', 'file', 'Profielfoto:', 0, 'form-label', 'form-control', 'text-warning', '', 'file_validation', 5, 0),
 (32, 4, 'people', 'numeric', 'Aantal Personen:', 1, 'form-label', 'form-control', 'text-warning', '', 'numeric_int_validation', 3, 0),
 (33, 4, 'user_id', 'hidden', '', 1, '', '', '', '0', 'numeric_int', 21, 0),
-(34, 4, 'number_of_ingredients', 'hidden', '', 1, '', '', '', '1', 'numeric_int', 22, 0),
-(35, 4, 'number_of_steps', 'hidden', '', 1, '', '', '', '1', 'numeric_int', 23, 0);
+(34, 4, 'number_of_ingredients', 'hidden', '', 1, '', '', '', '1', 'numeric_int_validation', 22, 0),
+(35, 4, 'number_of_steps', 'hidden', '', 1, '', '', '', '1', 'numeric_int_validation', 23, 0);
 
 -- --------------------------------------------------------
 

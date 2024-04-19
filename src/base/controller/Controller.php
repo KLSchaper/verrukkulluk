@@ -41,6 +41,11 @@ class Controller
         }
     }
 
+    protected function validateGeneral(): void
+    {
+        
+    }
+
     protected function getRequestVar(
         string $key,
         bool $frompost,
@@ -77,5 +82,6 @@ class Controller
         } else {
             $this->validateGet();
         }
+        $this->validateGeneral();
     }
 }

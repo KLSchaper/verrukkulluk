@@ -84,6 +84,120 @@ class AddRecipeDAO extends \vrklk\base\model\BaseDAO implements
         );
     }
 
+    // these measures have been added for the validation
+    public function checkRecipeName (string $recipe_name): bool
+    {
+        $check_recipe_name_query = '
+            SELECT id
+            FROM recipes
+            WHERE title = :title;
+        ';
+        $parameters = ['title' => [$recipe_name, false]];
+        return boolval($this->crud->selectOne($check_recipe_name_query, $parameters));
+    }
+
+    public function checkIngredientMeasure (string $ingredient_name, string $measure_name): bool
+    {
+        $general_measure_query = '
+            SELECT ingredient_id
+            FROM measures
+            WHERE name = :measure_name;
+        ';
+        $general_measure_parameters = ['measure_name' => [$measure_name, false]];
+        $general_measure_data = $this->crud->selectOne($general_measure_query, $general_measure_parameters);
+
+        if (is_null($general_measure_data['ingredient_id'])) {
+            return true;
+        }
+
+        $combined_data_query = '
+            SELECT i.unit, m.unit
+            FROM ingredients i
+            INNER JOIN measures m ON m.ingredient_id = i.id
+            WHERE i.name = :ingredient_name AND m.name = :measure_name;
+        ';
+        $combined_parameters = ['ingredient_name' => [$ingredient_name, false], 'measure_name' => [$measure_name, false]];
+        $combined_data = $this->crud->selectOne($combined_data_query, $combined_parameters);
+
+        if ($combined_data) {
+            if ($combined_data['i.unit'] == $combined_data['m.unit']) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function checkMeasureName (string $measure_name): bool
+    {
+        $check_measure_name_query = '
+            SELECT id
+            FROM measures
+            WHERE name = :name;
+        ';
+        $parameters = ['name' => [$measure_name, false]];
+        return boolval($this->crud->selectOne($check_measure_name_query, $parameters));
+    }
+
+    public function getCuisineByName (string $cuisine_name): int
+    {
+        $get_cuisine_query = '
+            SELECT id
+            FROM cuisines
+            WHERE name = :name
+        ';
+        $parameters = ['name'=> [$cuisine_name, false]];
+        return $this->crud->selectOne($get_cuisine_query, $parameters)['id'];
+    }
+
+    public function getTypeByName (string $type_name): int
+    {
+        $get_type_query = '
+            SELECT id
+            FROM lookup l
+            WHERE value = :value
+        ';
+        $parameters = ['value'=> [$type_name, false]];
+        return $this->crud->selectOne($get_type_query, $parameters)['id'];
+    }
+
+    public function getIngredientByName (string $ingredient_name): int
+    {
+        $get_ingredient_query = '
+            SELECT id
+            FROM ingredients
+            WHERE name = :name
+        ';
+        $parameters = ['name'=> [$ingredient_name, false]];
+        return $this->crud->selectOne($get_ingredient_query, $parameters)['id'];
+    }
+
+    public function getMeasureByName (string $measure_name): int
+    {
+        $get_measure_query = '
+            SELECT id
+            FROM measures
+            WHERE name = :name
+        ';
+        $parameters = ['name'=> [$measure_name, false]];
+        return $this->crud->selectOne($get_measure_query, $parameters)['id'];
+    }
+
+    // for testing purposes only
+    public function testRecipe(
+        array $recipe_values,
+        array $ingredient_values,
+        array $prep_step_values
+    )
+    {
+        var_dump($recipe_values);
+        echo'<br><br>';
+        var_dump($ingredient_values);
+        echo'<br><br>';
+        var_dump($prep_step_values);
+    }
+
+
     //=========================================================================
     // PRIVATE
     //=========================================================================

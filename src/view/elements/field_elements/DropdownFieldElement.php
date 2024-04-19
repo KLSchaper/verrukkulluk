@@ -19,9 +19,11 @@ class DropdownFieldElement extends \vrklk\view\elements\field_elements\BaseField
                 $option['value'] = $option['name'];
             }
             $this->dropdown_options .= '<option value="' . $option['value'];
-            if ($option['value'] == $this->field_info['value']) {
-                $this->dropdown_options .= ' selected';
-            }
+
+            //TODO this was originally intended to keep selected options, but it doesn't work this way. Fix it.
+            //if ($option['value'] == $this->field_info['value']) {
+            //    $this->dropdown_options .= ' selected';
+            //}
             $this->dropdown_options .= '">' . $option['display'] .'</option>';
         }
     }

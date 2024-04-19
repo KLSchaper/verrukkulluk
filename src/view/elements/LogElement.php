@@ -6,11 +6,13 @@ class LogElement extends \vrklk\base\view\BaseElement
 {
     private int $user_id;
     private \vrklk\model\interfaces\iLoginDAO $dao;
+    private string $page;
 
-    public function __construct(int $user_id)
+    public function __construct(int $user_id, $page)
     {
         $this->user_id = $user_id;
         $this->dao = \ManKind\ModelManager::getSiteDAO();
+        $this->page = $page;
     }
 
     public function show()
@@ -48,7 +50,7 @@ class LogElement extends \vrklk\base\view\BaseElement
 
     private function showLoginContent()
     {
-        $login_form = new \Vrklk\view\elements\FormElement(1, []);
+        $login_form = new \Vrklk\view\elements\FormElement(1, [], $this->page);
         $login_form->show();
     }
 }
