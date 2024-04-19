@@ -22,10 +22,10 @@ class RecipePageElement extends \vrklk\base\view\BaseElement
                 $this->recipe_dao->getRecipeDetails($recipe_id);
             
             // just for testing a full page with only 2 recipes in mock data db
-            $this->recipe_details[$recipe_id + count($recipe_id_array)] = 
-                $this->recipe_dao->getRecipeDetails($recipe_id);
+            // $this->recipe_details[$recipe_id + count($recipe_id_array)] = 
+                // $this->recipe_dao->getRecipeDetails($recipe_id);
         }
-        ksort($this->recipe_details);
+        // ksort($this->recipe_details);
         // end of testing code
         $this->page = $page;
         $this->page_number = $page_number;
