@@ -107,11 +107,11 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                         <p>{$this->recipe_details['descr']}</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <!-- <a href="{$add_link}" class="btn p-0" id="add-to-list"> -->
-                        <button class="btn p-0" id="add-to-list">
+                        <!-- <button class="btn p-0" id="add-to-list"> -->
+                        <a href="{$add_link}" class="btn p-0" id="add-to-list">
                             <h1 class="m-0"><span class="badge rounded-pill red-white-lily">Op Lijst</span></h1>
-                        </button>
-                        <!-- </a> -->
+                        <!-- </button> -->
+                        </a>
                         <div class="ms-auto">
                             <h2><i class="{$heart} fa-heart red me-4" id="favorite-heart"></i></h2>
                         </div>
