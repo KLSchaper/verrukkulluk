@@ -71,8 +71,8 @@ class VPage extends \vrklk\base\view\HtmlDoc
             </div>
         </div>
         <!-- END class GWDialog JS Component Html -->
-        <script src="./assets/js/dialog.js"></script>
         <script src="./assets/js/gw_dialog.js"></script>
+        <script src="./assets/js/dialogs.js"></script>
         EOD;
     }
 }
