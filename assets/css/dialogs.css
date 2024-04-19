@@ -1,0 +1,71 @@
+:root 
+{
+  --dlg-bg-color        	: white;
+  --txt-on-lightgrey    	: #606060;
+  --box-shadow-color    	: rgba(0,0,0,.6);
+  --box-border-color   		: rgba(0,0,0,0.2);
+  --grey-border-color   	: #A0A0A0;
+}
+
+#gw-dlg-overlay
+{
+	display					:none;
+	background-color        :#ffffff;
+	opacity					:0.7;
+	width					:100%;
+	top						:0px;
+	left					:0px;
+	position				:fixed;
+	z-index					:1100;
+}
+
+#gw-dlg-box
+{
+	display					: none;
+	position				: fixed;
+	min-width				: 320px;
+	z-index					: 1100;
+	color					: var(--txt-on-lightgrey); 
+	background-color		: var(--dlg-bg-color);
+	-webkit-box-shadow		: 0 5px 15px var(--box-shadow-color);
+	box-shadow				: 0 5px 15px var(--box-shadow-color);	
+	border					: 1px solid var(--box-border-color);
+	border-radius			: 6px;
+	-webkit-background-clip	: padding-box;
+	background-clip			: padding-box;
+	outline					: 0;
+}
+
+#gw-dlg-box img#gw-dlg-logo 
+{
+  display					: inline-block;
+  margin					: -10px 10px 10px -10px;
+  width						: 50px;
+}
+#gw-dlg-box-title 
+{
+	display					: inline-block;
+}
+
+#gw-dlg-box div
+{
+	margin					: 8px;
+}
+#gw-dlg-box #gw-dlg-box-head
+{ 
+	font-size				: 19px; 
+	padding					: 10px; 
+	color					: var(--txt-on-lightgrey); 
+	border-bottom  			: 1px solid var(--grey-border-color);
+}
+#gw-dlg-box #gw-dlg-box-body
+{ 
+	color					: var(--txt-on-lightgrey); 
+	border-bottom  			: 1px solid var(--grey-border-color);
+	padding					: 20px; 
+}
+#gw-dlg-box #gw-dlg-box-foot
+{ 
+	padding					: 10px; 
+	text-align				: right; 
+}
