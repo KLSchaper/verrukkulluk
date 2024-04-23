@@ -10,9 +10,9 @@ class HandlerFactory
         \ManKind\tools\dev\Logger::_echo($requested_handler . '-call made');
         switch ($requested_handler) {
             case 'page':
-                return new \vrklk\controller\PageHandler();
+                return new \vrklk\controller\VPageHandler();
             case 'ajax':
-                return new \vrklk\controller\AjaxHandler();
+                return new \vrklk\controller\VAjaxHandler();
             default:
                 throw new \Exception('Unknown handler requested: '
                     . $requested_handler);

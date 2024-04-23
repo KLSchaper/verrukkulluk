@@ -2,7 +2,7 @@
 
 namespace vrklk\base\controller;
 
-class MainController
+class MainController implements \vrklk\interfaces\iRequestHandler
 {
     protected $handler_factory;
 
