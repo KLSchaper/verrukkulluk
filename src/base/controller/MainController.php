@@ -2,7 +2,7 @@
 
 namespace vrklk\base\controller;
 
-use vrklk\base\controller\HandlerFactory;
+use \vrklk\base\controller\HandlerFactory;
 
 class MainController implements \vrklk\interfaces\iRequestHandler
 {
