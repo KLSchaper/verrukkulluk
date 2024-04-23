@@ -55,7 +55,7 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                 // p: recipe description (from recipe data)
             //div:
                 // button: "op lijst" (put ingredients in shopping list)
-        $add_link = \Config::LINKBASE . 'index.php?page=add_to_list&recipe_id=' . $this->recipe_id;
+        $add_link = \Config::LINKBASE_PAGE . 'add_to_list&recipe_id=' . $this->recipe_id;
         
         if ($this->is_favorite) {
             $heart = 'fa-solid';

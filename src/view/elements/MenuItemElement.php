@@ -20,7 +20,7 @@ class MenuItemElement extends \vrklk\base\view\BaseElement
 
     public function show()
     {
-        $link = \Config::LINKBASE . 'index.php?page=' . $this->name;
+        $link = \Config::LINKBASE_PAGE . $this->name;
         echo <<<EOD
         <li class="nav-item px-3">
             <a class="nav-link" href="{$link}">
