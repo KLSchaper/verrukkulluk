@@ -13,10 +13,9 @@ abstract class RESTfulHandler implements \vrklk\interfaces\iRequestHandler
         $result = false;
         try {
             ob_start();
-            if ($this->_generateResponse()) {
-                echo ob_get_clean();
-                $result = true;
-            }
+            $this->_generateResponse();
+            echo ob_get_clean();
+            $result = true;
         } catch (\Throwable $ex) {
             ob_end_clean();
             $this->_reportError($ex);
@@ -27,6 +26,6 @@ abstract class RESTfulHandler implements \vrklk\interfaces\iRequestHandler
     //=========================================================================
     // PROTECTED
     //=========================================================================
-    abstract protected function _generateResponse(): bool;
+    abstract protected function _generateResponse(): void;
     abstract protected function _reportError(\Throwable $ex): void;
 }

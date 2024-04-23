@@ -13,13 +13,14 @@ abstract class BasePageHandler extends \vrklk\base\controller\RESTfulHandler
     //=========================================================================
     // PROTECTED
     //=========================================================================
-    protected function _generateResponse(): bool
+    protected function _generateResponse(): void
     {
         $this->requested_page = Request::getRequestVar(
             key: 'page',
             default: 'home',
         );
-        return ($this->_validateRequest() && $this->_showResponse());
+        $this->_validateRequest();
+        $this->_showResponse();
     }
 
     protected function _reportError(\Throwable $e): void
@@ -27,17 +28,17 @@ abstract class BasePageHandler extends \vrklk\base\controller\RESTfulHandler
         \ManKind\tools\dev\Logger::_error($e);
     }
 
-    protected function _validateRequest(): bool
+    protected function _validateRequest(): void
     {
         $this->response['page'] = $this->requested_page;
         if (Request::isPost()) {
-            return $this->_validatePost();
+            $this->_validatePost();
         } else {
-            return $this->_validateGet();
+            $this->_validateGet();
         }
     }
 
-    abstract protected function _validateGet(): bool;
-    abstract protected function _validatePost(): bool;
-    abstract protected function _showResponse(): bool;
+    abstract protected function _validateGet(): void;
+    abstract protected function _validatePost(): void;
+    abstract protected function _showResponse(): void;
 }

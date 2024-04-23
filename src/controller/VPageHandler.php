@@ -4,27 +4,25 @@ namespace vrklk\controller;
 
 class VPageHandler extends \vrklk\base\controller\BasePageHandler
 {
-    protected function _validateGet(): bool
+    protected function _validateGet(): void
     {
         switch ($this->requested_page) {
             default:
                 \ManKind\tools\dev\Logger::_echo('Invalid GET request: '
                     . $this->requested_page);
         }
-        return true;
     }
 
-    protected function _validatePost(): bool
+    protected function _validatePost(): void
     {
         switch ($this->requested_page) {
             default:
                 \ManKind\tools\dev\Logger::_echo('Invalid POST request: '
                     . $this->requested_page);
         }
-        return true;
     }
 
-    protected function _showResponse(): bool
+    protected function _showResponse(): void
     {
         $user_id = \vrklk\controller\ControllerData::getLoggedUser();
         switch ($this->response['page']) {
@@ -44,6 +42,5 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
             $this->response['page']
         );
         $page->show();
-        return true;
     }
 }
