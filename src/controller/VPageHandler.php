@@ -10,8 +10,8 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
             default:
                 \ManKind\tools\dev\Logger::_echo('Invalid GET request: '
                     . $this->requested_page);
-                return false;
         }
+        return true;
     }
 
     protected function _validatePost(): bool
@@ -20,18 +20,30 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
             default:
                 \ManKind\tools\dev\Logger::_echo('Invalid POST request: '
                     . $this->requested_page);
-                return false;
         }
+        return true;
     }
 
     protected function _showResponse(): bool
     {
+        $user_id = \vrklk\controller\ControllerData::getLoggedUser();
         switch ($this->response['page']) {
             default:
-                \ManKind\tools\dev\Logger::_echo('Invalid response: '
+                $this->response['title'] = '404';
+                $main_element = new \vrklk\view\elements\TextElement(
+                    'De gevraagde pagina is niet gevonden',
+                    '404',
+                );
+                \ManKind\tools\dev\Logger::_echo('Invalid response page: '
                     . $this->response['page']);
-                return false;
         }
+        $page = new \vrklk\view\VPage(
+            $this->response['title'],
+            $main_element,
+            $user_id,
+            $this->response['page']
+        );
+        $page->show();
+        return true;
     }
-
 }
