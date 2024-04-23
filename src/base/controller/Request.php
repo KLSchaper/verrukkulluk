@@ -2,7 +2,7 @@
 
 namespace vrklk\base\controller;
 
-class Request
+abstract class Request
 {
     //=========================================================================
     // PUBLIC
