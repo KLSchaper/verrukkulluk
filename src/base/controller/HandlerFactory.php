@@ -9,8 +9,10 @@ class HandlerFactory
     //=========================================================================
     public function createHandler(): \vrklk\interfaces\iRequestHandler
     {
-        $request = new \vrklk\base\controller\Request();
-        $requested_handler = $request->getRequest()['handler'];
+        $requested_handler = \vrklk\base\controller\Request::getRequestVar(
+            key: 'handler',
+            default: 'page',
+        );
         \ManKind\tools\dev\Logger::_echo($requested_handler . '-call made');
         switch ($requested_handler) {
             case 'page':
