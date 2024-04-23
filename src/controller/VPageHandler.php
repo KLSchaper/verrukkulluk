@@ -2,8 +2,10 @@
 
 namespace vrklk\controller;
 
-abstract class VPageHandler extends \vrklk\base\controller\BasePageHandler
-
+class VPageHandler extends \vrklk\base\controller\BasePageHandler
 {
-    // TODO
+    protected function _createPage(): bool
+    {
+        return false;
+    }
 }
