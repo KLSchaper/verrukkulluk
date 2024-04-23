@@ -6,7 +6,8 @@ class HandlerFactory
 {
     public function createHandler(): \vrklk\interfaces\iRequestHandler
     {
-        $requested_handler = 'page'; // TODO replace with getRequestVar function somehow
+        $request = new \vrklk\base\controller\Request();
+        $requested_handler = $request->getRequest()['handler'];
         \ManKind\tools\dev\Logger::_echo($requested_handler . '-call made');
         switch ($requested_handler) {
             case 'page':
