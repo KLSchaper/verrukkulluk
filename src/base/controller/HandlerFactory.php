@@ -4,6 +4,9 @@ namespace vrklk\base\controller;
 
 class HandlerFactory
 {
+    //=========================================================================
+    // PUBLIC
+    //=========================================================================
     public function createHandler(): \vrklk\interfaces\iRequestHandler
     {
         $request = new \vrklk\base\controller\Request();
