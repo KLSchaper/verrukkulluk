@@ -15,17 +15,6 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
     protected function _validateGet(): void
     {
         switch ($this->requested_page) {
-            case 'site_test':
-            case 'agenda_test':
-            case 'favorite_test':
-            case 'recipeform_test':
-            case 'measureform_test':
-            case 'ingredientform_test':
-            case 'detailtabs_test':
-            case 'product_test':
-            case 'recipe_test':
-                $this->response['page'] = 'dao_test';
-                break;
             case 'log_out':
                 $this->response['page'] = 'home';
                 ControllerData::logOutUser(Request::getRequestVar('user_id', 0, true));
@@ -72,21 +61,6 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
     {
         $user_id = ControllerData::getLoggedUser();
         switch ($this->response['page']) {
-            case 'dao_test':
-                $this->response['title'] = \vrklk\model\site\TestDAO::getTestTitle($this->requested_page);
-                $main_element = new \vrklk\view\elements\DataElement(
-                    $this->response['title'],
-                    \vrklk\model\site\TestDAO::getTestFunctions($this->requested_page),
-                );
-                break;
-            case 'form_test':
-                $this->response['title'] = 'TestForm';
-                $main_element = new \vrklk\view\elements\FormElement(
-                    6,
-                    [],
-                    $this->response['page']
-                );
-                break;
             case 'home':
                 $this->response['title'] = 'Home';
                 $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes(
@@ -148,25 +122,6 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
                 $main_element = new \vrklk\view\elements\ShoppingListElement(
                     $this->response['shopping_list'],
                     $this->response['user_adaptations'],
-                );
-                break;
-            case 'add_test':
-                $user_dao = new \vrklk\model\user\AddUserDAO();
-                $user = $user_dao->registerUser('koen', 'kls@mail.com', 'pass', 'img.jpg');
-                $comment_dao = new \vrklk\model\user\AddCommentDAO();
-                $comment = $comment_dao->addComment(1, 1, 'test');
-                $recipe_dao = new \vrklk\model\recipe\AddRecipeDAO();
-                $measure = $recipe_dao->addMeasure(1, 'snufje', 'gram', 0.5);
-                $recipe = $recipe_dao->storeNewRecipe(
-                    \vrklk\model\site\TestDAO::getRecipeData('add_recipe_details'),
-                    \vrklk\model\site\TestDAO::getRecipeData('add_recipe_ingredients'),
-                    \vrklk\model\site\TestDAO::getRecipeData('add_recipe_steps'));
-                $main_element = new \vrklk\view\elements\TextElement(
-                    'user added: ' . $user . '<br>'
-                        . 'comment added: ' . $comment . '<br>'
-                        . 'measure added: ' . $measure . '<br>'
-                        . 'recipe added: ' . $recipe . '<br>',
-                    'Add DAO test results',
                 );
                 break;
             default:

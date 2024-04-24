@@ -15,6 +15,8 @@ class HandlerFactory
         );
         \ManKind\tools\dev\Logger::_echo($requested_handler . '-call made');
         switch ($requested_handler) {
+            case 'test':
+                return new \vrklk\controller\TestPageHandler();
             case 'page':
                 return new \vrklk\controller\VPageHandler();
             case 'ajax':
