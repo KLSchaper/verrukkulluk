@@ -23,8 +23,11 @@ try {
             'AddRecipeDAO'      => 'vrklk\model\recipe\addRecipeDAO',
         ]
     );
-    $maincontroller = new vrklk\controller\VController();
-    $maincontroller->handleRequest();
+
+    $main_controller = new \vrklk\base\controller\MainController(
+        new \vrklk\base\controller\HandlerFactory()
+    );
+    $main_controller->handleRequest();
 } catch (\Throwable $e) {
     \ManKind\tools\dev\Logger::_error($e);
 }
