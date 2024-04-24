@@ -3,11 +3,12 @@
 namespace vrklk\controller;
 
 use \vrklk\base\controller\Request,
-    \vrklk\controller\ControllerData;
+    \vrklk\controller\ControllerData,
+    \vrklk\controller\FormValidator;
 
 class VPageHandler extends \vrklk\base\controller\BasePageHandler
 {
-    protected array $controller_form_array;
+    protected FormValidator $validator;
 
     //=========================================================================
     // PROTECTED
@@ -37,10 +38,12 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
                 $this->response['user_adaptations'] = ControllerData::getUserAdaptations();
                 break;
             case 'register':
-                $this->controller_form_array = ['form_values' => [], 'form_errors' => []];
+                $this->validator = new FormValidator();
+                $this->validator->setFormData(['form_values' => [], 'form_errors' => []]);
                 break;
             case 'add_recipe':
-                $this->controller_form_array = ['form_values' => [], 'form_errors' => []];
+                $this->validator = new FormValidator();
+                $this->validator->setFormData(['form_values' => [], 'form_errors' => []]);
                 break;
             default:
                 \ManKind\tools\dev\Logger::_echo('Invalid GET request: '
@@ -50,10 +53,52 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
 
     protected function _validatePost(): void
     {
-        switch ($this->requested_page) {
-            default:
-                \ManKind\tools\dev\Logger::_echo('Invalid POST request: '
-                    . $this->requested_page);
+        $form_validity = true;
+        $form_id = htmlspecialchars($_POST['form_id']);
+
+        $form_dao = \ManKind\ModelManager::getFormDAO();
+        $form_info = $form_dao->getFormInfo($form_id);
+        $this->validator = new FormValidator();
+
+        $this->response['post_values'] = [];
+        foreach($form_info['fields'] as $field_id => $field_type) {
+            $field_info = $form_dao->getFieldInfo($field_id, $field_type);
+            if($field_info['type']!='comment') {
+                if($field_info['grouping_id'] == 0) {
+                    $validate_array = $this->validator->validateField($field_info, $form_dao);
+                    if(!$validate_array['valid']) {
+                        $form_validity = false;
+                    }
+                    $this->validator->setFormDataValue('form_values', $field_id, $validate_array['value']);
+                    $this->validator->setFormDataValue('form_errors', $field_id, $validate_array['error']);
+                    $this->response['post_values'][$field_info['name']] = $validate_array['value'];
+                } else {
+                    $group_info = $form_dao->getFieldInfo($field_info['grouping_id'], 'numeric_int');
+                    $group_number = htmlspecialchars($_POST[$group_info['name']]);
+                    $this->validator->setFormDataValue('error', $field_id, '');
+                    for ($i=1; $i<=$group_number; $i++) {
+                        $validate_array = $this->validator->validateField($field_info, $form_dao);
+                        if(!$validate_array['valid']) {
+                            $form_validity = false;
+                        }
+                        //TODO solve for multiple inputs of the same ID
+                        $this->validator->setFormDataValue('form_values', $field_id, $validate_array['value']);
+                        $this->validator->setFormDataValue('form_errors', $field_id, $validate_array['error']);
+                        $this->response['post_values'][$field_info['name']] = $validate_array['value'];
+                    }
+                }
+            }
+        }
+
+        if ($form_validity) {
+            $form_validity = $this->validator->validateForm(
+                $form_id,
+                $this->response['post_values']
+            );
+        }
+
+        if ($form_validity) {
+            $this->validator->handlePost($form_id, $this->response);
         }
     }
 
@@ -77,11 +122,21 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
                 break;
             case 'register':
                 $this->response['title'] = 'Registreren';  
-                $main_element = new \vrklk\view\elements\FormPageElement('Registreren', 6, $this->controller_form_array, $this->response['page']);
+                $main_element = new \vrklk\view\elements\FormPageElement(
+                    'Registreren',
+                    6,
+                    $this->validator->getFormData(),
+                    $this->response['page']
+                );
                 break;
             case 'add_recipe':
                 $this->response['title'] = 'Recept Toevoegen';
-                $main_element = new \vrklk\view\elements\FormPageElement('Recept Toevoegen', 4, $this->controller_form_array, $this->response['page']);
+                $main_element = new \vrklk\view\elements\FormPageElement(
+                    'Recept Toevoegen',
+                    4,
+                    $this->validator->getFormData(),
+                    $this->response['page']
+                );
                 break;
             case 'favorites':
                 $this->response['title'] = 'Mijn Favorieten';
