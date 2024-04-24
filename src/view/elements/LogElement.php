@@ -37,7 +37,7 @@ class LogElement extends \vrklk\base\view\BaseElement
     private function showLogoutContent(int $user_id)
     {
         $name = \ManKind\ModelManager::getUsersDAO()->getUserById($user_id)['name'];
-        $log_out_link = \Config::LINKBASE . 'index.php?page=log_out&user_id=' . $user_id;
+        $log_out_link = \Config::LINKBASE_PAGE . 'log_out&user_id=' . $user_id;
         echo <<<EOD
         <div class="text-center my-4">
             <p style="color: var(--white)">Ingelogd als {$name}</p>
