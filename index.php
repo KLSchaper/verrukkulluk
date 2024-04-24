@@ -23,8 +23,6 @@ try {
             'AddRecipeDAO'      => 'vrklk\model\recipe\addRecipeDAO',
         ]
     );
-    // $controller = new vrklk\controller\VController();
-    // $controller->handleRequest();
 
     $main_controller = new \vrklk\base\controller\MainController(
         new \vrklk\base\controller\HandlerFactory()
