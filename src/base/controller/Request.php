@@ -23,7 +23,11 @@ abstract class Request
             $key,
             $filter
         );
-        $result = $asnumber ? $result : htmlspecialchars($result);
-        return ($result === FALSE || $result === NULL) ? $default : $result;
+        if ($result === FALSE || $result === NULL) {
+            $result = $default;
+        } else {
+            $result = $asnumber ? $result : htmlspecialchars($result);
+        }
+        return $result;
     }
 }
