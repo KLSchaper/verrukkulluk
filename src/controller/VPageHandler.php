@@ -2,7 +2,8 @@
 
 namespace vrklk\controller;
 
-use \vrklk\base\controller\Request;
+use \vrklk\base\controller\Request,
+    \vrklk\controller\ControllerData;
 
 class VPageHandler extends \vrklk\base\controller\BasePageHandler
 {
@@ -27,7 +28,7 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
                 break;
             case 'log_out':
                 $this->response['page'] = 'home';
-                \vrklk\controller\ControllerData::logOutUser(Request::getRequestVar('user_id', 0, true));
+                ControllerData::logOutUser(Request::getRequestVar('user_id', 0, true));
                 // no break, falls through
             case 'home':
                 $this->response['page_number'] = Request::getRequestVar('page_number', 1, true);
@@ -37,14 +38,14 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
                 break;
             case 'add_to_list';
                 $this->response['page'] = 'details';
-                \vrklk\controller\ControllerData::addRecipeToShoppingList(Request::getRequestVar('recipe_id', 0, true));
+                ControllerData::addRecipeToShoppingList(Request::getRequestVar('recipe_id', 0, true));
                 // no break, falls through
             case 'details':
                 $this->response['recipe_id'] = Request::getRequestVar('recipe_id', 0, true);
                 break;
             case 'shopping_list';
-                $this->response['shopping_list'] = \vrklk\controller\ControllerData::getShoppingList();
-                $this->response['user_adaptations'] = \vrklk\controller\ControllerData::getUserAdaptations();
+                $this->response['shopping_list'] = ControllerData::getShoppingList();
+                $this->response['user_adaptations'] = ControllerData::getUserAdaptations();
                 break;
             case 'register':
                 $this->controller_form_array = ['form_values' => [], 'form_errors' => []];
@@ -69,7 +70,7 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
 
     protected function _showResponse(): void
     {
-        $user_id = \vrklk\controller\ControllerData::getLoggedUser();
+        $user_id = ControllerData::getLoggedUser();
         switch ($this->response['page']) {
             case 'dao_test':
                 $this->response['title'] = \vrklk\model\site\TestDAO::getTestTitle($this->requested_page);
