@@ -108,14 +108,15 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
         switch ($this->response['page']) {
             case 'home':
                 $this->response['title'] = 'Home';
+                $page_number = $this->getKeyValue($this->response, 'page_number', 1);
                 $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getHomeRecipes(
                     4,
-                    $this->response['page_number'],
+                    $page_number,
                 );
                 $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalHomeRecipes() / 4);
                 $main_element = new \vrklk\view\elements\RecipePageElement(
                     recipe_id_array: $recipe_id_array,
-                    page_number: $this->response['page_number'],
+                    page_number: $page_number,
                     total_pages: $total_pages,
                     page: $this->response['page'],
                 );
@@ -140,30 +141,32 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
                 break;
             case 'favorites':
                 $this->response['title'] = 'Mijn Favorieten';
+                $page_number = $this->getKeyValue($this->response, 'page_number', 1);
                 $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getFavoriteRecipes(
                     4,
-                    $this->response['page_number'],
+                    $page_number,
                     $user_id,
                 );
                 $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalFavoriteRecipes($user_id) / 4);
                 $main_element = new \vrklk\view\elements\RecipePageElement(
                     recipe_id_array: $recipe_id_array,
-                    page_number: $this->response['page_number'],
+                    page_number: $page_number,
                     total_pages: $total_pages,
                     page: $this->response['page'],
                 );
                 break;
             case 'search':
                 $this->response['title'] = 'Zoekresultaten';
+                $page_number = $this->getKeyValue($this->response, 'page_number', 1);
                 $recipe_id_array = \ManKind\ModelManager::getRecipeDAO()->getSearchRecipes(
                     4,
-                    $this->response['page_number'],
+                    $page_number,
                     $this->response['search_query'],
                 );
                 $total_pages = ceil(\ManKind\ModelManager::getRecipeDAO()->getTotalSearchRecipes($this->response['search_query']) / 4);
                 $main_element = new \vrklk\view\elements\RecipePageElement(
                     recipe_id_array: $recipe_id_array,
-                    page_number: $this->response['page_number'],
+                    page_number: $page_number,
                     total_pages: $total_pages,
                     page: $this->response['page'],
                 );
@@ -200,4 +203,11 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
     //=========================================================================
     // PRIVATE
     //=========================================================================
+    private function getKeyValue(
+        array $arr,
+        string $key,
+        mixed $default = false
+    ): mixed {
+        return (isset($arr[$key]) ? $arr[$key] : $default);
+    }
 }
