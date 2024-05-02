@@ -19,15 +19,20 @@ class FavoriteAjaxFunction extends \vrklk\base\model\BaseAjaxFunction
     //=========================================================================
     protected function _getData(): bool
     {
+        if ($this->user_id === 0) {
+            $this->data = 'Log in om iets aan je favorieten toe te voegen';
+            return true;
+        }
+        
         switch ($this->action) {
             case 'add':
-                echo 'adding recipe ' . $this->recipe_id . ' to favorites for user ' . $this->user_id;
+                $this->data = 'adding recipe ' . $this->recipe_id . ' to favorites for user ' . $this->user_id;
                 break;
             case 'remove':
-                echo 'removing recipe ' . $this->recipe_id . ' from favorites for user ' . $this->user_id;
+                $this->data = 'removing recipe ' . $this->recipe_id . ' from favorites for user ' . $this->user_id;
                 break;
             default:
-                echo 'invalid favorite action';
+                $this->data = 'invalid favorite action';
         }
         return true;
     }

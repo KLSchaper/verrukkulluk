@@ -8,7 +8,7 @@ function changeFavoriteStatus() {
                 document.getElementById('favorite-response').innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", 'index.php?handler=ajax&action=add_favorite&recipe_id=1&user_id=1');
+        xmlhttp.open("GET", 'index.php?handler=ajax&action=add_favorite&recipe_id=1');
         xmlhttp.send();
         heart.classList.remove('fa-regular');
         heart.classList.add('fa-solid');
@@ -18,7 +18,7 @@ function changeFavoriteStatus() {
                 document.getElementById('favorite-response').innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", 'index.php?handler=ajax&action=remove_favorite&recipe_id=1&user_id=1');
+        xmlhttp.open("GET", 'index.php?handler=ajax&action=remove_favorite&recipe_id=1');
         xmlhttp.send();
         heart.classList.remove('fa-solid');
         heart.classList.add('fa-regular');
