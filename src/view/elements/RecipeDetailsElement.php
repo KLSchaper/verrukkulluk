@@ -59,8 +59,10 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
         
         if ($this->is_favorite) {
             $heart = 'fa-solid';
+            $fav_link = \Config::LINKBASE_AJAX . 'remove_favorite&recipe_id=' . $this->recipe_id;
         } else {
             $heart = 'fa-regular';
+            $fav_link = \Config::LINKBASE_AJAX . 'add_favorite&recipe_id=' . $this->recipe_id;
         }
 
         $ingredients_tab = $this->makeIngredientsTabContent($this->ingredients_tab_content);
@@ -113,7 +115,9 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                         <!-- </button> -->
                         </a>
                         <div class="ms-auto">
-                            <h2><i class="{$heart} fa-heart red me-4" id="favorite-heart"></i></h2>
+                            <h2>
+                                <i id="favorite-heart" class="{$heart} fa-heart red me-4" data-vrklk-fav-url="{$fav_link}"></i>
+                            </h2>
                         </div>
                     </div>
                     <div id="favorite-response">

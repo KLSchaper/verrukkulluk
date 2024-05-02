@@ -1,6 +1,7 @@
 
 function changeFavoriteStatus() {
     const heart = document.getElementById('favorite-heart');
+    const url = heart.getAttribute('data-vrklk-fav-url');
     var xmlhttp = new XMLHttpRequest();
     if (heart.classList.contains('fa-regular')) {
         xmlhttp.onreadystatechange = function() {
@@ -8,20 +9,22 @@ function changeFavoriteStatus() {
                 document.getElementById('favorite-response').innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", 'index.php?handler=ajax&action=add_favorite&recipe_id=1');
+        xmlhttp.open("GET", url);
         xmlhttp.send();
         heart.classList.remove('fa-regular');
         heart.classList.add('fa-solid');
+        heart.setAttribute('data-vrklk-fav-url', url.replace('add', 'remove'))
     } else {
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 document.getElementById('favorite-response').innerHTML = this.responseText;
             }
         };
-        xmlhttp.open("GET", 'index.php?handler=ajax&action=remove_favorite&recipe_id=1');
+        xmlhttp.open("GET", url);
         xmlhttp.send();
         heart.classList.remove('fa-solid');
         heart.classList.add('fa-regular');
+        heart.setAttribute('data-vrklk-fav-url', url.replace('remove', 'add'))
     }
 }
 
