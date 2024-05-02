@@ -116,6 +116,8 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                             <h2><i class="{$heart} fa-heart red me-4" id="favorite-heart"></i></h2>
                         </div>
                     </div>
+                    <div id="favorite-response">
+                    </div>
                 </div>
             </div>
 
