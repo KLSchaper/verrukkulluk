@@ -3,7 +3,7 @@
 namespace vrklk\base\controller;
 
 use \vrklk\base\controller\Request,
-    \vrklk\base\controller\BaseAjaxFunction,
+    \vrklk\base\model\BaseAjaxFunction,
     \vrklk\base\model\BaseAsyncModel;
 
 abstract class BaseAjaxHandler extends \vrklk\base\controller\RESTfulHandler

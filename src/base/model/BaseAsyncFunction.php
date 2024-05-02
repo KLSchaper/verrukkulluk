@@ -1,6 +1,6 @@
 <?php
 
-namespace vrklk\base\controller;
+namespace vrklk\base\model;
 
 abstract class BaseAsyncFunction
 {

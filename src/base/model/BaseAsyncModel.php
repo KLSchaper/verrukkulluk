@@ -2,7 +2,7 @@
 
 namespace vrklk\base\model;
 
-use \vrklk\base\controller\BaseAjaxFunction;
+use \vrklk\base\model\BaseAjaxFunction;
 
 abstract class BaseAsyncModel
 {

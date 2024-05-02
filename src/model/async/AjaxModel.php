@@ -2,7 +2,7 @@
 
 namespace vrklk\model\async;
 
-use vrklk\base\controller\BaseAjaxFunction;
+use vrklk\base\model\BaseAjaxFunction;
 
 class AjaxModel extends \vrklk\base\model\BaseAsyncModel
 {
