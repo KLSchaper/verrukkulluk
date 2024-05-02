@@ -3,14 +3,12 @@
 namespace vrklk\base\controller;
 
 use \vrklk\base\controller\Request,
-    \vrklk\base\model\BaseAjaxFunction,
-    \vrklk\base\model\BaseAsyncModel;
+    \vrklk\base\model\BaseAsyncFunction;
 
 abstract class BaseAjaxHandler extends \vrklk\base\controller\RESTfulHandler
 {
     protected string $requested_function = '';
-    protected ?BaseAjaxFunction $ajax_response;
-    protected ?BaseAsyncModel $async_model;
+    protected ?BaseAsyncFunction $ajax_response;
 
     //=========================================================================
     // PROTECTED
@@ -31,12 +29,11 @@ abstract class BaseAjaxHandler extends \vrklk\base\controller\RESTfulHandler
 
     protected function _createFunction(): bool
     {
-        $res = $this->_createAsyncModel()->createResponse($this->requested_function);
+        $res = $this->_createAsyncFunction();
         if ($res !== false) {
             $this->ajax_response = $res;
             return true;
         }
-        throw new \Error($this->async_model->getErrors());
     }
 
     protected function _executeFunction(): bool
@@ -44,5 +41,5 @@ abstract class BaseAjaxHandler extends \vrklk\base\controller\RESTfulHandler
         return $this->ajax_response->execute();
     }
 
-    abstract protected function _createAsyncModel(): BaseAsyncModel;
+    abstract protected function _createAsyncFunction(): BaseAsyncFunction;
 }

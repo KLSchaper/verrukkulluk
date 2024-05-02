@@ -2,12 +2,29 @@
 
 namespace vrklk\controller;
 
-use \vrklk\model\async\AjaxModel;
+use \vrklk\base\controller\Request;
 
 class VAjaxHandler extends \vrklk\base\controller\BaseAjaxHandler
 {
-    protected function _createAsyncModel(): \vrklk\base\model\BaseAsyncModel
+    protected function _createAsyncFunction(): \vrklk\base\model\BaseAsyncFunction
     {
-        return new AjaxModel;
+        switch ($this->requested_function) {
+            case 'add_favorite':
+                $recipe_id = Request::getRequestVar('recipe_id', 0, true);
+                $user_id = Request::getRequestVar('user_id', 0, true);
+                return new \vrklk\model\async\FavoriteAjaxFunction(
+                    'add',
+                    $recipe_id,
+                    $user_id
+                );
+            case 'remove_favorite':
+                $recipe_id = Request::getRequestVar('recipe_id', 0, true);
+                $user_id = Request::getRequestVar('user_id', 0, true);
+                return new \vrklk\model\async\FavoriteAjaxFunction(
+                    'remove',
+                    $recipe_id,
+                    $user_id
+                );
+        }
     }
 }

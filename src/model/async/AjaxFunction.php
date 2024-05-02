@@ -1,6 +1,6 @@
 <?php
 
-namespace vrklk\base\model;
+namespace vrklk\model\async;
 
 class AjaxFunction extends \vrklk\base\model\BaseAjaxFunction
 {
