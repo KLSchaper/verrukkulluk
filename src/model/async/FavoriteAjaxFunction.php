@@ -20,19 +20,28 @@ class FavoriteAjaxFunction extends \vrklk\base\model\BaseAjaxFunction
     protected function _getData(): bool
     {
         if ($this->user_id === 0) {
-            $this->data = 'Log in om iets aan je favorieten toe te voegen';
+            $this->data = '';
             return true;
         }
+
+        $recipe_title = \ManKind\ModelManager::getRecipeDAO()->
+            getRecipeTitle($this->recipe_id)['title'];
+        $user_name = \ManKind\ModelManager::getUsersDAO()->
+            getUserById($this->user_id)['name'];
         
         switch ($this->action) {
             case 'add':
-                $this->data = 'adding recipe ' . $this->recipe_id . ' to favorites for user ' . $this->user_id;
+                $this->data = $recipe_title 
+                    . ' toegevoegd aan de favorieten van '
+                    . $user_name;
                 break;
             case 'remove':
-                $this->data = 'removing recipe ' . $this->recipe_id . ' from favorites for user ' . $this->user_id;
+                $this->data = $recipe_title 
+                    . ' verwijderd uit de favorieten van '
+                    . $user_name;
                 break;
             default:
-                $this->data = 'invalid favorite action';
+                $this->data = 'Ongeldige actie';
         }
         return true;
     }

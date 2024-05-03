@@ -77,6 +77,25 @@ const add_to_list_options = (recipe) => {
     };
 };
 
+const toggle_favorite_options = (response_text) => {
+    return {
+        title: response_text,
+        cancel_func: 'NOP',
+        body: '<div class="alert alert-succes">'
+            + '<p>Je kunt je favorieten terugvinden via het menu bovenaan de pagina.</p>'
+            + '</div>',
+    };
+};
+
+const not_logged_favorite_options = () => {
+    return {
+        title: 'Log in om iets aan je favorieten toe te voegen',
+        cancel_func: 'NOP',
+        body: '<div class="alert alert-succes">'
+            + '<p>Je vindt het inlog formulier aan de linkerkant, onder de Agenda.</p>'
+            + '</div>',
+    };
+};
 
 /* OK CALLBACK */
 function saveName(data) {
