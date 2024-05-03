@@ -1,4 +1,4 @@
-
+/* FAVORITE */
 function changeFavoriteStatus() {
     const heart = document.getElementById('favorite-heart');
     const url = heart.getAttribute('data-vrklk-fav-url');

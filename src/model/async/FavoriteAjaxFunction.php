@@ -24,6 +24,8 @@ class FavoriteAjaxFunction extends \vrklk\base\model\BaseAjaxFunction
             return true;
         }
 
+        $favorites_dao = \ManKind\ModelManager::getFavoritesDAO();
+
         $recipe_title = \ManKind\ModelManager::getRecipeDAO()->
             getRecipeTitle($this->recipe_id)['title'];
         $user_name = \ManKind\ModelManager::getUsersDAO()->
@@ -31,14 +33,28 @@ class FavoriteAjaxFunction extends \vrklk\base\model\BaseAjaxFunction
         
         switch ($this->action) {
             case 'add':
-                $this->data = $recipe_title 
-                    . ' toegevoegd aan de favorieten van '
-                    . $user_name;
+                if (is_int($favorites_dao->addFavorite($this->recipe_id, $this->user_id))) {
+                    $this->data = $recipe_title 
+                        . ' is toegevoegd aan de favorieten van '
+                        . $user_name;
+                } else {
+                    $this->data = 'FOUT: '
+                        . $recipe_title 
+                        . ' kon niet toegevoegd worden aan de favorieten van '
+                        . $user_name;
+                }
                 break;
             case 'remove':
-                $this->data = $recipe_title 
-                    . ' verwijderd uit de favorieten van '
-                    . $user_name;
+                if ($favorites_dao->removeFavorite($this->recipe_id, $this->user_id)) {
+                    $this->data = $recipe_title 
+                        . ' verwijderd uit de favorieten van '
+                        . $user_name;
+                } else {
+                    $this->data = 'FOUT: '
+                        . $recipe_title 
+                        . ' kon niet verwijderd worden uit de favorieten van '
+                        . $user_name;
+                }
                 break;
             default:
                 $this->data = 'Ongeldige actie';
