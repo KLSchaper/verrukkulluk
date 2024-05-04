@@ -25,7 +25,6 @@ class ControllerData
 
     public static function addRecipeToShoppingList(int $recipe_id): void
     {
-        echo 'adding recipe ' . $recipe_id . ' to shopping list!'; // TODO replace with nice alert
         $ingredients = \ManKind\ModelManager::getRecipeDAO()->getRecipeIngredients($recipe_id);
         foreach ($ingredients as $ingredient_id => $quantity) {
             if (isset($_SESSION['shopping_list'][$ingredient_id])) {
