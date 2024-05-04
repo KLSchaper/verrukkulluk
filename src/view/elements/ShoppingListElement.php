@@ -48,6 +48,7 @@ class ShoppingListElement extends \vrklk\base\view\BaseElement
         EOD . PHP_EOL;
         $total_price = 0;
         foreach ($this->products as $id => $product_data) {
+            $price = number_format($product_data['price'], 2, ',', '.');
             $total_price += $product_data['price'];
             echo <<<EOD
                     <div class="col-sm-2">
@@ -76,13 +77,14 @@ class ShoppingListElement extends \vrklk\base\view\BaseElement
                         </div>
                     </div>
                     <div class="col-sm-1 d-flex align-items-center">
-                        <i class="fa-solid fa-euro-sign red ms-2 me-1"></i>{$product_data['price']}
+                        <i class="fa-solid fa-euro-sign red ms-2 me-1"></i>{$price}
                     </div>
                     <div class="col-sm-1 d-flex align-items-center">
                         <i class="fa-solid fa-trash-can red" id="thrashcan-{$id}"></i>
                     </div>
             EOD . PHP_EOL;
         }
+        $total_price = number_format($total_price, 2, ',', '.');
         echo <<<EOD
             </div>
             <div class="row mt-5">
