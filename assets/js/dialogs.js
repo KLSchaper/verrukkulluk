@@ -66,11 +66,13 @@ const edit_name_options = (title, name) => {
     };
 };
 
+
+/* VERRUKKULLUK SPECIFIC DIALOG OPTIONS */
 const add_to_list_options = (recipe) => {
     return {
         title: recipe + ' toegevoegd aan boodschappenlijst',
         cancel_func: 'NOP',
-        body: '<div class="alert alert-succes">'
+        body: '<div class="alert alert-success">'
             + '<p>Je kunt je boodschappenlijst terugvinden via het menu bovenaan de pagina.</p>'
             + '<p>(maar je boodschappen staan er nog niet op want nog geen AJAX toegevoegd)</p>'
             + '</div>',
@@ -81,18 +83,28 @@ const toggle_favorite_options = (response_text) => {
     return {
         title: response_text,
         cancel_func: 'NOP',
-        body: '<div class="alert alert-succes">'
+        body: '<div class="alert alert-success">'
             + '<p>Je kunt je favorieten terugvinden via het menu bovenaan de pagina.</p>'
             + '</div>',
     };
 };
 
-const not_logged_favorite_options = () => {
+const not_logged_options = (response_text) => {
     return {
-        title: 'Log in om iets aan je favorieten toe te voegen',
+        title: response_text,
         cancel_func: 'NOP',
-        body: '<div class="alert alert-succes">'
-            + '<p>Je vindt het inlog formulier aan de linkerkant, onder de Agenda.</p>'
+        body: '<div class="alert alert-warning">'
+            + '<p>Gebruik de login velden links op de pagina, onder de agenda.</p>'
+            + '</div>',
+    };
+};
+
+const action_failed_options = (response_text) => {
+    return {
+        title: response_text,
+        cancel_func: 'NOP',
+        body: '<div class="alert alert-danger">'
+            + '<p>Excuses voor het ongemak. Als dit probleem zich blijft voordoen, neem contact met ons op.</p>'
             + '</div>',
     };
 };
