@@ -68,13 +68,12 @@ const edit_name_options = (title, name) => {
 
 
 /* VERRUKKULLUK SPECIFIC DIALOG OPTIONS */
-const add_to_list_options = (recipe) => {
+const add_to_list_options = (response_text) => {
     return {
-        title: recipe + ' toegevoegd aan boodschappenlijst',
+        title: response_text,
         cancel_func: 'NOP',
         body: '<div class="alert alert-success">'
             + '<p>Je kunt je boodschappenlijst terugvinden via het menu bovenaan de pagina.</p>'
-            + '<p>(maar je boodschappen staan er nog niet op want nog geen AJAX toegevoegd)</p>'
             + '</div>',
     };
 };
@@ -139,27 +138,3 @@ function editName() {
     const name = 'Mag geen naam hebben';
     gwprompt.show(edit_name_options('Edit', name));
 }
-
-function addToList() {
-    const recipe = document.getElementById('recipe-title').innerHTML;
-    gwprompt.show(add_to_list_options(recipe));
-}
-
-
-/* INIT */
-const initPage = () => {
-    console.log('initPage');
-    // document.getElementById('show-dlg').addEventListener('click', editName);
-    document.getElementById('add-to-list').addEventListener('click', addToList);
-}
-
-(function (fn) {
-    if (document.readyState === "complete" || document.readyState === "interactive") {
-        // call on next available tick
-        setTimeout(fn, 1);
-    }
-    else {
-        document.addEventListener("DOMContentLoaded", fn);
-    }
-}(initPage));
-
