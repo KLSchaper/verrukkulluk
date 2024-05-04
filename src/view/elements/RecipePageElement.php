@@ -5,7 +5,7 @@ namespace vrklk\view\elements;
 class RecipePageElement extends \vrklk\base\view\BaseElement
 {
     private \vrklk\model\recipe\RecipeDAO $recipe_dao;
-    private array $recipe_details;
+    private array $recipe_details = [];
     private string $page;
     private int $page_number;
     private int $total_pages;
