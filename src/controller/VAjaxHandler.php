@@ -26,6 +26,9 @@ class VAjaxHandler extends \vrklk\base\controller\BaseAjaxHandler
                     $recipe_id,
                     $user_id
                 );
+            default:
+                http_response_code(501);
+                return new \vrklk\model\async\AjaxFunction();
         }
     }
 }
