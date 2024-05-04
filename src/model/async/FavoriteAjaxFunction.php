@@ -61,6 +61,7 @@ class FavoriteAjaxFunction extends \vrklk\base\model\BaseAjaxFunction
                 break;
             default:
                 $this->data = 'Ongeldige actie';
+                http_response_code(501);
         }
         return true;
     }
