@@ -55,7 +55,7 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                 // p: recipe description (from recipe data)
             //div:
                 // button: "op lijst" (put ingredients in shopping list)
-        $add_link = \Config::LINKBASE_PAGE . 'add_to_list&recipe_id=' . $this->recipe_id;
+        $add_link = \Config::LINKBASE_AJAX . 'add_to_list&recipe_id=' . $this->recipe_id;
         
         if ($this->is_favorite) {
             $heart = 'fa-solid';
@@ -109,11 +109,11 @@ class RecipeDetailsElement extends \vrklk\base\view\BaseElement
                         <p>{$this->recipe_details['descr']}</p>
                     </div>
                     <div class="d-flex align-items-center">
-                        <!-- <button class="btn p-0" id="add-to-list"> -->
-                        <a href="{$add_link}" class="btn p-0" id="add-to-list">
-                            <h1 class="m-0"><span class="badge rounded-pill red-white-lily">Op Lijst</span></h1>
-                        <!-- </button> -->
-                        </a>
+                        <div data-vrklk-add-list-url="{$add_link}" class="btn p-0" id="add-to-list">
+                            <h1 class="m-0">
+                                <span class="badge rounded-pill red-white-lily">Op Lijst</span>
+                            </h1>
+                        </div>
                         <div class="ms-auto">
                             <h2>
                                 <i id="favorite-heart" class="{$heart} fa-heart red me-4" data-vrklk-fav-url="{$fav_link}"></i>
