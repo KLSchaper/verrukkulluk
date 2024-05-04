@@ -20,7 +20,8 @@ class FavoriteAjaxFunction extends \vrklk\base\model\BaseAjaxFunction
     protected function _getData(): bool
     {
         if ($this->user_id === 0) {
-            $this->data = '';
+            $this->data = 'Log in om iets aan je favorieten toe te voegen';
+            http_response_code(401);
             return true;
         }
 
@@ -42,6 +43,7 @@ class FavoriteAjaxFunction extends \vrklk\base\model\BaseAjaxFunction
                         . $recipe_title 
                         . ' kon niet toegevoegd worden aan de favorieten van '
                         . $user_name;
+                    http_response_code(500);
                 }
                 break;
             case 'remove':
@@ -54,6 +56,7 @@ class FavoriteAjaxFunction extends \vrklk\base\model\BaseAjaxFunction
                         . $recipe_title 
                         . ' kon niet verwijderd worden uit de favorieten van '
                         . $user_name;
+                    http_response_code(500);
                 }
                 break;
             default:
