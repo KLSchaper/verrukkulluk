@@ -1,3 +1,7 @@
+/*
+ * NOT USED IN VERRUKKULLUK IMPLEMENTATION CURRENTLY
+ */
+
 //==============================================================================
 const show = (element, visible) =>
 {
