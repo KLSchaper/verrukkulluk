@@ -18,7 +18,7 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
         switch ($this->requested_page) {
             case 'log_out':
                 $this->response['page'] = 'home';
-                ControllerData::logOutUser(Request::getRequestVar('user_id', 0, true));
+                ControllerData::logOutUser();
                 // no break, falls through
             case 'home':
                 $this->response['page_number'] = Request::getRequestVar('page_number', 1, true);
@@ -26,10 +26,6 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
             case 'favorites':
                 $this->response['page_number'] = Request::getRequestVar('page_number', 1, true);
                 break;
-            case 'add_to_list';
-                $this->response['page'] = 'details';
-                ControllerData::addRecipeToShoppingList(Request::getRequestVar('recipe_id', 0, true));
-                // no break, falls through
             case 'details':
                 $this->response['recipe_id'] = Request::getRequestVar('recipe_id', 0, true);
                 break;

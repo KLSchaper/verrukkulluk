@@ -66,17 +66,47 @@ const edit_name_options = (title, name) => {
     };
 };
 
-const add_to_list_options = (recipe) => {
+
+/* VERRUKKULLUK SPECIFIC DIALOG OPTIONS */
+const add_to_list_options = (response_text) => {
     return {
-        title: recipe + ' toegevoegd aan boodschappenlijst',
+        title: response_text,
         cancel_func: 'NOP',
-        body: '<div class="alert alert-succes">'
+        body: '<div class="alert alert-success">'
             + '<p>Je kunt je boodschappenlijst terugvinden via het menu bovenaan de pagina.</p>'
-            + '<p>(maar je boodschappen staan er nog niet op want nog geen AJAX toegevoegd)</p>'
             + '</div>',
     };
 };
 
+const toggle_favorite_options = (response_text) => {
+    return {
+        title: response_text,
+        cancel_func: 'NOP',
+        body: '<div class="alert alert-success">'
+            + '<p>Je kunt je favorieten terugvinden via het menu bovenaan de pagina.</p>'
+            + '</div>',
+    };
+};
+
+const not_logged_options = (response_text) => {
+    return {
+        title: response_text,
+        cancel_func: 'NOP',
+        body: '<div class="alert alert-warning">'
+            + '<p>Gebruik de login velden links op de pagina, onder de agenda.</p>'
+            + '</div>',
+    };
+};
+
+const action_failed_options = (response_text) => {
+    return {
+        title: response_text,
+        cancel_func: 'NOP',
+        body: '<div class="alert alert-danger">'
+            + '<p>Excuses voor het ongemak. Als dit probleem zich blijft voordoen, neem contact met ons op.</p>'
+            + '</div>',
+    };
+};
 
 /* OK CALLBACK */
 function saveName(data) {
@@ -108,27 +138,3 @@ function editName() {
     const name = 'Mag geen naam hebben';
     gwprompt.show(edit_name_options('Edit', name));
 }
-
-function addToList() {
-    const recipe = document.getElementById('recipe-title').innerHTML;
-    gwprompt.show(add_to_list_options(recipe));
-}
-
-
-/* INIT */
-const initPage = () => {
-    console.log('initPage');
-    // document.getElementById('show-dlg').addEventListener('click', editName);
-    document.getElementById('add-to-list').addEventListener('click', addToList);
-}
-
-(function (fn) {
-    if (document.readyState === "complete" || document.readyState === "interactive") {
-        // call on next available tick
-        setTimeout(fn, 1);
-    }
-    else {
-        document.addEventListener("DOMContentLoaded", fn);
-    }
-}(initPage));
-

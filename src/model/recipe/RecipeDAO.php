@@ -205,6 +205,18 @@ class RecipeDAO extends \vrklk\base\model\BaseDAO implements \vrklk\model\interf
         );
     }
 
+    public function getRecipeTitle(int $recipe_id): array|false
+    {
+        return $this->crud->selectOne(
+            "SELECT title"
+                . " FROM recipes"
+                . " WHERE id = :recipe_id",
+            [
+                'recipe_id' => [$recipe_id, true],
+            ],
+        );
+    }
+
     //=========================================================================
     // PRIVATE
     //=========================================================================

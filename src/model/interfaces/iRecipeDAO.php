@@ -26,4 +26,5 @@ interface iRecipeDAO
     
     public function getRecipeIngredients(int $recipe_id): array|false;
     public function getRecipeDetails(int $recipe_id): array|false;
+    public function getRecipeTitle(int $recipe_id): array|false;
 }
