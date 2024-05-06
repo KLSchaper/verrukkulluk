@@ -10,7 +10,7 @@ class TextareaFieldElement extends \vrklk\view\elements\field_elements\BaseField
         echo <<<EOD
         <div class = "{$this->layout_data['complete_layout_class']}">
             <div class = "{$this->layout_data['label_layout_class']}">
-                <label class = "{$this->field_info['label_class']}" for "{$this->field_info['name']}">
+                <label class = "{$this->field_info['label_class']}" for = "{$this->field_info['name']}">
                     {$this->field_info['label']}
                 </label>
             </div>
