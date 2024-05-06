@@ -9,7 +9,7 @@ class ControllerData
         $_SESSION['user_id'] = $user_id;
     }
 
-    public static function logOutUser(int $user_id): void
+    public static function logOutUser(): void
     {
         session_unset();
         session_destroy();
