@@ -77,7 +77,6 @@ class VPageHandler extends \vrklk\base\controller\BasePageHandler
                         if(!$validate_array['valid']) {
                             $form_validity = false;
                         }
-                        //TODO solve for multiple inputs of the same ID
                         $this->validator->setFormDataValue('form_values', $field_id, $validate_array['value']);
                         $this->validator->setFormDataValue('form_errors', $field_id, $validate_array['error']);
                         $this->response['post_values'][$field_info['name']] = $validate_array['value'];
